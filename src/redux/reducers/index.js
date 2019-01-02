@@ -1,4 +1,5 @@
 import mangaReducer from './mangaReducer'
+import mangaListReducer from './mangaListReducer'
 
 /**
  * Combine reducers to make a flat state
@@ -10,4 +11,7 @@ const reduceReducers = (...reducers) => (prevState, value, ...args) =>
     prevState
   )
 
-export default reduceReducers(mangaReducer)
+export default reduceReducers(
+  mangaReducer,
+  mangaListReducer
+)

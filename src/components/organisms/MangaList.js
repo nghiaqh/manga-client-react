@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { fetchMangaByIdIfNeeded } from 'redux/actions/mangaActions'
+import { loadMoreMangas } from 'redux/actions/mangaListActions'
 
 export class MangaDetail extends PureComponent {
   componentDidMount () {
     const { dispatch } = this.props
-    dispatch(fetchMangaByIdIfNeeded(1))
+    dispatch(loadMoreMangas('manga-hub'))
   }
 
   render () {
