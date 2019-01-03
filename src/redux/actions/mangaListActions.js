@@ -5,7 +5,7 @@ import {
   REQUEST_NUMBER_OF_MANGAS,
   RECEIVE_NUMBER_OF_MANGAS
 } from './actionTypes'
-import { apiRoutes } from './apiRoutes'
+import getApiPath from './apiRoutes'
 
 export const setIsNew = json => json.map(item => {
   const now = new Date()
@@ -101,7 +101,7 @@ export const fetchMangas = (
       order: order
     }
 
-    return fetch(`${apiRoutes.mangas}?filter=${JSON.stringify(filterObj)}`)
+    return fetch(`${getApiPath('mangas')}?filter=${JSON.stringify(filterObj)}`)
       .then(res => res.json())
       .then(json => dispatch(receiveMangas(id, json)))
   }
@@ -123,7 +123,7 @@ export const countMangas = (id, filter = {}) => dispatch => {
     }
   }
 
-  return fetch(`${apiRoutes.mangas}/count?where=${JSON.stringify(where)}`)
+  return fetch(`${getApiPath('countMangas')}?where=${JSON.stringify(where)}`)
     .then(res => res.json())
     .then(json => dispatch(receiveNumberOfMangas(id, json)))
 }

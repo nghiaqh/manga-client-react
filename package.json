@@ -6,6 +6,7 @@
     "@material-ui/core": "^3.8.1",
     "lodash": "^4.17.11",
     "normalizr": "^3.3.0",
+    "path-to-regexp": "^2.4.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",

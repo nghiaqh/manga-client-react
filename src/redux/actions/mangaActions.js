@@ -2,7 +2,7 @@ import {
   REQUEST_MANGA,
   RECEIVE_MANGA
 } from './actionTypes'
-import { apiRoutes } from './apiRoutes'
+import getApiPath from './apiRoutes'
 import get from 'lodash/get'
 
 export const requestManga = id => ({
@@ -20,7 +20,7 @@ export const receiveManga = manga => ({
 
 export const fetchMangaById = id => dispatch => {
   dispatch(requestManga(id))
-  return fetch(`${apiRoutes.mangas}/${id}`)
+  return fetch(getApiPath('mangaById', id))
     .then(response => response.json())
     .then(json => dispatch(receiveManga(json)))
 }
