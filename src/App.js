@@ -4,7 +4,7 @@ import React, {
 import logo from './logo.svg'
 import './App.css'
 import ArtistDetail from 'components/pages/ArtistDetail'
-import MangaDetail from 'components/pages/MangaDetail'
+import MangaList from 'components/organisms/MangaList'
 
 class App extends Component {
   render () {
@@ -15,7 +15,7 @@ class App extends Component {
             className='App-logo'
             alt='logo' />
           <ArtistDetail /><br />
-          <MangaDetail />
+          <MangaList />
         </header>
       </div>
     )

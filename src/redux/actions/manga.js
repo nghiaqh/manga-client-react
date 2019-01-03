@@ -3,14 +3,14 @@ import {
   RECEIVE_MANGA
 } from './actionTypes'
 import {
-  requestItemById,
-  receiveItemById
+  createRequestItemByIdAction,
+  createReceiveItemByIdAction
 } from './actionCreators'
 import getApiPath from './getApiPath'
 import get from 'lodash/get'
 
-const requestManga = requestItemById(REQUEST_MANGA)
-const receiveManga = receiveItemById(RECEIVE_MANGA)
+const requestManga = createRequestItemByIdAction(REQUEST_MANGA)
+const receiveManga = createReceiveItemByIdAction(RECEIVE_MANGA)
 
 export const fetchMangaById = id => dispatch => {
   dispatch(requestManga(id))

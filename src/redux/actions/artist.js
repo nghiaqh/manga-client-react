@@ -3,13 +3,13 @@ import {
   RECEIVE_ARTIST
 } from './actionTypes'
 import {
-  requestItemById,
-  receiveItemById
+  createRequestItemByIdAction,
+  createReceiveItemByIdAction
 } from './actionCreators'
 import getApiPath from './getApiPath'
 
-const requestArtist = requestItemById(REQUEST_ARTIST)
-const receiveArtist = receiveItemById(RECEIVE_ARTIST)
+const requestArtist = createRequestItemByIdAction(REQUEST_ARTIST)
+const receiveArtist = createReceiveItemByIdAction(RECEIVE_ARTIST)
 
 /**
  * Request a artist by ID

@@ -40,12 +40,12 @@ export const createReceiveItemCountAction = actionType => (id, json) => ({
   }
 })
 
-export const requestItemById = actionType => id => ({
+export const createRequestItemByIdAction = actionType => id => ({
   type: actionType,
   payload: { id }
 })
 
-export const receiveItemById = actionType => data => ({
+export const createReceiveItemByIdAction = actionType => data => ({
   type: actionType,
   payload: {
     data,

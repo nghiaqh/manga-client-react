@@ -9,10 +9,10 @@ export class MangaDetail extends PureComponent {
   }
 
   render () {
-    const { mangas, artists } = this.props
+    const { mangas, artists, withLoadMore } = this.props
     return (
       <React.Fragment>
-        {mangas && mangas[1] && mangas[1].title}
+        {withLoadMore['manga-hub'] && withLoadMore['manga-hub'].items}
       </React.Fragment>
     )
   }
@@ -21,7 +21,8 @@ export class MangaDetail extends PureComponent {
 const mapStateToProps = (state) => {
   return {
     mangas: state.entities.mangas || {},
-    artists: state.entities.artists || {}
+    artists: state.entities.artists || {},
+    withLoadMore: state.withLoadMore
   }
 }
 
