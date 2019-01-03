@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { fetchArtistByIdIfNeeded } from 'redux/actions/artistActions'
+import { fetchArtistByIdIfNeeded } from 'redux/actions/artist'
 
 export class ArtistDetail extends PureComponent {
   componentDidMount () {

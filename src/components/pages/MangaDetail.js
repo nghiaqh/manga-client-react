@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { fetchMangaByIdIfNeeded } from 'redux/actions/mangaActions'
+import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
 
 export class MangaDetail extends PureComponent {
   componentDidMount () {
