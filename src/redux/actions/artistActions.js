@@ -2,20 +2,20 @@ import {
   REQUEST_ARTIST,
   RECEIVE_ARTIST
 } from './actionTypes'
-import getApiPath from './apiRoutes'
+import getApiPath from './getApiPath'
 
 /*
  * Sync action creators
  */
-export const requestArtist = (id) => ({
+export const requestArtist = id => ({
   type: REQUEST_ARTIST,
   payload: { id }
 })
 
-export const receiveArtist = (json) => ({
+export const receiveArtist = artist => ({
   type: RECEIVE_ARTIST,
   payload: {
-    artist: json[0],
+    artist,
     receivedAt: Date.now()
   }
 })
@@ -27,7 +27,7 @@ export const receiveArtist = (json) => ({
 export const fetchArtistById = id => dispatch => {
   dispatch(requestArtist(id))
 
-  return fetch(getApiPath('artistById', id))
+  return fetch(getApiPath('artistById', { id }))
     .then(res => res.json())
     .then(json => dispatch(receiveArtist(json)))
 }

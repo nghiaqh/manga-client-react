@@ -5,7 +5,7 @@ import {
   REQUEST_NUMBER_OF_MANGAS,
   RECEIVE_NUMBER_OF_MANGAS
 } from './actionTypes'
-import getApiPath from './apiRoutes'
+import getApiPath from './getApiPath'
 
 export const setIsNew = json => json.map(item => {
   const now = new Date()

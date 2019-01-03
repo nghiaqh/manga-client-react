@@ -1,5 +1,6 @@
 import mangaReducer from './mangaReducer'
 import mangaListReducer from './mangaListReducer'
+import artistReducer from './artistReducer'
 
 /**
  * Combine reducers to make a flat state
@@ -13,5 +14,6 @@ const reduceReducers = (...reducers) => (prevState, value, ...args) =>
 
 export default reduceReducers(
   mangaReducer,
-  mangaListReducer
+  mangaListReducer,
+  artistReducer
 )
