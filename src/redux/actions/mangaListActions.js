@@ -5,6 +5,12 @@ import {
   REQUEST_NUMBER_OF_MANGAS,
   RECEIVE_NUMBER_OF_MANGAS
 } from './actionTypes'
+import {
+  createRequestItemsAction,
+  createReceiveItemsAction,
+  createRequestItemCountAction,
+  createReceiveItemCountAction
+} from './actionCreators'
 import getApiPath from './getApiPath'
 
 export const setIsNew = json => json.map(item => {
@@ -25,48 +31,10 @@ export const normalizeData = json => {
   return normalize(data, [manga])
 }
 
-export const requestMangas = (id, pageSize, pageNumber, filter, order) => ({
-  type: REQUEST_MANGAS,
-  payload: {
-    id,
-    pageSize,
-    pageNumber,
-    filter,
-    order
-  }
-})
-
-export const receiveMangas = (id, json) => {
-  const data = normalizeData(json)
-  return {
-    type: RECEIVE_MANGAS,
-    payload: {
-      id,
-      items: data.result,
-      entities: data.entities,
-      receivedAt: Date.now()
-    }
-  }
-}
-
-export const requestNumberOfMangas = (id, filter) =>
-  ({
-    type: REQUEST_NUMBER_OF_MANGAS,
-    payload: {
-      id,
-      filter
-    }
-  })
-
-export const receiveNumberOfMangas = (id, json) =>
-  ({
-    type: RECEIVE_NUMBER_OF_MANGAS,
-    payload: {
-      id,
-      total: json.count,
-      receivedAt: Date.now()
-    }
-  })
+const requestMangas = createRequestItemsAction(REQUEST_MANGAS)
+const receiveMangas = createReceiveItemsAction(RECEIVE_MANGAS, normalizeData)
+const requestNumberOfMangas = createRequestItemCountAction(REQUEST_NUMBER_OF_MANGAS)
+const receiveNumberOfMangas = createReceiveItemCountAction(RECEIVE_NUMBER_OF_MANGAS)
 
 /**
  * Call mangas api

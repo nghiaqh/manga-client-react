@@ -38,10 +38,10 @@ const handleRequestArtistAction = (state, action) => {
 }
 
 const handleReceiveArtistAction = (state, action) => {
-  const { artist, receivedAt } = action.payload
-  artist.retrieving = false
-  artist.receivedAt = receivedAt
-  const id = artist.id
+  const { data, receivedAt } = action.payload
+  data.retrieving = false
+  data.receivedAt = receivedAt
+  const id = data.id
 
   return {
     ...state,
@@ -49,7 +49,7 @@ const handleReceiveArtistAction = (state, action) => {
       ...state.entities,
       artists: {
         ...state.entities.artists,
-        [id]: Object.assign({}, state.entities.artists[id], artist)
+        [id]: Object.assign({}, state.entities.artists[id], data)
       }
     }
   }

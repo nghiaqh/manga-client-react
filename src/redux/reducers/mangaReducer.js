@@ -38,13 +38,13 @@ const handleRequestManga = (state, action) => {
 }
 
 const handleReceiveManga = (state, action) => {
-  const { manga, receivedAt } = action.payload
+  const { data, receivedAt } = action.payload
   const now = new Date()
-  const then = new Date(manga.modifiedAt)
-  manga.isNew = (now - then) / (1000 * 3600 * 24) <= 10
-  manga.retrieving = false
-  manga.receivedAt = receivedAt
-  const id = manga.id
+  const then = new Date(data.modifiedAt)
+  data.isNew = (now - then) / (1000 * 3600 * 24) <= 10
+  data.retrieving = false
+  data.receivedAt = receivedAt
+  const id = data.id
 
   return {
     ...state,
@@ -52,7 +52,7 @@ const handleReceiveManga = (state, action) => {
       ...state.entities,
       mangas: {
         ...state.entities.mangas,
-        [id]: Object.assign({}, state.entities.mangas[id], manga)
+        [id]: Object.assign({}, state.entities.mangas[id], data)
       }
     }
   }

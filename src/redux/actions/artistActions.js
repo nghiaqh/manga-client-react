@@ -2,23 +2,14 @@ import {
   REQUEST_ARTIST,
   RECEIVE_ARTIST
 } from './actionTypes'
+import {
+  requestItemById,
+  receiveItemById
+} from './actionCreators'
 import getApiPath from './getApiPath'
 
-/*
- * Sync action creators
- */
-export const requestArtist = id => ({
-  type: REQUEST_ARTIST,
-  payload: { id }
-})
-
-export const receiveArtist = artist => ({
-  type: RECEIVE_ARTIST,
-  payload: {
-    artist,
-    receivedAt: Date.now()
-  }
-})
+const requestArtist = requestItemById(REQUEST_ARTIST)
+const receiveArtist = receiveItemById(RECEIVE_ARTIST)
 
 /**
  * Request a artist by ID

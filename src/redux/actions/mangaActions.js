@@ -2,21 +2,15 @@ import {
   REQUEST_MANGA,
   RECEIVE_MANGA
 } from './actionTypes'
+import {
+  requestItemById,
+  receiveItemById
+} from './actionCreators'
 import getApiPath from './getApiPath'
 import get from 'lodash/get'
 
-export const requestManga = id => ({
-  type: REQUEST_MANGA,
-  payload: { id }
-})
-
-export const receiveManga = manga => ({
-  type: RECEIVE_MANGA,
-  payload: {
-    manga,
-    receivedAt: Date.now()
-  }
-})
+const requestManga = requestItemById(REQUEST_MANGA)
+const receiveManga = receiveItemById(RECEIVE_MANGA)
 
 export const fetchMangaById = id => dispatch => {
   dispatch(requestManga(id))
