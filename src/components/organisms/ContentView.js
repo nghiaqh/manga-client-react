@@ -8,7 +8,7 @@ export default class ContentView extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      type: props.type || 'grid'
+      layout: props.layout || 'grid'
     }
 
     this.renderList = this.renderList.bind(this)
@@ -28,7 +28,7 @@ export default class ContentView extends PureComponent {
     } = this.props
     let renderLayout
 
-    switch (this.state.type) {
+    switch (this.state.layout) {
       case 'list':
         renderLayout = this.renderList
         break
@@ -54,21 +54,33 @@ export default class ContentView extends PureComponent {
     )
   }
 
-  renderList (items, retrievingItems) {
+  renderList (items, retrievingItems, renderItem) {
     return (
-      <List items={items} retrievingItems={retrievingItems} />
+      <List
+        items={items}
+        retrievingItems={retrievingItems}
+        renderItem={renderItem}
+      />
     )
   }
 
-  renderGrid (items, retrievingItems) {
+  renderGrid (items, retrievingItems, renderItem) {
     return (
-      <Grid items={items} retrievingItems={retrievingItems} />
+      <Grid
+        items={items}
+        retrievingItems={retrievingItems}
+        renderItem={renderItem}
+      />
     )
   }
 
-  renderSlider (items, retrievingItems) {
+  renderSlider (items, retrievingItems, renderItem) {
     return (
-      <Slider items={items} retrievingItems={retrievingItems} />
+      <Slider
+        items={items}
+        retrievingItems={retrievingItems}
+        renderItem={renderItem}
+      />
     )
   }
 }
