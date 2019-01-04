@@ -11,7 +11,7 @@ import {
   createRequestItemCountAction,
   createReceiveItemCountAction
 } from './actionCreators'
-import getApiPath from './getApiPath'
+import getApiPath from 'libs/apiRoutes'
 
 const requestArtists = createRequestItemsAction(REQUEST_ARTISTS)
 const receiveArtists = createReceiveItemsAction(RECEIVE_ARTISTS, normalizeData)

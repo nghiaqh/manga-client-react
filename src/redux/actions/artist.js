@@ -6,7 +6,7 @@ import {
   createRequestItemByIdAction,
   createReceiveItemByIdAction
 } from './actionCreators'
-import getApiPath from './getApiPath'
+import getApiPath from 'libs/apiRoutes'
 
 const requestArtist = createRequestItemByIdAction(REQUEST_ARTIST)
 const receiveArtist = createReceiveItemByIdAction(RECEIVE_ARTIST)

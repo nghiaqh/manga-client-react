@@ -11,7 +11,7 @@ import {
   createRequestItemCountAction,
   createReceiveItemCountAction
 } from './actionCreators'
-import getApiPath from './getApiPath'
+import getApiPath from 'libs/apiRoutes'
 
 export const normalizeData = json => {
   const image = new schema.Entity('images')

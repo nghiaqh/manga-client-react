@@ -3,8 +3,6 @@ import React, {
 } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import ArtistDetail from 'components/pages/ArtistDetail'
-import MangaList from 'components/organisms/MangaList'
 
 class App extends Component {
   render () {
@@ -14,8 +12,7 @@ class App extends Component {
           <img src={logo}
             className='App-logo'
             alt='logo' />
-          <ArtistDetail /><br />
-          <MangaList />
+
         </header>
       </div>
     )

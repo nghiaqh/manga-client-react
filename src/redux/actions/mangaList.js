@@ -11,7 +11,7 @@ import {
   createRequestItemCountAction,
   createReceiveItemCountAction
 } from './actionCreators'
-import getApiPath from './getApiPath'
+import getApiPath from 'libs/apiRoutes'
 
 export const setIsNew = json => json.map(item => {
   const now = new Date()

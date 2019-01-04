@@ -6,7 +6,7 @@ import {
   createRequestItemByIdAction,
   createReceiveItemByIdAction
 } from './actionCreators'
-import getApiPath from './getApiPath'
+import getApiPath from 'libs/apiRoutes'
 import get from 'lodash/get'
 
 const requestManga = createRequestItemByIdAction(REQUEST_MANGA)
