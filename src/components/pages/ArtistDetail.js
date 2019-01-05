@@ -1,19 +1,23 @@
+import get from 'lodash/get'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { fetchArtistByIdIfNeeded } from 'redux/actions/artist'
 
-export class ArtistDetail extends PureComponent {
+class ArtistDetail extends PureComponent {
   componentDidMount () {
     const { dispatch } = this.props
-    dispatch(fetchArtistByIdIfNeeded(28))
+    dispatch(fetchArtistByIdIfNeeded(this.props.match.params.artistId))
   }
 
   render () {
-    const { mangas, artists } = this.props
+    const { match, artists } = this.props
+    const artistId = parseInt(match.params.artistId)
+    const artist = get(artists, artistId)
+
     return (
       <React.Fragment>
-        {artists && artists[28] && artists[28].name}
-      </React.Fragment>
+        {artist && artist.name}
+      </React.Fragment >
     )
   }
 }

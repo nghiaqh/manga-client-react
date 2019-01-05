@@ -15,14 +15,28 @@ class WithPagination extends PureComponent {
   }
 
   render () {
-    const { withPagination, entities, id, render, entityType } = this.props
-    const data = withPagination[id] || { items: [] }
-    const { items } = data
+    const {
+      withPagination,
+      entities,
+      id,
+      renderLayout,
+      renderItem,
+      entityType,
+      pageSize
+    } = this.props
+    const data = withPagination[id] || {
+      items: [],
+      pageNumber: 1,
+      total: 0,
+      pageSize,
+      retrievingItems: true
+    }
+    const { items, retrievingItems } = data
 
     const contents = Array.isArray(items)
       ? items.map(i => entities[entityType][i])
       : []
-    const content = render(contents)
+    const content = renderLayout(contents, retrievingItems, renderItem)
     const control = this.renderPaginationControl()
 
     return (

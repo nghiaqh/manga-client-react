@@ -6,11 +6,12 @@ import {
   createRequestItemByIdAction,
   createReceiveItemByIdAction
 } from './actionCreators'
+import { normalizeData } from 'redux/actions/mangaList'
 import getApiPath from 'libs/apiRoutes'
 import get from 'lodash/get'
 
 const requestManga = createRequestItemByIdAction(REQUEST_MANGA)
-const receiveManga = createReceiveItemByIdAction(RECEIVE_MANGA)
+const receiveManga = createReceiveItemByIdAction(RECEIVE_MANGA, normalizeData)
 
 export const fetchMangaById = id => dispatch => {
   dispatch(requestManga(id))

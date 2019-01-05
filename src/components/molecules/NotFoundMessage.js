@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from 'components/atoms/Typography'
+import Typography from 'components/atoms/Typography'
 
 const NotFoundMessage = (props) => {
   const textfaces = [

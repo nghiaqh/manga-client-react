@@ -10,7 +10,7 @@ class MangaCard extends PureComponent {
     const artist = artists[manga.artistId] || {}
 
     const { id, title } = manga
-    const mangaUrl = toUrl('mangas', { mangaId: id })
+    const mangaUrl = toUrl('mangaDetail', { mangaId: id })
 
     return (
       <Link className='card--manga' to={mangaUrl}>

@@ -54,32 +54,32 @@ export default class ContentView extends PureComponent {
     )
   }
 
-  renderList (items, retrievingItems, renderItem) {
+  renderList (items, retrievingItems, render) {
     return (
       <List
         items={items}
         retrievingItems={retrievingItems}
-        renderItem={renderItem}
+        render={render}
       />
     )
   }
 
-  renderGrid (items, retrievingItems, renderItem) {
+  renderGrid (items, retrievingItems, render) {
     return (
       <Grid
         items={items}
         retrievingItems={retrievingItems}
-        renderItem={renderItem}
+        render={render}
       />
     )
   }
 
-  renderSlider (items, retrievingItems, renderItem) {
+  renderSlider (items, retrievingItems, render) {
     return (
       <Slider
         items={items}
         retrievingItems={retrievingItems}
-        renderItem={renderItem}
+        render={render}
       />
     )
   }

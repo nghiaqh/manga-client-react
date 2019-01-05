@@ -7,7 +7,7 @@ export default class Grid extends PureComponent {
   constructor (props) {
     super(props)
 
-    this.defaultSetting = {
+    this.state = {
       xsmall: 2,
       small: 4,
       medium: 6,
@@ -18,7 +18,7 @@ export default class Grid extends PureComponent {
 
   render () {
     const { retrievingItems, render } = this.props
-    const cols = Object.assign(this.defaultSettings, this.props.cols)
+    const cols = Object.assign(this.state, this.props.cols)
     const items = this.props.items.filter(item => item && item.id)
       .map(item => render(item))
     const statusText = (items.length === 0 && !retrievingItems)

@@ -45,10 +45,24 @@ export const createRequestItemByIdAction = actionType => id => ({
   payload: { id }
 })
 
-export const createReceiveItemByIdAction = actionType => data => ({
-  type: actionType,
-  payload: {
-    data,
-    receivedAt: Date.now()
+export const createReceiveItemByIdAction = (actionType, normalizeData) => json => {
+  if (!normalizeData) {
+    return {
+      type: actionType,
+      payload: {
+        data: json,
+        receivedAt: Date.now()
+      }
+    }
   }
-})
+
+  const data = normalizeData([json])
+  return {
+    type: actionType,
+    payload: {
+      items: data.result,
+      entities: data.entities,
+      receivedAt: Date.now()
+    }
+  }
+}

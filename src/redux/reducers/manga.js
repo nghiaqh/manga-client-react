@@ -1,3 +1,4 @@
+import merge from 'lodash/merge'
 import {
   REQUEST_MANGA,
   RECEIVE_MANGA
@@ -38,22 +39,10 @@ const handleRequestManga = (state, action) => {
 }
 
 const handleReceiveManga = (state, action) => {
-  const { data, receivedAt } = action.payload
-  const now = new Date()
-  const then = new Date(data.modifiedAt)
-  data.isNew = (now - then) / (1000 * 3600 * 24) <= 10
-  data.retrieving = false
-  data.receivedAt = receivedAt
-  const id = data.id
+  const { entities } = action.payload
 
   return {
     ...state,
-    entities: {
-      ...state.entities,
-      mangas: {
-        ...state.entities.mangas,
-        [id]: Object.assign({}, state.entities.mangas[id], data)
-      }
-    }
+    entities: merge(state.entities, entities)
   }
 }
