@@ -16,7 +16,7 @@ export default (prevState, action) => {
     case SET_THEME:
       return {
         ...state,
-        theme: action.payload.theme
+        currentTheme: action.payload.theme
       }
     default:
       return state

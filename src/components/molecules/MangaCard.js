@@ -25,7 +25,6 @@ class MangaCard extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
     style: state.style,
     artists: state.entities.artists || {}
   }

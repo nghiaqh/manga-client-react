@@ -13,20 +13,27 @@ class Button extends PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <button className='button--basic'>{props.children}</button>
+      <button className='button--basic'
+        onClick={props.onClick}
+        disabled={props.disabled}>
+        {props.children}
+      </button>
     )
   }
 
   renderMaterialVersion (props) {
     return (
-      <button className='button--material'>{props.children}</button>
+      <button className='button--material'
+        onClick={props.onClick}
+        disabled={props.disabled}>
+        {props.children}
+      </button>
     )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
     style: state.style
   }
 }

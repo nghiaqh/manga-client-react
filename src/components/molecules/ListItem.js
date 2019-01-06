@@ -26,7 +26,6 @@ class ListItem extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
     style: state.style
   }
 }

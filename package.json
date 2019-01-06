@@ -8,6 +8,7 @@
     "@emotion/styled": "^10.0.5",
     "@material-ui/core": "^3.8.1",
     "deep-equal": "^1.0.1",
+    "emotion-theming": "^10.0.5",
     "lodash": "^4.17.11",
     "normalizr": "^3.3.0",
     "path-to-regexp": "^2.4.0",
