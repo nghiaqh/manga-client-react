@@ -3,6 +3,7 @@ import artistReducer from './artist'
 import withLoadMoreReducer from './withLoadMore'
 import withPaginationReducer from './withPagination'
 import breadcrumbReducer from './breadcrumb'
+import styleReducer from './style'
 
 /**
  * Combine reducers to make a flat state
@@ -19,5 +20,6 @@ export default reduceReducers(
   artistReducer,
   withLoadMoreReducer,
   withPaginationReducer,
-  breadcrumbReducer
+  breadcrumbReducer,
+  styleReducer
 )

@@ -1,8 +1,10 @@
-import { SET_THEME, SET_STYLE } from './actions'
+import { SET_THEME, SET_STYLE } from 'redux/actions/actionTypes'
+
+const storageKey = '[manga-client-react] theme'
 
 const initialState = {
   style: 'basic',
-  theme: 'light'
+  theme: localStorage.getItem(storageKey) || 'light'
 }
 
 export default (prevState, action) => {
@@ -14,9 +16,10 @@ export default (prevState, action) => {
         style: action.payload.style
       }
     case SET_THEME:
+      localStorage.setItem(storageKey, action.payload.theme)
       return {
         ...state,
-        currentTheme: action.payload.theme
+        theme: action.payload.theme
       }
     default:
       return state

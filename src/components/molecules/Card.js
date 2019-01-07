@@ -1,3 +1,4 @@
+import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
@@ -14,11 +15,11 @@ class Card extends PureComponent {
   renderBasicVersion (props) {
     const { media, title, description } = props
     return (
-      <div className='card--basic'>
+      <BasicCard className='card--basic'>
         <div className='card__media'>{media}</div>
         <div className='card__title'>{title}</div>
-        <div className='card__title'>{description}</div>
-      </div>
+        <div className='card__description'>{description}</div>
+      </BasicCard>
     )
   }
 
@@ -28,11 +29,24 @@ class Card extends PureComponent {
       <div className='card--material'>
         <div className='card__media'>{media}</div>
         <div className='card__title'>{title}</div>
-        <div className='card__title'>{description}</div>
+        <div className='card__description'>{description}</div>
       </div>
     )
   }
 }
+
+const BasicCard = styled.div(props => ({
+  backgroundColor: props.theme.colors.surface,
+  color: props.theme.colors.onSurface,
+  padding: props.theme.padding,
+  '.card__title': {
+    fontSize: '1rem',
+    marginBottom: 8
+  },
+  '.card__description': {
+    fontSize: '0.75rem'
+  }
+}))
 
 const mapStateToProps = (state) => {
   return {

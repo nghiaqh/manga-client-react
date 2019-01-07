@@ -1,13 +1,17 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import ThemePicker from 'components/molecules/ThemePicker'
 
 class Topbar extends PureComponent {
   render () {
     return (
       <nav id='sidebar'>
         <p>Sidebar</p>
-        <Link className='sidebar--nav' to='/'>Manga Reader</Link>
+        <div className='sidebar--nav'>
+          <Link to='/'>Manga Reader</Link>
+        </div>
+        <ThemePicker />
       </nav>
     )
   }
@@ -15,7 +19,6 @@ class Topbar extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
     style: state.style
   }
 }

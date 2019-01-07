@@ -45,6 +45,10 @@ const colors = {
   }
 }
 
+const common = {
+  padding: 20
+}
+
 export default {
   light: {
     colors: {
@@ -58,18 +62,22 @@ export default {
       onSecondary: colors.grey[50],
       onBackground: colors.grey[800],
       onSurface: colors.grey[800]
-    }
+    },
+    ...common
   },
   dark: {
-    primary: colors.grey[800],
-    primaryVariant: colors.grey[900],
-    secondary: colors.orange[200],
-    secondaryVariant: colors.orange[400],
-    background: colors.grey[600],
-    surface: colors.grey[700],
-    onPrimary: colors.grey[50],
-    onSecondary: colors.grey[50],
-    onBackground: colors.grey[50],
-    onSurface: colors.grey[50]
+    colors: {
+      primary: colors.grey[800],
+      primaryVariant: colors.grey[900],
+      secondary: colors.orange[200],
+      secondaryVariant: colors.orange[400],
+      background: colors.grey[600],
+      surface: colors.grey[700],
+      onPrimary: colors.grey[50],
+      onSecondary: colors.grey[50],
+      onBackground: colors.grey[50],
+      onSurface: colors.grey[50]
+    },
+    ...common
   }
 }

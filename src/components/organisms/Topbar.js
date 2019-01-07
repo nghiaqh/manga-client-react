@@ -1,3 +1,4 @@
+import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -5,17 +6,27 @@ import { Link } from 'react-router-dom'
 class Topbar extends PureComponent {
   render () {
     return (
-      <nav id='topbar'>
-        <span>Topbar</span>
+      <BasicNav id='topbar'>
         <Link className='topbar--nav' to='/'>Manga Reader</Link>
-      </nav>
+      </BasicNav>
     )
   }
 }
 
+const BasicNav = styled.nav(props => ({
+  backgroundColor: props.theme.colors.primary,
+  color: props.theme.colors.onPrimary,
+  padding: props.theme.padding,
+  maxHeight: 64,
+
+  a: {
+    color: props.theme.colors.onPrimary,
+    textDecoration: 'none'
+  }
+}))
+
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
     style: state.style
   }
 }

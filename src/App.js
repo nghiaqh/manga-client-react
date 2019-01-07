@@ -4,7 +4,6 @@ import React, {
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { routes } from 'libs/routes'
-import './App.css'
 import { ThemeProvider } from 'emotion-theming'
 import themes from 'libs/themes'
 import Topbar from 'components/organisms/Topbar'
@@ -12,15 +11,19 @@ import Sidebar from 'components/organisms/Sidebar'
 import Home from 'components/pages/Home'
 import ArtistDetail from 'components/pages/ArtistDetail'
 import MangaDetail from 'components/pages/MangaDetail'
+import Composition from 'components/organisms/Composition'
 
 class App extends Component {
   render () {
+    const theme = themes[this.props.currentTheme || 'light']
     return (
-      <ThemeProvider theme={themes[this.props.currentTheme || 'light']}>
+      <ThemeProvider theme={theme}>
         <div className='App' >
-          <header><Topbar /></header>
-          <aside><Sidebar /></aside>
-          <main>{this.setRoutes()}</main>
+          <Topbar />
+          <Composition>
+            <aside><Sidebar /></aside>
+            <main>{this.setRoutes()}</main>
+          </Composition>
         </div>
       </ThemeProvider>
     )
@@ -39,10 +42,10 @@ class App extends Component {
 
 // container
 const mapStateToProps = (state) => {
-  const { currentTheme, style } = state
+  const { theme, style } = state
 
   return {
-    currentTheme,
+    currentTheme: theme,
     style
   }
 }
