@@ -1,6 +1,6 @@
 import pathToRegexp from 'path-to-regexp'
 
-const apiServer = `${window.location.protocol}//${window.location.hostname}\\:1881`
+const apiServer = `${window.location.protocol}//${window.location.hostname}\\:8181`
 const imgServer = `${window.location.protocol}//${window.location.hostname}`
 
 const apiRoutes = {
