@@ -38,13 +38,14 @@ class Card extends PureComponent {
 const BasicCard = styled.div(props => ({
   backgroundColor: props.theme.colors.surface,
   color: props.theme.colors.onSurface,
-  padding: props.theme.padding,
+  padding: props.theme.padding / 4,
   '.card__title': {
     fontSize: '1rem',
-    marginBottom: 8
+    margin: 8
   },
   '.card__description': {
-    fontSize: '0.75rem'
+    fontSize: '0.75rem',
+    margin: 8
   }
 }))
 

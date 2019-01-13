@@ -1,16 +1,13 @@
-import React, { PureComponent } from 'react'
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import ThemePicker from 'components/molecules/ThemePicker'
 
-class Topbar extends PureComponent {
+class Topbar extends React.PureComponent {
   render () {
     return (
-      <nav id='sidebar'>
-        <p>Sidebar</p>
-        <div className='sidebar--nav'>
-          <Link to='/'>Manga Reader</Link>
-        </div>
+      <nav id='sidebar' css={theme => ({ padding: theme.padding / 2 })}>
         <ThemePicker />
       </nav>
     )

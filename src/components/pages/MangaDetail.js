@@ -1,7 +1,11 @@
 import get from 'lodash/get'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
+import { loadMoreChapters } from 'redux/actions/chapterList'
+import { toUrl } from 'libs/routes'
+import ContentView from 'components/organisms/ContentView'
 
 class MangaDetail extends PureComponent {
   componentDidMount () {
@@ -17,9 +21,38 @@ class MangaDetail extends PureComponent {
 
     return (
       <React.Fragment>
-        {manga && manga.title}<br />
-        {artist && artist.name}
+        <div>{manga && manga.title}</div>
+        <div>{artist && artist.name}</div>
+        <div>{this.renderChapterList(manga)}</div>
       </React.Fragment >
+    )
+  }
+
+  renderChapterList (manga) {
+    if (!manga || !manga.id) return
+    const filter = { mangaId: manga.id }
+    const renderChapter = chapter => (
+      <Link
+        key={chapter.id}
+        to={toUrl('imageViewer', {
+          mangaId: manga.id,
+          chapterId: chapter.id,
+          imageId: 1
+        })}
+      >
+        {chapter.number} - {chapter.shortTitle}
+      </Link>
+    )
+    return (
+      <ContentView
+        id={`manga-${manga.id}-chapters`}
+        entityType='chapters'
+        filter={filter}
+        pageSize={24}
+        loadMoreFunc={loadMoreChapters}
+        renderItem={renderChapter}
+        layout='list'
+      />
     )
   }
 }

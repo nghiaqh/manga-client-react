@@ -38,18 +38,18 @@ export default class Grid extends PureComponent {
   }
 }
 
-const breakpoints = [400, 641, 1008, 1400]
-const mq = breakpoints.map(
-  bp => `@media (min-width: ${bp}px)`
-)
 const GridContainer = styled('div')(props => {
-  const { xsmall, small, medium, large, xlarge } = props
+  const { xsmall, small, medium, large, xlarge, theme } = props
+  const mq = theme.breakpoints.map(
+    bp => `@media (min-width: ${bp}px)`
+  )
+
   return {
     display: 'grid',
-    gridGap: '10px',
+    gridGap: theme.padding / 2,
     gridTemplateRows: 'auto',
     gridTemplateColumns: `repeat(${xsmall}, calc((100% - 10px) / ${xsmall}))`,
-    padding: '10px',
+    padding: theme.padding / 2,
 
     [mq[0]]: {
       gridTemplateColumns: `repeat(${small}, calc((100% - 10px * (${small} - 1)) / ${small}))`

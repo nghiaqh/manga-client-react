@@ -14,20 +14,23 @@ class Composition extends PureComponent {
 
 const Section = styled.section(props => {
   return {
-    height: 'calc(100vh - 64px)',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 'calc(100vh - 64px)',
+
     aside: {
-      minWidth: 260,
-      float: 'right',
-      height: '100%',
       backgroundColor: props.theme.colors.surface,
       color: props.theme.colors.onSurface
     },
     main: {
-      display: 'inline-block',
-      maxWidth: `calc(100% - 260px)`,
-      height: '100%',
       backgroundColor: props.theme.colors.background,
       color: props.theme.colors.onBackground
+    },
+
+    [`@media (min-width: ${props.theme.breakpoints[1]}px)`]: {
+      flexDirection: 'row-reverse',
+      aside: { width: 220 },
+      main: { width: `calc(100% - 220px)` }
     }
   }
 })

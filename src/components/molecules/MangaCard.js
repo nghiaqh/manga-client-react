@@ -1,10 +1,12 @@
-import React, { PureComponent } from 'react'
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Card from 'components/molecules/Card'
 import { toUrl } from 'libs/routes'
 
-class MangaCard extends PureComponent {
+class MangaCard extends React.PureComponent {
   render () {
     const { manga, artists } = this.props
     const artist = artists[manga.artistId] || {}
@@ -13,7 +15,8 @@ class MangaCard extends PureComponent {
     const mangaUrl = toUrl('mangaDetail', { mangaId: id })
 
     return (
-      <Link className='card--manga' to={mangaUrl}>
+      <Link className='card--manga' to={mangaUrl}
+        css={anchorOnSurfaceCss}>
         <Card
           title={title}
           description={artist.name}
@@ -22,6 +25,11 @@ class MangaCard extends PureComponent {
     )
   }
 }
+
+const anchorOnSurfaceCss = theme => ({
+  textDecoration: 'none',
+  color: theme.colors.onSurface
+})
 
 const mapStateToProps = (state) => {
   return {

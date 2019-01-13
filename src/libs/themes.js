@@ -46,7 +46,8 @@ const colors = {
 }
 
 const common = {
-  padding: 20
+  padding: 20,
+  breakpoints: [400, 641, 1008, 1400]
 }
 
 export default {
