@@ -11,6 +11,7 @@ import Sidebar from 'components/organisms/Sidebar'
 import Home from 'components/pages/Home'
 import ArtistDetail from 'components/pages/ArtistDetail'
 import MangaDetail from 'components/pages/MangaDetail'
+import ImageViewer from 'components/pages/ImageViewer'
 import Composition from 'components/organisms/Composition'
 
 class App extends Component {
@@ -35,6 +36,7 @@ class App extends Component {
         <Route exact path={routes.home} component={Home} />
         <Route exact path={routes.mangaDetail} component={MangaDetail} />
         <Route exact path={routes.artistDetail} component={ArtistDetail} />
+        <Route exact path={routes.imageViewer} component={ImageViewer} />
       </Switch>
     )
   }

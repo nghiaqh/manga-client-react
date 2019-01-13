@@ -33,7 +33,7 @@ class WithLoadMore extends PureComponent {
     const contents = Array.isArray(items)
       ? items.map(i => entities[entityType][i])
       : []
-    const dom = renderLayout(contents, retrievingItems, renderItem)
+    const dom = renderLayout(contents, retrievingItems, renderItem, this.handleClick)
 
     const totalPages = 1 + Math.ceil((total - data.pageSize) / pageSize)
     const showButton = totalPages > pageNumber
@@ -76,8 +76,7 @@ class WithLoadMore extends PureComponent {
     dispatch(loadMore(id, pageSize, 1, filter, order))
   }
 
-  handleClick (e) {
-    e.preventDefault()
+  handleClick () {
     const { dispatch, withLoadMore, id, loadMore, order, pageSize } = this.props
     const { pageNumber, total, filter } = withLoadMore[id]
     const totalPages = Math.ceil(total / pageSize)

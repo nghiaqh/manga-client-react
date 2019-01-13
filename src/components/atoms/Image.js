@@ -1,6 +1,10 @@
-import React, { PureComponent } from 'react'
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
+import React from 'react'
 import { connect } from 'react-redux'
-class Image extends PureComponent {
+import { getImageUrl } from 'libs/apiRoutes'
+
+class Image extends React.PureComponent {
   render () {
     switch (this.props.style) {
       case 'material':
@@ -12,15 +16,25 @@ class Image extends PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <image className='image--basic' src={props.src} />
+      <img className='image--basic'
+        alt={props.title}
+        src={getImageUrl(props.src)}
+        css={imgCss}
+      />
     )
   }
 
   renderMaterialVersion (props) {
     return (
-      <image className='iamge--material' src={props.src} />
+      <img className='iamge--material'
+        alt={props.title}
+        src={getImageUrl(props.src)} />
     )
   }
+}
+
+const imgCss = {
+  height: '100%'
 }
 
 const mapStateToProps = (state) => {

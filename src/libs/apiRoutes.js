@@ -26,4 +26,6 @@ const apiRoutes = {
   image: `${imgServer}/:src`
 }
 
+export const getImageUrl = src => `${imgServer}${src}`
+
 export default (id, params = {}) => pathToRegexp.compile(apiRoutes[id])(params)
