@@ -11,6 +11,8 @@ class ImageViewer extends React.PureComponent {
   componentDidMount () {
     const { dispatch } = this.props
     dispatch(fetchMangaByIdIfNeeded(this.props.match.params.mangaId))
+    const imageSlider = document.querySelector('.slider')
+    imageSlider.addEventListener('wheel', this.handleMouseWheel)
   }
 
   render () {
@@ -23,7 +25,7 @@ class ImageViewer extends React.PureComponent {
       <ImageView>
         <div>{manga && manga.title}</div>
         <div>{artist && artist.name}</div>
-        <div>{this.renderImageSlider(match.params.chapterId, match.params.imageId)}</div>
+        {this.renderImageSlider(match.params.chapterId, match.params.imageId)}
       </ImageView>
     )
   }
@@ -45,6 +47,10 @@ class ImageViewer extends React.PureComponent {
         layout='slider'
       />
     )
+  }
+
+  handleMouseWheel (event) {
+    event.target.offsetParent.scrollLeft -= event.deltaY
   }
 }
 

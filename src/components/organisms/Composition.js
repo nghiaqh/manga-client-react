@@ -16,7 +16,6 @@ const Section = styled.section(props => {
   return {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: 'calc(100vh - 64px)',
 
     aside: {
       backgroundColor: props.theme.colors.surface,

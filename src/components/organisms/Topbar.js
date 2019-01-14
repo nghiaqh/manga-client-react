@@ -17,7 +17,8 @@ const BasicNav = styled.nav(props => ({
   backgroundColor: props.theme.colors.primary,
   color: props.theme.colors.onPrimary,
   padding: props.theme.padding,
-  maxHeight: 64,
+  height: 64,
+  boxSizing: 'border-box',
 
   a: {
     color: props.theme.colors.onPrimary,

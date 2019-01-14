@@ -8,33 +8,38 @@ export default class Slider extends PureComponent {
     super(props)
     this.ref = React.createRef()
     this.handleScroll = this.handleScroll.bind(this)
-    this.handleMouseWheel = this.handleMouseWheel.bind(this)
     this.scrollLeft = this.scrollLeft.bind(this)
     this.scrollRight = this.scrollRight.bind(this)
+    this.state = {
+      slider: this.ref
+    }
   }
   render () {
     const { retrievingItems, render } = this.props
     const items = this.props.items.filter(item => item && item.id)
-      .map((item, index) =>
-        <div className='slide' key={item.id || index}>
-          {render(item)}
-        </div>)
+
+    const slides = items.map((item, index) =>
+      <div className='slide' key={item.id || index}>
+        {render(item)}
+      </div>)
+
     const statusText = (items.length === 0 && !retrievingItems)
       ? <NotFoundMessage />
       : (retrievingItems ? <Loader /> : '')
 
     return (
       <>
-        <SliderContainer className='slider'
+        <StyledSlider className='slider'
           ref={this.ref}
-          onScroll={this.handleScroll}
-          onWheel={this.handleMouseWheel}>
-          {items}
+          onScroll={this.handleScroll}>
           <div className='slider__controller'>
             <span className='slider__controller--left' onClick={this.scrollLeft}>Left</span>
             <span className='slider__controller--right' onClick={this.scrollRight}>Right</span>
           </div>
-        </SliderContainer>
+          <div className='slider__main'>
+            {slides}
+          </div>
+        </StyledSlider>
         {statusText}
       </>
     )
@@ -47,35 +52,36 @@ export default class Slider extends PureComponent {
     }
   }
 
-  handleMouseWheel (event) {
-    this.ref.current.scrollLeft -= event.deltaY
-  }
-
   scrollLeft () {
     const slider = this.ref.current
-    const childWidth = slider.firstElementChild.offsetWidth
-    if (slider.scrollLeft >= childWidth) {
-      slider.scrollLeft -= childWidth
-    }
+    const slide = slider.querySelector('.slide')
+    slider.scrollLeft -= slide ? slide.clientWidth : 0
+    console.log('left controller: ', slider.scrollLeft)
   }
 
   scrollRight () {
     const slider = this.ref.current
-    const childWidth = slider.firstElementChild.offsetWidth
-    slider.scrollLeft += childWidth
+    const slide = slider.querySelector('.slide')
+    slider.scrollLeft += slide ? slide.clientWidth : 0
+    console.log('right controller: ', slider.scrollLeft)
   }
 }
 
-const SliderContainer = styled.div(props => {
+const StyledSlider = styled.div(props => {
   return {
     height: '100%',
-    width: '100%',
-    cursor: 'pointer',
-    overflowX: 'auto',
     overflowY: 'hidden',
+    cursor: 'pointer',
     display: 'flex',
     flexDirection: 'row-reverse',
     background: props.theme.colors.background,
+
+    '.slider__main': {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'row-reverse',
+      justifyContent: 'flex-end'
+    },
 
     '.slide': {
       padding: '0 0 0 2px',
@@ -84,6 +90,7 @@ const SliderContainer = styled.div(props => {
 
     '.slider__controller': {
       position: 'fixed',
+      top: 0,
       width: '100%',
       display: 'flex',
       justifyContent: 'space-between',
