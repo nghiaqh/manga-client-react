@@ -78,7 +78,7 @@ const SliderContainer = styled.div(props => {
     background: props.theme.colors.background,
 
     '.slide': {
-      padding: '0 0 0 1px',
+      padding: '0 0 0 2px',
       userSelect: 'none'
     },
 
