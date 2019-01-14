@@ -9,6 +9,8 @@ export default class Slider extends PureComponent {
     this.ref = React.createRef()
     this.handleScroll = this.handleScroll.bind(this)
     this.handleMouseWheel = this.handleMouseWheel.bind(this)
+    this.scrollLeft = this.scrollLeft.bind(this)
+    this.scrollRight = this.scrollRight.bind(this)
   }
   render () {
     const { retrievingItems, render } = this.props
@@ -28,6 +30,10 @@ export default class Slider extends PureComponent {
           onScroll={this.handleScroll}
           onWheel={this.handleMouseWheel}>
           {items}
+          <div className='slider__controller'>
+            <span className='slider__controller--left' onClick={this.scrollLeft}>Left</span>
+            <span className='slider__controller--right' onClick={this.scrollRight}>Right</span>
+          </div>
         </SliderContainer>
         {statusText}
       </>
@@ -43,6 +49,20 @@ export default class Slider extends PureComponent {
 
   handleMouseWheel (event) {
     this.ref.current.scrollLeft -= event.deltaY
+  }
+
+  scrollLeft () {
+    const slider = this.ref.current
+    const childWidth = slider.firstElementChild.offsetWidth
+    if (slider.scrollLeft >= childWidth) {
+      slider.scrollLeft -= childWidth
+    }
+  }
+
+  scrollRight () {
+    const slider = this.ref.current
+    const childWidth = slider.firstElementChild.offsetWidth
+    slider.scrollLeft += childWidth
   }
 }
 
@@ -60,6 +80,27 @@ const SliderContainer = styled.div(props => {
     '.slide': {
       padding: '0 0 0 1px',
       userSelect: 'none'
+    },
+
+    '.slider__controller': {
+      position: 'fixed',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+
+      span: {
+        fontSize: '1.5rem',
+        background: props.theme.colors.surface,
+        color: props.theme.colors.onSurface,
+        padding: `0 ${props.theme.padding / 2}px`,
+        userSelect: 'none'
+      },
+      'slider__controller--left': {
+        textAlight: 'left'
+      },
+      'slider__controller--right': {
+        textAlight: 'right'
+      }
     }
   }
 })
