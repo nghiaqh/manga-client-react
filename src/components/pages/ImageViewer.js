@@ -33,9 +33,13 @@ class ImageViewer extends React.PureComponent {
   renderImageSlider (chapterId, imageNumber) {
     if (!chapterId) return
     const filter = { chapterId: chapterId, number: imageNumber }
-    const renderImage = image => (
-      <Image key={image.id} {...image} />
-    )
+    const setImageWidth = this.setImageWidth
+    const renderImage = image =>
+      <Image
+        key={image.id}
+        handleOnLoad={setImageWidth}
+        {...image} />
+
     return (
       <ContentView
         id={`chapter-${chapterId}-images`}
@@ -52,6 +56,11 @@ class ImageViewer extends React.PureComponent {
   handleMouseWheel (event) {
     event.target.offsetParent.scrollLeft -= event.deltaY
   }
+
+  setImageWidth (ref, image) {
+    const width = image.width * window.innerHeight / image.height
+    ref.current.style.width = `${width}px`
+  }
 }
 
 const ImageView = styled.section(props => {
@@ -61,7 +70,8 @@ const ImageView = styled.section(props => {
       top: 0,
       left: 0,
       bottom: 0,
-      right: 0
+      right: 0,
+      direction: 'rtl'
     }
   }
 })

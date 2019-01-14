@@ -33,8 +33,8 @@ export default class Slider extends PureComponent {
           ref={this.ref}
           onScroll={this.handleScroll}>
           <div className='slider__controller'>
-            <span className='slider__controller--left' onClick={this.scrollLeft}>Left</span>
-            <span className='slider__controller--right' onClick={this.scrollRight}>Right</span>
+            <span className='slider__controller--left' onClick={this.scrollLeft}>&lt;</span>
+            <span className='slider__controller--right' onClick={this.scrollRight}>&gt;</span>
           </div>
           <div className='slider__main'>
             {slides}
@@ -47,7 +47,9 @@ export default class Slider extends PureComponent {
 
   handleScroll (event) {
     const slider = this.ref.current
-    if (slider.scrollLeft === 0) {
+    const lastSlide = slider.childNodes[1].lastElementChild
+    const isLastSlideVisible = lastSlide.getBoundingClientRect().right > 0
+    if (slider.scrollLeft === 0 || isLastSlideVisible) {
       this.props.loadMore()
     }
   }
@@ -56,14 +58,12 @@ export default class Slider extends PureComponent {
     const slider = this.ref.current
     const slide = slider.querySelector('.slide')
     slider.scrollLeft -= slide ? slide.clientWidth : 0
-    console.log('left controller: ', slider.scrollLeft)
   }
 
   scrollRight () {
     const slider = this.ref.current
     const slide = slider.querySelector('.slide')
     slider.scrollLeft += slide ? slide.clientWidth : 0
-    console.log('right controller: ', slider.scrollLeft)
   }
 }
 
@@ -72,20 +72,18 @@ const StyledSlider = styled.div(props => {
     height: '100%',
     overflowY: 'hidden',
     cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'row-reverse',
     background: props.theme.colors.background,
 
     '.slider__main': {
       height: '100%',
       display: 'flex',
-      flexDirection: 'row-reverse',
-      justifyContent: 'flex-end'
+      flexFlow: 'row nowrap'
     },
 
     '.slide': {
-      padding: '0 0 0 2px',
-      userSelect: 'none'
+      margin: '2px',
+      userSelect: 'none',
+      flexBasis: 'content'
     },
 
     '.slider__controller': {

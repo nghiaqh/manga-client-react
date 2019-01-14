@@ -1,10 +1,14 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
+import styled from '@emotion/styled/macro'
 import React from 'react'
 import { connect } from 'react-redux'
 import { getImageUrl } from 'libs/apiRoutes'
 
 class Image extends React.PureComponent {
+  constructor (props) {
+    super(props)
+    this.ref = React.createRef()
+  }
+
   render () {
     switch (this.props.style) {
       case 'material':
@@ -14,28 +18,37 @@ class Image extends React.PureComponent {
     }
   }
 
+  componentDidMount () {
+    this.props.handleOnLoad(this.ref, this.props)
+  }
+
   renderBasicVersion (props) {
     return (
-      <img className='image--basic'
+      <BasicImage className='image--basic'
         alt={props.title}
         src={getImageUrl(props.src)}
-        css={imgCss}
+        ref={this.ref}
       />
     )
   }
 
   renderMaterialVersion (props) {
     return (
-      <img className='iamge--material'
+      <img className='image--material'
         alt={props.title}
-        src={getImageUrl(props.src)} />
+        src={getImageUrl(props.src)}
+        ref={this.ref}
+      />
     )
   }
 }
 
-const imgCss = {
-  height: '100%'
-}
+const BasicImage = styled.img(props => {
+  return {
+    maxHeight: '100%',
+    width: '100%'
+  }
+})
 
 const mapStateToProps = (state) => {
   return {
