@@ -73,6 +73,7 @@ const StyledSlider = styled.div(props => {
     overflowY: 'hidden',
     cursor: 'pointer',
     background: props.theme.colors.background,
+    scrollBehaviour: 'smooth',
 
     '.slider__main': {
       height: '100%',
@@ -82,7 +83,6 @@ const StyledSlider = styled.div(props => {
 
     '.slide': {
       margin: '2px',
-      userSelect: 'none',
       flexBasis: 'content'
     },
 
