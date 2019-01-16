@@ -71,7 +71,6 @@ const StyledSlider = styled.div(props => {
   return {
     height: '100%',
     overflowY: 'hidden',
-    cursor: 'pointer',
     background: props.theme.colors.background,
     scrollBehaviour: 'smooth',
 
@@ -88,7 +87,7 @@ const StyledSlider = styled.div(props => {
 
     '.slider__controller': {
       position: 'fixed',
-      top: 0,
+      bottom: 0,
       width: '100%',
       display: 'flex',
       justifyContent: 'space-between',
@@ -98,7 +97,8 @@ const StyledSlider = styled.div(props => {
         background: props.theme.colors.surface,
         color: props.theme.colors.onSurface,
         padding: `0 ${props.theme.padding / 2}px`,
-        userSelect: 'none'
+        userSelect: 'none',
+        cursor: 'pointer'
       },
       'slider__controller--left': {
         textAlight: 'left'

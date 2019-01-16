@@ -54,6 +54,7 @@ class ImageViewer extends React.PureComponent {
   }
 
   handleMouseWheel (event) {
+    event.preventDefault(event)
     // Firefox deltaMode = 1 means scroll 1 line
     // Multiply by 30 for faster horizontal scroll
     event.target.offsetParent.scrollLeft -= event.deltaMode === 1 ? event.deltaY * 30 : event.deltaY
