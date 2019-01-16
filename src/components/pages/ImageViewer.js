@@ -74,7 +74,15 @@ const ImageView = styled.section(props => {
       left: 0,
       bottom: 0,
       right: 0,
-      direction: 'rtl'
+      direction: 'rtl',
+
+      '.slide:first-child': {
+        paddingRight: props.theme.padding
+      },
+
+      '.slide:last-child': {
+        paddingLeft: props.theme.padding
+      }
     }
   }
 })
