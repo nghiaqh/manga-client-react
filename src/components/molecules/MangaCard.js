@@ -15,7 +15,7 @@ class MangaCard extends React.PureComponent {
     const mangaUrl = toUrl('mangaDetail', { mangaId: id })
 
     return (
-      <Link className={`card--manga ${classNames}`} to={mangaUrl}
+      <Link className={`card--manga ${classNames || ''}`} to={mangaUrl}
         css={anchorOnSurfaceCss}>
         <Card
           title={title}

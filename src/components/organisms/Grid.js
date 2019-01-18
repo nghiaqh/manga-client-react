@@ -44,6 +44,7 @@ export default class Grid extends React.PureComponent {
   }
 
   componentDidMount () {
+    this.resizeAllGridItems()
     window.addEventListener('resize', this.resizeAllGridItems)
   }
 
@@ -67,20 +68,27 @@ export default class Grid extends React.PureComponent {
     const gridStyle = window.getComputedStyle(grid)
     const rowHeight = parseInt(gridStyle.getPropertyValue('grid-auto-rows'))
     const rowGap = parseInt(gridStyle.getPropertyValue('grid-row-gap'))
-    let rowSpan = Math.ceil((item.children[0].getBoundingClientRect().height + rowGap) /
-      (rowHeight + rowGap))
+    let rowSpan = Math.ceil(
+      (item.children[0].getBoundingClientRect().height + rowGap) /
+      (rowHeight + rowGap)
+    )
     item.style.gridRowEnd = `span ${rowSpan}`
   }
 }
 
 const GridContainer = styled('div')(props => {
   const { theme } = props
+  const colWidth = props.colWidth || '250px'
 
   return {
     display: 'grid',
     gridGap: theme.padding / 2,
-    gridTemplateColumns: `repeat(auto-fill, minmax(250px,1fr))`,
-    gridAutoRows: theme.padding / 5,
-    padding: theme.padding / 2
+    gridTemplateColumns: `repeat(auto-fill, minmax(${colWidth}, 1fr))`,
+    gridAutoRows: theme.padding / 2,
+    padding: theme.padding / 2,
+
+    '.grid__item': {
+      height: 'max-content'
+    }
   }
 })
