@@ -7,7 +7,7 @@ export const routes = {
   mangaDetail: '/mangas/:mangaId',
   artists: '/artists',
   artistDetail: '/artists/:artistId',
-  imageViewer: '/mangas/:mangaId/:chapterId/:imageId'
+  imageViewer: '/mangas/:mangaId/:chapterId/:imageId?'
 }
 
 export const toUrl = (routeId, params = {}) => pathToRegexp.compile(routes[routeId])(params)

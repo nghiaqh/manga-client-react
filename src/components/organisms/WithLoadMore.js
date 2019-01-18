@@ -39,7 +39,7 @@ class WithLoadMore extends PureComponent {
     const showButton = totalPages > pageNumber
 
     return (
-      <React.Fragment>
+      <div id={id}>
         {dom}
 
         {showButton &&
@@ -52,14 +52,13 @@ class WithLoadMore extends PureComponent {
             {retrievingItems ? <Loader /> : 'Load More'}
           </LoadMoreButton>
         }
-      </React.Fragment>
+      </div>
     )
   }
 
   componentDidMount () {
     const { dispatch, filter, loadMore, id, pageSize, order } = this.props
     dispatch(loadMore(id, pageSize, 1, filter, order))
-    // window.addEventListener('scroll', this.handleScroll);
   }
 
   componentDidUpdate (prevProps) {

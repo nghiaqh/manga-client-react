@@ -48,8 +48,10 @@ export default class Slider extends PureComponent {
   handleScroll (event) {
     const slider = this.ref.current
     const lastSlide = slider.childNodes[1].lastElementChild
-    const isLastSlideVisible = lastSlide.getBoundingClientRect().right > 0
+    const isLastSlideVisible = lastSlide &&
+      lastSlide.getBoundingClientRect().right > 0
     if (slider.scrollLeft === 0 || isLastSlideVisible) {
+      event.preventDefault(event)
       this.props.loadMore()
     }
   }
@@ -87,7 +89,7 @@ const StyledSlider = styled.div(props => {
 
     '.slider__controller': {
       position: 'fixed',
-      bottom: 0,
+      bottom: 20,
       width: '100%',
       display: 'flex',
       justifyContent: 'space-between',

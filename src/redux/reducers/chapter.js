@@ -1,46 +1,46 @@
 import merge from 'lodash/merge'
 import {
-  REQUEST_MANGA,
-  RECEIVE_MANGA
+  REQUEST_CHAPTER,
+  RECEIVE_CHAPTER
 } from 'redux/actions/actionTypes'
 
 const initialState = {
   entities: {
-    mangas: {}
+    chapters: {}
   }
 }
 
 export default (prevState, action) => {
   const state = Object.assign({}, initialState, prevState)
   switch (action.type) {
-    case REQUEST_MANGA:
-      return handleRequestManga(state, action)
-    case RECEIVE_MANGA:
-      return handleReceiveManga(state, action)
+    case REQUEST_CHAPTER:
+      return handleRequestChapter(state, action)
+    case RECEIVE_CHAPTER:
+      return handleReceiveChapter(state, action)
     default:
       return state
   }
 }
 
-const handleRequestManga = (state, action) => {
+const handleRequestChapter = (state, action) => {
   const { id } = action.payload
-  return {
+
+  return (id !== undefined) ? {
     ...state,
     entities: {
       ...state.entities,
-      mangas: {
-        ...state.entities.mangas,
+      chapters: {
+        ...state.entities.chapters,
         [id]: {
           retrieving: true
         }
       }
     }
-  }
+  } : state
 }
 
-const handleReceiveManga = (state, action) => {
+const handleReceiveChapter = (state, action) => {
   const { entities } = action.payload
-
   return {
     ...state,
     entities: merge({}, state.entities, entities)

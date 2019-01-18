@@ -46,6 +46,8 @@ export const createRequestItemByIdAction = actionType => id => ({
 })
 
 export const createReceiveItemByIdAction = (actionType, normalizeData) => json => {
+  json.retrieving = false
+
   if (!normalizeData) {
     return {
       type: actionType,
@@ -55,8 +57,8 @@ export const createReceiveItemByIdAction = (actionType, normalizeData) => json =
       }
     }
   }
-
   const data = normalizeData([json])
+
   return {
     type: actionType,
     payload: {

@@ -1,5 +1,6 @@
 import mangaReducer from './manga'
 import artistReducer from './artist'
+import chapterReducer from './chapter'
 import withLoadMoreReducer from './withLoadMore'
 import withPaginationReducer from './withPagination'
 import breadcrumbReducer from './breadcrumb'
@@ -17,6 +18,7 @@ const reduceReducers = (...reducers) => (prevState, value, ...args) =>
 
 export default reduceReducers(
   mangaReducer,
+  chapterReducer,
   artistReducer,
   withLoadMoreReducer,
   withPaginationReducer,
