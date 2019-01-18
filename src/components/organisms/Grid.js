@@ -1,9 +1,9 @@
 import styled from '@emotion/styled/macro'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import Loader from 'components/atoms/Loader'
 import NotFoundMessage from 'components/molecules/NotFoundMessage'
 
-export default class Grid extends PureComponent {
+export default class Grid extends React.PureComponent {
   constructor (props) {
     super(props)
 
@@ -14,13 +14,18 @@ export default class Grid extends PureComponent {
       large: 8,
       xlarge: 12
     }
+
+    this.ref = React.createRef()
+    this.resizeAllGridItems = this.resizeAllGridItems.bind(this)
   }
 
   render () {
     const { retrievingItems, render } = this.props
     const cols = Object.assign(this.state, this.props.cols)
     const items = this.props.items.filter(item => item && item.id)
-      .map(item => render(item))
+      .map(item => <div className='grid__item' key={item.id}>
+        {render(item)}
+      </div>)
     const statusText = (items.length === 0 && !retrievingItems)
       ? <NotFoundMessage />
       : (retrievingItems ? <Loader /> : '')
@@ -29,6 +34,7 @@ export default class Grid extends PureComponent {
       <>
         <GridContainer
           {...cols}
+          ref={this.ref}
         >
           {items}
         </GridContainer>
@@ -36,32 +42,45 @@ export default class Grid extends PureComponent {
       </>
     )
   }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.resizeAllGridItems)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.resizeAllGridItems)
+  }
+
+  componentDidUpdate () {
+    this.resizeAllGridItems()
+  }
+
+  resizeAllGridItems () {
+    const grid = this.ref.current
+    grid.querySelectorAll('.grid__item').forEach(item =>
+      this.resizeGridItem(grid, item))
+  }
+
+  resizeGridItem (grid, item) {
+    if (!item || !item.children.length) return
+
+    const gridStyle = window.getComputedStyle(grid)
+    const rowHeight = parseInt(gridStyle.getPropertyValue('grid-auto-rows'))
+    const rowGap = parseInt(gridStyle.getPropertyValue('grid-row-gap'))
+    let rowSpan = Math.ceil((item.children[0].getBoundingClientRect().height + rowGap) /
+      (rowHeight + rowGap))
+    item.style.gridRowEnd = `span ${rowSpan}`
+  }
 }
 
 const GridContainer = styled('div')(props => {
-  const { xsmall, small, medium, large, xlarge, theme } = props
-  const mq = theme.breakpoints.map(
-    bp => `@media (min-width: ${bp}px)`
-  )
+  const { theme } = props
 
   return {
     display: 'grid',
     gridGap: theme.padding / 2,
-    gridTemplateRows: 'auto',
-    gridTemplateColumns: `repeat(${xsmall}, calc((100% - 10px) / ${xsmall}))`,
-    padding: theme.padding / 2,
-
-    [mq[0]]: {
-      gridTemplateColumns: `repeat(${small}, calc((100% - 10px * (${small} - 1)) / ${small}))`
-    },
-    [mq[1]]: {
-      gridTemplateColumns: `repeat(${medium}, calc((100% - 10px * (${medium} - 1)) / ${medium}))`
-    },
-    [mq[2]]: {
-      gridTemplateColumns: `repeat(${large}, calc((100% - 10px * (${large} - 1)) / ${large}))`
-    },
-    [mq[3]]: {
-      gridTemplateColumns: `repeat(${xlarge}, calc((100% - 10px * (${xlarge} - 1)) / ${xlarge}))`
-    }
+    gridTemplateColumns: `repeat(auto-fill, minmax(250px,1fr))`,
+    gridAutoRows: theme.padding / 5,
+    padding: theme.padding / 2
   }
 })

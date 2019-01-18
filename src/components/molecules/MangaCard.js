@@ -8,14 +8,14 @@ import { toUrl } from 'libs/routes'
 
 class MangaCard extends React.PureComponent {
   render () {
-    const { manga, artists } = this.props
+    const { manga, artists, classNames } = this.props
     const artist = artists[manga.artistId] || {}
 
     const { id, title } = manga
     const mangaUrl = toUrl('mangaDetail', { mangaId: id })
 
     return (
-      <Link className='card--manga' to={mangaUrl}
+      <Link className={`card--manga ${classNames}`} to={mangaUrl}
         css={anchorOnSurfaceCss}>
         <Card
           title={title}
