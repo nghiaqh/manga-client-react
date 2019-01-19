@@ -13,7 +13,8 @@ class Button extends PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <button className='button--basic'
+      <button id={props.id}
+        className={`button--basic ${props.className || ''}`}
         onClick={props.onClick}
         disabled={props.disabled}>
         {props.children}
@@ -23,7 +24,8 @@ class Button extends PureComponent {
 
   renderMaterialVersion (props) {
     return (
-      <button className='button--material'
+      <button id={props.id}
+        className={`button--material ${props.className || ''}`}
         onClick={props.onClick}
         disabled={props.disabled}>
         {props.children}

@@ -15,14 +15,23 @@ import ImageViewer from 'components/pages/ImageViewer'
 import Composition from 'components/organisms/Composition'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      sideBarDisplay: true
+    }
+
+    this.toggleSidebar = this.toggleSidebar.bind(this)
+  }
+
   render () {
     const theme = themes[this.props.currentTheme || 'light']
     return (
       <ThemeProvider theme={theme}>
         <div className='App' >
-          <Topbar />
+          <Topbar toggleSidebar={this.toggleSidebar} />
           <Composition>
-            <aside><Sidebar /></aside>
+            <Sidebar id='main-sidebar' display={this.state.sideBarDisplay} />
             <main>{this.setRoutes()}</main>
           </Composition>
         </div>
@@ -39,6 +48,13 @@ class App extends Component {
         <Route exact path={routes.imageViewer} component={ImageViewer} />
       </Switch>
     )
+  }
+
+  toggleSidebar (event) {
+    event.preventDefault()
+    this.setState(state => ({
+      sideBarDisplay: !state.sideBarDisplay
+    }))
   }
 }
 

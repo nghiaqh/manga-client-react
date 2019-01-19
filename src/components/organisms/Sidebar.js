@@ -4,12 +4,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ThemePicker from 'components/molecules/ThemePicker'
 
-class Topbar extends React.PureComponent {
+class Sidebar extends React.PureComponent {
   render () {
     return (
-      <nav id='sidebar' css={theme => ({ padding: theme.padding / 2 })}>
-        <ThemePicker />
-      </nav>
+      <aside
+        id={this.props.id}
+        className={this.props.display ? 'visible' : 'hidden'}
+        css={theme => ({ padding: theme.padding / 2 })}>
+        <nav>
+          <ThemePicker />
+        </nav>
+      </aside>
     )
   }
 }
@@ -20,4 +25,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Topbar)
+export default connect(mapStateToProps)(Sidebar)

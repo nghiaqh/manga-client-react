@@ -6,36 +6,25 @@ import NotFoundMessage from 'components/molecules/NotFoundMessage'
 export default class Grid extends React.PureComponent {
   constructor (props) {
     super(props)
-
-    this.state = {
-      xsmall: 2,
-      small: 4,
-      medium: 6,
-      large: 8,
-      xlarge: 12
-    }
-
     this.ref = React.createRef()
     this.resizeAllGridItems = this.resizeAllGridItems.bind(this)
   }
 
   render () {
     const { retrievingItems, render } = this.props
-    const cols = Object.assign(this.state, this.props.cols)
+
     const items = this.props.items.filter(item => item && item.id)
       .map(item => <div className='grid__item' key={item.id}>
         {render(item)}
       </div>)
+
     const statusText = (items.length === 0 && !retrievingItems)
       ? <NotFoundMessage />
       : (retrievingItems ? <Loader /> : '')
 
     return (
       <>
-        <GridContainer
-          {...cols}
-          ref={this.ref}
-        >
+        <GridContainer ref={this.ref}>
           {items}
         </GridContainer>
         {statusText}
@@ -78,7 +67,7 @@ export default class Grid extends React.PureComponent {
 
 const GridContainer = styled('div')(props => {
   const { theme } = props
-  const colWidth = props.colWidth || '250px'
+  const colWidth = props.colWidth || '200px'
 
   return {
     display: 'grid',

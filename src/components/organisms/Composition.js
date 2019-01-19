@@ -19,17 +19,21 @@ const Section = styled.section(props => {
 
     aside: {
       backgroundColor: props.theme.colors.surface,
-      color: props.theme.colors.onSurface
+      color: props.theme.colors.onSurface,
+
+      '&.hidden': {
+        display: 'none'
+      }
     },
     main: {
       backgroundColor: props.theme.colors.background,
-      color: props.theme.colors.onBackground
+      color: props.theme.colors.onBackground,
+      flexGrow: 1
     },
 
     [`@media (min-width: ${props.theme.breakpoints[1]}px)`]: {
       flexDirection: 'row-reverse',
-      aside: { width: 220 },
-      main: { width: `calc(100% - 220px)` }
+      aside: { width: 220 }
     }
   }
 })
