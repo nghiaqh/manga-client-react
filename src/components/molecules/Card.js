@@ -16,9 +16,9 @@ class Card extends PureComponent {
     const { media, title, description } = props
     return (
       <BasicCard className='card--basic'>
-        <div className='card__media'>{media}</div>
         <div className='card__title'>{title}</div>
         <div className='card__description'>{description}</div>
+        <div className='card__media'>{media}</div>
       </BasicCard>
     )
   }
