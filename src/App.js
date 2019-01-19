@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { routes } from 'libs/routes'
 import { ThemeProvider } from 'emotion-theming'
+import styled from '@emotion/styled/macro'
 import themes from 'libs/themes'
 import Topbar from 'components/organisms/Topbar'
 import Sidebar from 'components/organisms/Sidebar'
@@ -28,15 +29,22 @@ class App extends Component {
     const theme = themes[this.props.currentTheme || 'light']
     return (
       <ThemeProvider theme={theme}>
-        <div className='App' >
+        <Container>
           <Topbar toggleSidebar={this.toggleSidebar} />
           <Composition>
             <Sidebar id='main-sidebar' display={this.state.sideBarDisplay} />
             <main>{this.setRoutes()}</main>
           </Composition>
-        </div>
+        </Container>
       </ThemeProvider>
     )
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.currentTheme !== this.props.currentTheme) {
+      const theme = themes[this.props.currentTheme || 'light']
+      document.body.style.backgroundColor = theme.colors.background
+    }
   }
 
   setRoutes () {
@@ -57,6 +65,15 @@ class App extends Component {
     }))
   }
 }
+
+// style
+const Container = styled.div(props => {
+  return {
+    height: '-webkit-fill-available',
+    display: 'flex',
+    flexDirection: 'column'
+  }
+})
 
 // container
 const mapStateToProps = (state) => {

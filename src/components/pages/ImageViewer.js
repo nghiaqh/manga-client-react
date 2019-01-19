@@ -60,6 +60,7 @@ class ImageViewer extends React.PureComponent {
 
     const manga = get(mangas, mangaId)
     const artist = manga ? get(artists, manga.artistId) : null
+    const chapter = chapters[chapterId]
 
     const endSlide = <NextChapterLink
       mangas={mangas}
@@ -68,11 +69,16 @@ class ImageViewer extends React.PureComponent {
       chapterId={chapterId} />
 
     return (
-      <ImageView>
-        <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
-          {manga && manga.title} - {artist && artist.name}
-        </StyledLink>
-        <Button onClick={this.toggleFullScreen}>Toggle fullscreen</Button>
+      <ImageView chapterId={chapterId}>
+        <header>
+          <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
+            {manga && manga.title} by {artist && artist.name}
+          </StyledLink>
+          &nbsp;
+          - {chapter && chapter.number}. {chapter && chapter.shortTitle}
+          &nbsp;
+          <Button onClick={this.toggleFullScreen}>Toggle fullscreen</Button>
+        </header>
         <ImageSlider chapterId={chapterId} endSlide={endSlide} />
       </ImageView>
     )
@@ -89,6 +95,8 @@ class ImageViewer extends React.PureComponent {
       case 'f':
         e.preventDefault()
         return this.toggleFullScreen()
+      default:
+        return null
     }
   }
 }
@@ -97,9 +105,9 @@ class ImageViewer extends React.PureComponent {
 function ImageSlider ({ chapterId, endSlide }) {
   if (!chapterId) return
   const filter = { chapterId }
-
+  const parent = document.getElementById(`chapter-${chapterId}-images`)
   const setImageWidth = (ref, image) => {
-    const width = image.width * (window.innerHeight - 200) / image.height
+    const width = image.width * (parent.offsetHeight - 30) / image.height
     ref.current.style.width = `${width > image.width ? image.width : width}px`
   }
 
@@ -140,7 +148,10 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
         mangaId: mangaId,
         chapterId: nextChapterKey,
         imageId: 1
-      })}> Next Chapter </StyledLink> : null
+      })}>
+      Next - Chapter {chapters[nextChapterKey].number}
+      <br /> {chapters[nextChapterKey].shortTitle}
+    </StyledLink> : null
   }
 
   return null
@@ -148,7 +159,20 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
 
 // Style
 const ImageView = styled.div(props => {
+  const mainId = `chapter-${props.chapterId}-images`
   return {
+    display: 'flex',
+    flexFlow: 'column',
+    height: '100%',
+
+    header: {
+      padding: `${props.theme.padding / 2}px ${props.theme.padding}px`
+    },
+
+    [`#${mainId}`]: {
+      flexGrow: 1,
+      minHeight: 0
+    }
   }
 })
 

@@ -56,8 +56,7 @@ class Image extends React.PureComponent {
 const BasicImage = styled.img(props => {
   return {
     maxHeight: '100%',
-    width: '100%',
-    transition: 'width 0.66s ease-out'
+    width: '100%'
   }
 })
 

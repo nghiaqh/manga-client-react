@@ -16,8 +16,7 @@ const Layout = styled.div(props => {
   return {
     display: 'flex',
     flexDirection: 'column',
-    width: '100%',
-    maxWidth: '100%',
+    flexGrow: 1,
 
     aside: {
       backgroundColor: props.theme.colors.surface,
