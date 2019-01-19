@@ -5,21 +5,30 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toUrl } from 'libs/routes'
+import toggleFullscreen from 'libs/fullscreen'
 import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
 import {
   fetchChapterByIdIfNeeded,
   fetchChapterOfMangaIfNeeded
 } from 'redux/actions/chapter'
 import { loadMoreImages } from 'redux/actions/imageList'
+import Button from 'components/atoms/Button'
 import Image from 'components/atoms/Image'
 import ContentView from 'components/organisms/ContentView'
 
 class ImageViewer extends React.PureComponent {
+  constructor (props) {
+    super(props)
+    this.toggleFullScreen = this.toggleFullScreen.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+  }
+
   componentWillMount () {
     const { dispatch } = this.props
     const { mangaId, chapterId } = this.props.match.params
     dispatch(fetchMangaByIdIfNeeded(mangaId))
     dispatch(fetchChapterByIdIfNeeded(chapterId))
+    document.addEventListener('keydown', this.handleKeyDown)
   }
 
   componentDidUpdate (prevProps) {
@@ -60,14 +69,27 @@ class ImageViewer extends React.PureComponent {
 
     return (
       <ImageView>
-        <div>
-          <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
-            {manga && manga.title} - {artist && artist.name}
-          </StyledLink>
-        </div>
+        <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
+          {manga && manga.title} - {artist && artist.name}
+        </StyledLink>
+        <Button onClick={this.toggleFullScreen}>Toggle fullscreen</Button>
         <ImageSlider chapterId={chapterId} endSlide={endSlide} />
       </ImageView>
     )
+  }
+
+  toggleFullScreen () {
+    const { chapterId } = this.props.match.params
+    const element = document.getElementById(`chapter-${chapterId}-images`)
+    return toggleFullscreen(element)
+  }
+
+  handleKeyDown (e) {
+    switch (e.key) {
+      case 'f':
+        e.preventDefault()
+        return this.toggleFullScreen()
+    }
   }
 }
 
