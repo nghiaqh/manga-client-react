@@ -163,7 +163,7 @@ const ImageView = styled.div(props => {
   return {
     display: 'flex',
     flexFlow: 'column',
-    height: '100%',
+    flexGrow: 1,
 
     header: {
       padding: `${props.theme.padding / 2}px ${props.theme.padding}px`
