@@ -7,6 +7,7 @@ class Image extends React.PureComponent {
   constructor (props) {
     super(props)
     this.ref = React.createRef()
+    this.setWidth = this.setWidth.bind(this)
   }
 
   render () {
@@ -19,7 +20,16 @@ class Image extends React.PureComponent {
   }
 
   componentDidMount () {
-    this.props.handleOnLoad && this.props.handleOnLoad(this.ref, this.props)
+    this.setWidth()
+    window.addEventListener('resize', this.setWidth)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.setWidth)
+  }
+
+  setWidth () {
+    if (this.props.setWidth) this.props.setWidth(this.ref, this.props)
   }
 
   renderBasicVersion (props) {

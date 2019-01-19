@@ -50,6 +50,7 @@ export default class ContentView extends PureComponent {
         filter={filter}
         pageSize={pageSize}
         order={order}
+        hideLoadMoreBtn={this.state.layout === 'slider'}
       />
     )
   }
@@ -70,6 +71,7 @@ export default class ContentView extends PureComponent {
         items={items}
         retrievingItems={retrievingItems}
         render={render}
+        layoutDirection={this.props.layoutDirection}
       />
     )
   }
@@ -81,6 +83,8 @@ export default class ContentView extends PureComponent {
         retrievingItems={retrievingItems}
         render={render}
         loadMore={loadMore}
+        layoutDirection={this.props.layoutDirection}
+        endSlide={this.props.endSlide}
       />
     )
   }

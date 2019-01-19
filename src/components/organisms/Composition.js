@@ -5,21 +5,24 @@ import { connect } from 'react-redux'
 class Composition extends PureComponent {
   render () {
     return (
-      <Section cols={this.props.cols}>
+      <Layout cols={this.props.cols}>
         {this.props.children}
-      </Section>
+      </Layout>
     )
   }
 }
 
-const Section = styled.section(props => {
+const Layout = styled.div(props => {
   return {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+    maxWidth: '100%',
 
     aside: {
       backgroundColor: props.theme.colors.surface,
       color: props.theme.colors.onSurface,
+      boxSizing: 'border-box',
 
       '&.hidden': {
         display: 'none'
@@ -28,12 +31,16 @@ const Section = styled.section(props => {
     main: {
       backgroundColor: props.theme.colors.background,
       color: props.theme.colors.onBackground,
-      flexGrow: 1
+      width: '100%',
+      minWidth: 0
     },
 
     [`@media (min-width: ${props.theme.breakpoints[1]}px)`]: {
-      flexDirection: 'row-reverse',
-      aside: { width: 220 }
+      flexDirection: 'row',
+      aside: {
+        width: 220,
+        flexShrink: 0
+      }
     }
   }
 })

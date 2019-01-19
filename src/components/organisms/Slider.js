@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce'
 import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import Loader from 'components/atoms/Loader'
@@ -6,16 +7,18 @@ import NotFoundMessage from 'components/molecules/NotFoundMessage'
 export default class Slider extends PureComponent {
   constructor (props) {
     super(props)
+    this.state = {
+      retrievingItems: false
+    }
+
     this.ref = React.createRef()
     this.handleScroll = this.handleScroll.bind(this)
-    this.scrollLeft = this.scrollLeft.bind(this)
-    this.scrollRight = this.scrollRight.bind(this)
-    this.state = {
-      slider: this.ref
-    }
+    this.handleMouseWheel = this.handleMouseWheel.bind(this)
+    this.loadMore = debounce(this.loadMore.bind(this), 500)
   }
+
   render () {
-    const { retrievingItems, render } = this.props
+    const { retrievingItems, render, layoutDirection, endSlide } = this.props
     const items = this.props.items.filter(item => item && item.id)
 
     const slides = items.map((item, index) =>
@@ -23,90 +26,93 @@ export default class Slider extends PureComponent {
         {render(item)}
       </div>)
 
-    const statusText = (items.length === 0 && !retrievingItems)
-      ? <NotFoundMessage />
-      : (retrievingItems ? <Loader /> : '')
+    const statusText =
+      <div className='slide slide--status' key='status-text'>
+        {(items.length === 0 && !retrievingItems)
+          ? <NotFoundMessage />
+          : (retrievingItems ? <Loader /> : endSlide || '')}
+      </div>
+
+    slides.push(statusText)
 
     return (
       <>
-        <StyledSlider className='slider'
-          ref={this.ref}
-          onScroll={this.handleScroll}>
-          <div className='slider__controller'>
-            <span className='slider__controller--left' onClick={this.scrollLeft}>&lt;</span>
-            <span className='slider__controller--right' onClick={this.scrollRight}>&gt;</span>
-          </div>
-          <div className='slider__main'>
+        <StyledSlider className='slider' direction={layoutDirection}>
+          <div className='slider__main'
+            ref={this.ref}
+            onScroll={this.handleScroll}
+            onWheel={this.handleMouseWheel}>
             {slides}
           </div>
         </StyledSlider>
-        {statusText}
       </>
     )
   }
 
-  handleScroll (event) {
-    const slider = this.ref.current
-    const lastSlide = slider.childNodes[1].lastElementChild
-    const isLastSlideVisible = lastSlide &&
-      lastSlide.getBoundingClientRect().right > 0
-    if (slider.scrollLeft === 0 || isLastSlideVisible) {
-      event.preventDefault(event)
-      this.props.loadMore()
+  componentDidUpdate (prevProps) {
+    if (this.props.items.length > prevProps.items.length) {
+      this.setState({ retrievingItems: false })
     }
   }
 
-  scrollLeft () {
-    const slider = this.ref.current
-    const slide = slider.querySelector('.slide')
-    slider.scrollLeft -= slide ? slide.clientWidth : 0
+  handleMouseWheel (event) {
+    const deltaY = event.deltaMode === 1 ? event.deltaY * 30 : event.deltaY
+    this.ref.current.scrollLeft -= deltaY
   }
 
-  scrollRight () {
+  handleScroll (event) {
     const slider = this.ref.current
-    const slide = slider.querySelector('.slide')
-    slider.scrollLeft += slide ? slide.clientWidth : 0
+    const lastSlide = slider.lastElementChild
+    const isLastSlideVisible = lastSlide &&
+      lastSlide.getBoundingClientRect().right > 0
+
+    if (isLastSlideVisible) {
+      this.loadMore()
+    }
+  }
+
+  loadMore () {
+    if (this.state.retrievingItems || !this.props.loadMore) return
+    this.setState({ retrievingItems: true })
+    this.props.loadMore()
   }
 }
 
 const StyledSlider = styled.div(props => {
+  const { theme, direction } = props
   return {
     height: '100%',
-    overflowY: 'hidden',
-    background: props.theme.colors.background,
-    scrollBehaviour: 'smooth',
+    background: theme.colors.background,
+    direction: direction,
 
     '.slider__main': {
       height: '100%',
+      width: '100%',
       display: 'flex',
-      flexFlow: 'row nowrap'
+      flexFlow: 'row nowrap',
+      scrollBehavior: 'smooth',
+      overflowX: 'auto'
     },
 
     '.slide': {
       margin: '2px',
-      flexBasis: 'content'
-    },
-
-    '.slider__controller': {
-      position: 'fixed',
-      bottom: 20,
-      width: '100%',
       display: 'flex',
-      justifyContent: 'space-between',
+      flexFlow: 'column',
+      justifyContent: 'center',
 
-      span: {
-        fontSize: '1.5rem',
-        background: props.theme.colors.surface,
-        color: props.theme.colors.onSurface,
-        padding: `0 ${props.theme.padding / 2}px`,
-        userSelect: 'none',
-        cursor: 'pointer'
+      '&:first-of-type': {
+        padding: `0 ${direction === 'rtl' ? theme.padding : 0}px 0 ${
+          direction === 'rtl' ? 0 : theme.padding}px`
       },
-      'slider__controller--left': {
-        textAlight: 'left'
+
+      '&:last-child': {
+        padding: `0 ${direction === 'rtl' ? 0 : theme.padding}px 0 ${
+          direction === 'rtl' ? theme.padding : 0}px`
       },
-      'slider__controller--right': {
-        textAlight: 'right'
+
+      '&.slide--status': {
+        minWidth: 200,
+        textAlign: 'center'
       }
     }
   }

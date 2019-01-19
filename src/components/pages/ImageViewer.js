@@ -22,24 +22,26 @@ class ImageViewer extends React.PureComponent {
     dispatch(fetchChapterByIdIfNeeded(chapterId))
   }
 
-  componentDidMount () {
-    const { chapterId } = this.props.match.params
-    const slider = document.querySelector(`#chapter-${chapterId}-images .slider`)
-    if (slider) {
-      slider.addEventListener('wheel', this.handleMouseWheel)
-    }
-  }
-
   componentDidUpdate (prevProps) {
     const { chapterId, mangaId } = this.props.match.params
-    const { number } = this.props.chapters[chapterId] || {}
+    const { chapters } = this.props
+    const { number } = chapters[chapterId] || {}
     const { chaptersCount } = this.props.mangas[mangaId] || {}
     const imageList = this.props[`chapter-${chapterId}-images`] || {}
     const { total } = imageList
     const images = get(imageList, 'items', [])
 
-    if (total === images.length && number && number < chaptersCount) {
+    const nextChapterKey = findKey(chapters, {
+      mangaId: parseInt(mangaId),
+      number: number + 1
+    })
+
+    if (nextChapterKey === undefined &&
+      total === images.length && number && number < chaptersCount) {
       this.props.dispatch(fetchChapterOfMangaIfNeeded(mangaId, number + 1))
+      this.setState({
+        shouldFetchNextChapter: false
+      })
     }
   }
 
@@ -50,43 +52,39 @@ class ImageViewer extends React.PureComponent {
     const manga = get(mangas, mangaId)
     const artist = manga ? get(artists, manga.artistId) : null
 
+    const endSlide = <NextChapterLink
+      mangas={mangas}
+      mangaId={mangaId}
+      chapters={chapters}
+      chapterId={chapterId} />
+
     return (
       <ImageView>
-        <div>{manga && manga.title}</div>
-        <div>{artist && artist.name}</div>
-        <div>{Object.keys(this.props.chapters).map(k => k)}</div>
-        <ImageSlider chapterId={chapterId} />
-        <NextChapterLink
-          mangas={mangas}
-          mangaId={mangaId}
-          chapters={chapters}
-          chapterId={chapterId} />
+        <div>
+          <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
+            {manga && manga.title} - {artist && artist.name}
+          </StyledLink>
+        </div>
+        <ImageSlider chapterId={chapterId} endSlide={endSlide} />
       </ImageView>
     )
-  }
-
-  handleMouseWheel (event) {
-    // Firefox deltaMode = 1 means scroll 1 line
-    // Multiply by 30 for faster horizontal scroll
-    const slider = event.target.offsetParent
-    if (slider) slider.scrollLeft -= event.deltaMode === 1 ? event.deltaY * 30 : event.deltaY
   }
 }
 
 // Sub components
-function ImageSlider ({ chapterId }) {
+function ImageSlider ({ chapterId, endSlide }) {
   if (!chapterId) return
   const filter = { chapterId }
 
   const setImageWidth = (ref, image) => {
-    const width = image.width * window.innerHeight / image.height
-    ref.current.style.width = `${width}px`
+    const width = image.width * (window.innerHeight - 200) / image.height
+    ref.current.style.width = `${width > image.width ? image.width : width}px`
   }
 
   const renderImage = image =>
     <Image
       key={image.id}
-      handleOnLoad={setImageWidth}
+      setWidth={setImageWidth}
       {...image} />
 
   return (
@@ -98,6 +96,8 @@ function ImageSlider ({ chapterId }) {
       loadMoreFunc={loadMoreImages}
       renderItem={renderImage}
       layout='slider'
+      layoutDirection='rtl'
+      endSlide={endSlide}
     />
   )
 }
@@ -125,34 +125,14 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
 }
 
 // Style
-const ImageView = styled.section(props => {
+const ImageView = styled.div(props => {
   return {
-    '.slider': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      direction: 'rtl',
-
-      '.slide:first-of-type': {
-        paddingRight: props.theme.padding
-      },
-
-      '.slide:last-child': {
-        paddingLeft: props.theme.padding
-      }
-    }
   }
 })
 
 const StyledLink = styled(Link)(props => {
   return {
-    position: 'absolute',
-    bottom: 45,
-    zIndex: 1,
-    background: props.theme.colors.surface,
-    color: props.theme.colors.onSurface
+    color: props.theme.colors.onBackground
   }
 })
 
