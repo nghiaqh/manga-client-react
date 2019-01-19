@@ -19,7 +19,7 @@ class Image extends React.PureComponent {
   }
 
   componentDidMount () {
-    this.props.handleOnLoad(this.ref, this.props)
+    this.props.handleOnLoad && this.props.handleOnLoad(this.ref, this.props)
   }
 
   renderBasicVersion (props) {
