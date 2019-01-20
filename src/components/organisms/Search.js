@@ -23,6 +23,9 @@ class Search extends PureComponent {
     this.closeSearch = this.closeSearch.bind(this)
     this.showSearch = this.showSearch.bind(this)
     this.emitChangeDebounced = debounce(this.emitChange, 250)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+
+    document.addEventListener('keydown', this.handleKeyDown)
   }
 
   render () {
@@ -56,6 +59,7 @@ class Search extends PureComponent {
 
   componentWillUnmount () {
     this.emitChangeDebounced.cancel()
+    document.removeEventListener('keydown', this.handleKeyDown)
   }
 
   handleSearch (event) {
@@ -77,6 +81,15 @@ class Search extends PureComponent {
 
   closeSearch (e) {
     this.setState({ showResults: false })
+  }
+
+  handleKeyDown (e) {
+    switch (e.key) {
+      case 'Escape':
+        return this.setState({ showResults: false })
+      default:
+        return null
+    }
   }
 }
 
@@ -175,6 +188,7 @@ const Container = styled.header(props => {
   return {
     boxSizing: 'border-box',
     flexGrow: 1,
+    zIndex: 1,
 
     a: {
       color: colors.onPrimary,
