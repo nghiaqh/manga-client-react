@@ -152,16 +152,19 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
       number: number + 1
     })
 
-    return nextChapterKey ? <StyledLink
-      id='next-chapter'
-      to={toUrl('imageViewer', {
-        mangaId: mangaId,
-        chapterId: nextChapterKey,
-        imageId: 1
-      })}>
-      Next - Chapter {chapters[nextChapterKey].number}
-      <br /> {chapters[nextChapterKey].shortTitle}
-    </StyledLink> : null
+    return nextChapterKey
+      ? <div style={{ writingMode: 'vertical-rl', direction: 'ltr' }}>
+        <StyledLink
+          id='next-chapter'
+          to={toUrl('imageViewer', {
+            mangaId: mangaId,
+            chapterId: nextChapterKey,
+            imageId: 1
+          })}>
+          Next - Chapter {chapters[nextChapterKey].number}
+          <br /> {chapters[nextChapterKey].shortTitle}
+        </StyledLink>
+      </div> : null
   }
 
   return null

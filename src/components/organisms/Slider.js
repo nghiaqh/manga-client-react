@@ -115,7 +115,7 @@ const StyledSlider = styled.div(props => {
       },
 
       '&.slide--status': {
-        minWidth: 200,
+        // minWidth: 200,
         textAlign: 'center'
       }
     }
