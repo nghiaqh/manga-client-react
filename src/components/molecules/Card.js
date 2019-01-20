@@ -13,9 +13,9 @@ class Card extends PureComponent {
   }
 
   renderBasicVersion (props) {
-    const { media, title, description } = props
+    const { media, title, description, size } = props
     return (
-      <BasicCard className='card--basic'>
+      <BasicCard className='card--basic' size={size} >
         <div className='card__title'>{title}</div>
         <div className='card__description'>{description}</div>
         <div className='card__media'>{media}</div>
@@ -35,19 +35,43 @@ class Card extends PureComponent {
   }
 }
 
-const BasicCard = styled.div(props => ({
-  backgroundColor: props.theme.colors.surface,
-  color: props.theme.colors.onSurface,
-  padding: props.theme.padding / 4,
-  '.card__title': {
-    fontSize: '1rem',
-    margin: 8
-  },
-  '.card__description': {
-    fontSize: '0.75rem',
-    margin: 8
+const BasicCard = styled.div(props => {
+  const { width, height } = props.size || {}
+  const { colors, padding } = props.theme || {}
+  return {
+    backgroundColor: colors.surface,
+    color: colors.onSurface,
+    padding: padding / 4,
+    display: 'flex',
+    flexFlow: 'column',
+    width: width || 'auto',
+    height: height || 'auto',
+
+    '.card__title': {
+      fontSize: `${height
+        ? (height < 300 ? height / 300 : 1) : 1}rem`
+    },
+    '.card__description': {
+      fontSize: `${height
+        ? (height < 300 ? height * 0.9 / 300 : 0.9) : 0.9}rem`,
+      marginBottom: padding / 4
+    },
+    '.card__media': {
+      flexGrow: 1,
+      minWidth: 0,
+      minHeight: 0,
+      display: 'flex',
+      flexFlow: 'column',
+
+      img: {
+        objectFit: 'cover',
+        objectPosition: 'top',
+        minWidth: 0,
+        minHeight: 0
+      }
+    }
   }
-}))
+})
 
 const mapStateToProps = (state) => {
   return {

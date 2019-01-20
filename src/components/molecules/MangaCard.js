@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
+import styled from '@emotion/styled/macro'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -9,7 +8,7 @@ import Image from 'components/atoms/Image'
 
 class MangaCard extends React.PureComponent {
   render () {
-    const { manga, artists, classNames, onItemClick } = this.props
+    const { manga, artists, classNames, onItemClick, size } = this.props
     const artist = artists[manga.artistId] || {}
 
     const { id, title } = manga
@@ -17,24 +16,27 @@ class MangaCard extends React.PureComponent {
     const thumbnail = <Image {...manga.previewImages[0]} />
 
     return (
-      <Link to={mangaUrl}
+      <Container
+        to={mangaUrl}
         className={`card--manga ${classNames || ''}`}
-        css={anchorOnSurfaceCss}
         onClick={onItemClick}
         data-key={id}>
         <Card
           media={thumbnail}
           title={title}
           description={artist.name}
+          size={size}
         />
-      </Link>
+      </Container>
     )
   }
 }
 
-const anchorOnSurfaceCss = theme => ({
-  textDecoration: 'none',
-  color: theme.colors.onSurface
+const Container = styled(Link)(props => {
+  return {
+    textDecoration: 'none',
+    color: props.theme.colors.onSurface
+  }
 })
 
 const mapStateToProps = (state) => {

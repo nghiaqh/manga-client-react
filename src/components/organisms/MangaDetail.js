@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom'
 import styled from '@emotion/styled/macro'
 import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
 import { loadMoreChapters } from 'redux/actions/chapterList'
+import { loadMoreMangas } from 'redux/actions/mangaList'
 import { toUrl } from 'libs/routes'
 import ContentView from 'components/organisms/ContentView'
+import MangaCard from 'components/molecules/MangaCard'
 import Image from 'components/atoms/Image'
 
 class MangaDetail extends PureComponent {
@@ -43,6 +45,7 @@ class MangaDetail extends PureComponent {
           </div>
         </header>
         <div><ChapterList manga={manga} /></div>
+        <div><SameAuthorMangaList manga={manga} /></div>
       </Container>
     )
   }
@@ -65,15 +68,48 @@ function ChapterList ({ manga }) {
     </Link>
   )
   return (
-    <ContentView
-      id={`manga-${manga.id}-chapters`}
-      entityType='chapters'
-      filter={filter}
-      pageSize={24}
-      loadMoreFunc={loadMoreChapters}
-      renderItem={renderChapter}
-      layout='list'
-    />
+    <>
+      <h2>Chapters</h2>
+
+      <ContentView
+        id={`manga-${manga.id}-chapters`}
+        entityType='chapters'
+        filter={filter}
+        pageSize={24}
+        loadMoreFunc={loadMoreChapters}
+        renderItem={renderChapter}
+        layout='list'
+      />
+    </>
+  )
+}
+
+function SameAuthorMangaList ({ manga }) {
+  if (!manga || !manga.artistId) return null
+
+  const filter = {
+    artistId: manga.artistId
+  }
+  const renderMangaCard = manga => (
+    <MangaCard key={manga.id} manga={manga} size={{
+      height: 240,
+      width: 180
+    }} />
+  )
+
+  return (
+    <>
+      <h2>Same Author</h2>
+      <ContentView
+        id={`mangas-by-artist-${manga.artistId}`}
+        entityType='mangas'
+        filter={filter}
+        pageSize={24}
+        loadMoreFunc={loadMoreMangas}
+        renderItem={renderMangaCard}
+        layout='slider'
+      />
+    </>
   )
 }
 
