@@ -191,7 +191,7 @@ const Container = styled.header(props => {
     zIndex: 1,
 
     a: {
-      color: colors.onPrimary,
+      color: colors.onBackground,
       textDecoration: 'none'
     },
 
