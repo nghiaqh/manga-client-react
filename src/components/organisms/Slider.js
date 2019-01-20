@@ -14,7 +14,7 @@ export default class Slider extends PureComponent {
     this.ref = React.createRef()
     this.handleScroll = this.handleScroll.bind(this)
     this.handleMouseWheel = this.handleMouseWheel.bind(this)
-    this.loadMore = debounce(this.loadMore.bind(this), 500)
+    this.loadMore = debounce(this.loadMore.bind(this), 200)
   }
 
   render () {
@@ -56,7 +56,7 @@ export default class Slider extends PureComponent {
   }
 
   handleMouseWheel (event) {
-    const deltaY = event.deltaMode === 1 ? event.deltaY * 30 : event.deltaY
+    const deltaY = event.deltaMode === 1 ? event.deltaY * 90 : event.deltaY * 3
     this.ref.current.scrollLeft -= deltaY
   }
 

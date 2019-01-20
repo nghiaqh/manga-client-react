@@ -38,8 +38,8 @@ class Home extends PureComponent {
         />
 
         { currentManga &&
-          <div class='manga-detail'>
-            <div class='manga-detail__content'>
+          <div className='manga-detail'>
+            <div className='manga-detail__content'>
               <Button className='btn--close' onClick={this.closeQuickView}>
                 Close
               </Button>

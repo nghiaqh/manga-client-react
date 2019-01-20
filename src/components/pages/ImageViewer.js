@@ -105,10 +105,13 @@ class ImageViewer extends React.PureComponent {
 function ImageSlider ({ chapterId, endSlide }) {
   if (!chapterId) return
   const filter = { chapterId }
-  const parent = document.getElementById(`chapter-${chapterId}-images`)
   const setImageWidth = (ref, image) => {
-    const width = image.width * (parent.offsetHeight - 30) / image.height
-    ref.current.style.width = `${width > image.width ? image.width : width}px`
+    const parent = document.getElementById(`chapter-${chapterId}-images`)
+
+    if (parent && ref && image) {
+      const width = image.width * (parent.offsetHeight - 30) / image.height
+      ref.current.style.width = `${width > image.width ? image.width : width}px`
+    }
   }
 
   const renderImage = image =>
