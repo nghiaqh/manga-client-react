@@ -45,8 +45,7 @@ function fetchArtists (
     const where = {}
     if (typeof name !== 'undefined' && name !== '') {
       where.name = {
-        regexp: '.*' + name + '.*',
-        options: 'i'
+        regexp: `/.*${name}.*/i`
       }
     }
 

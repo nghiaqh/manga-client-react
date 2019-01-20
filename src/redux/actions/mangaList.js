@@ -57,8 +57,7 @@ export const fetchMangas = (
     const where = artistId ? { artistId: artistId } : {}
     if (typeof title !== 'undefined' && title !== '') {
       where.title = {
-        regexp: '.*' + title + '.*',
-        options: 'i'
+        regexp: `/.*${title}.*/i`
       }
     }
 

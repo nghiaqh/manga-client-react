@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Button from 'components/atoms/Button'
 import ThemePicker from 'components/molecules/ThemePicker'
+import Search from 'components/organisms/Search'
 
 class Topbar extends PureComponent {
   constructor (props) {
@@ -20,6 +21,7 @@ class Topbar extends PureComponent {
       <Header>
         <div id='topbar'>
           <Link className='topbar--nav' to='/'>Manga Reader</Link>
+          <Search />
           <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
             Settings
           </Button>

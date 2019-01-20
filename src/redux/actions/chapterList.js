@@ -82,8 +82,7 @@ export const countChapters = (id, filter = {}) => dispatch => {
   const where = mangaId ? { mangaId: mangaId } : {}
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
-      regexp: '.*' + title + '.*',
-      options: 'i'
+      regexp: `/.*${title}.*/i`
     }
   }
 
