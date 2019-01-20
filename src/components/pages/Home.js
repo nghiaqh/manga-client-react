@@ -93,7 +93,6 @@ const Container = styled.div(props => {
       '.manga-detail__content': {
         margin: `0 auto`,
         minHeight: '100%',
-        width: 'calc(100% - 160px)',
         maxWidth: 1600,
         padding: `${padding}px`,
         backgroundColor: colors.background,
@@ -103,6 +102,10 @@ const Container = styled.div(props => {
         '> button': {
           cursor: 'pointer',
           float: 'right'
+        },
+
+        '> div': {
+          clear: 'both'
         }
       }
     }
