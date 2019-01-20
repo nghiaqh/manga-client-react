@@ -19,8 +19,6 @@ class App extends Component {
     this.state = {
       sideBarDisplay: true
     }
-
-    this.toggleSidebar = this.toggleSidebar.bind(this)
   }
 
   render () {
@@ -28,7 +26,7 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <Container>
-          <Topbar toggleSidebar={this.toggleSidebar} />
+          <Topbar />
           <main>{this.setRoutes()}</main>
         </Container>
       </ThemeProvider>
@@ -51,13 +49,6 @@ class App extends Component {
         <Route exact path={routes.imageViewer} component={ImageViewer} />
       </Switch>
     )
-  }
-
-  toggleSidebar (event) {
-    event.preventDefault()
-    this.setState(state => ({
-      sideBarDisplay: !state.sideBarDisplay
-    }))
   }
 }
 
