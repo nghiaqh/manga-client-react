@@ -59,7 +59,7 @@ function ChapterList ({ manga }) {
     <Link
       key={chapter.id}
       to={toUrl('imageViewer', {
-        mangaId: manga.id,
+        mangaId: chapter.mangaId,
         chapterId: chapter.id,
         imageId: 1
       })}

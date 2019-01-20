@@ -1,8 +1,12 @@
+import debounce from 'lodash/debounce'
 import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { loadMoreMangas } from 'redux/actions/mangaList'
+import { loadMoreChapters } from 'redux/actions/chapterList'
 import { loadMoreArtists } from 'redux/actions/artistList'
+import { toUrl } from 'libs/routes'
 import Button from 'components/atoms/Button'
 import ContentView from 'components/organisms/ContentView'
 import MangaCard from 'components/molecules/MangaCard'
@@ -18,6 +22,7 @@ class Search extends PureComponent {
     this.handleSearch = this.handleSearch.bind(this)
     this.closeSearch = this.closeSearch.bind(this)
     this.showSearch = this.showSearch.bind(this)
+    this.emitChangeDebounced = debounce(this.emitChange, 250)
   }
 
   render () {
@@ -29,23 +34,41 @@ class Search extends PureComponent {
 
         <div id='search-results'
           className={this.state.showResults ? 'visible' : 'hidden'}>
-          <div class='search-results__content'>
+          <div className='search-results__content'>
             <Button id='search-results--close-btn' onClick={this.closeSearch}>
               Close
             </Button>
             <div>Search results for {this.state.searchText}</div>
             <MangaList searchText={this.state.searchText} />
+            <ChapterList searchText={this.state.searchText} />
+            <ArtistList searchText={this.state.searchText} />
           </div>
         </div>
       </Container>
     )
   }
 
-  handleSearch (e) {
-    this.setState({
-      searchText: e.currentTarget.value,
-      showResults: true
-    })
+  componentDidUpdate (prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({ showResults: false })
+    }
+  }
+
+  componentWillUnmount () {
+    this.emitChangeDebounced.cancel()
+  }
+
+  handleSearch (event) {
+    this.emitChangeDebounced(event.target.value)
+  }
+
+  emitChange (value) {
+    if (value !== '') {
+      this.setState({
+        searchText: value,
+        showResults: true
+      })
+    }
   }
 
   showSearch (e) {
@@ -57,6 +80,7 @@ class Search extends PureComponent {
   }
 }
 
+// Sub components
 function MangaList ({ searchText }) {
   if (!searchText) return null
 
@@ -72,7 +96,7 @@ function MangaList ({ searchText }) {
       <h2>Mangas</h2>
 
       <ContentView
-        id={`mangas-search`}
+        id={`mangas-search-${searchText}`}
         entityType='mangas'
         filter={filter}
         pageSize={12}
@@ -84,6 +108,68 @@ function MangaList ({ searchText }) {
   )
 }
 
+function ChapterList ({ searchText }) {
+  if (!searchText) return null
+
+  const filter = { title: searchText }
+  const renderChapter = chapter => (
+    <Link
+      key={chapter.id}
+      to={toUrl('imageViewer', {
+        mangaId: chapter.mangaId,
+        chapterId: chapter.id,
+        imageId: 1
+      })}
+    >
+      {chapter.number} - {chapter.shortTitle}
+    </Link>
+  )
+  return (
+    <>
+      <h2>Chapters</h2>
+
+      <ContentView
+        id={`chapters-search-${searchText}`}
+        entityType='chapters'
+        filter={filter}
+        pageSize={12}
+        loadMoreFunc={loadMoreChapters}
+        renderItem={renderChapter}
+        layout='list'
+      />
+    </>
+  )
+}
+
+function ArtistList ({ searchText }) {
+  if (!searchText) return null
+
+  const filter = { name: searchText }
+  const renderArtist = artist => (
+    <Link
+      key={artist.id}
+      to={toUrl('artistDetail', { artistId: artist.id })}>
+      {artist.name}
+    </Link>
+  )
+  return (
+    <>
+      <h2>Artists</h2>
+
+      <ContentView
+        id={`artists-search-${searchText}`}
+        entityType='artists'
+        filter={filter}
+        pageSize={12}
+        loadMoreFunc={loadMoreArtists}
+        renderItem={renderArtist}
+        layout='list'
+      />
+    </>
+  )
+}
+
+// Styling
 const Container = styled.header(props => {
   const { colors, padding, topBarHeight } = props.theme
   return {
@@ -137,6 +223,7 @@ const Container = styled.header(props => {
   }
 })
 
+// Redux mapping
 const mapStateToProps = (state) => {
   return {
     style: state.style

@@ -21,6 +21,7 @@ class ImageViewer extends React.PureComponent {
     super(props)
     this.toggleFullScreen = this.toggleFullScreen.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.ref = React.createRef()
   }
 
   componentWillMount () {
@@ -29,6 +30,10 @@ class ImageViewer extends React.PureComponent {
     dispatch(fetchMangaByIdIfNeeded(mangaId))
     dispatch(fetchChapterByIdIfNeeded(chapterId))
     document.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleKeyDown)
   }
 
   componentDidUpdate (prevProps) {
@@ -69,7 +74,7 @@ class ImageViewer extends React.PureComponent {
       chapterId={chapterId} />
 
     return (
-      <ImageView chapterId={chapterId}>
+      <ImageView chapterId={chapterId} ref={this.ref}>
         <header>
           <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
             {manga && manga.title} by {artist && artist.name}
@@ -91,12 +96,14 @@ class ImageViewer extends React.PureComponent {
   }
 
   handleKeyDown (e) {
-    switch (e.key) {
-      case 'f':
-        e.preventDefault()
-        return this.toggleFullScreen()
-      default:
-        return null
+    if (document.activeElement.tagName !== 'INPUT') {
+      switch (e.key) {
+        case 'f':
+          e.preventDefault()
+          return this.toggleFullScreen()
+        default:
+          return null
+      }
     }
   }
 }

@@ -55,6 +55,10 @@ export default class Slider extends PureComponent {
     }
   }
 
+  componentWillUnmount () {
+    this.loadMore.cancel()
+  }
+
   handleMouseWheel (event) {
     const direction = this.props.layoutDirection || 'ltr'
     const deltaY = event.deltaMode === 1 ? event.deltaY * 90 : event.deltaY * 3

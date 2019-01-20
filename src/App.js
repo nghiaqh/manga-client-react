@@ -26,7 +26,7 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <Container>
-          <Topbar />
+          <Topbar location={this.props.location} />
           <main>{this.setRoutes()}</main>
         </Container>
       </ThemeProvider>

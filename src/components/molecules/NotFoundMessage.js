@@ -1,12 +1,12 @@
+import styled from '@emotion/styled/macro'
 import React from 'react'
-import Typography from 'components/atoms/Typography'
 
 const NotFoundMessage = (props) => {
   const textfaces = [
     '( ˚ Δ ˚ ) b',
-    '≧ ☉ _ ☉ ≦',
+    '≧☉_☉≦',
     'ರ _ ರ',
-    '¯\\ ( ° _ o ) /¯',
+    '¯\\(° _ o)/¯',
     '（╯°□°）╯︵ ┻━┻',
     '¯\\_(ツ)_/¯',
     'ಠ_ಠ',
@@ -16,7 +16,7 @@ const NotFoundMessage = (props) => {
     '⤜(ᗒ﹏ᗕ)⤏',
     'ʕ ᗒ ﹏ ᗕ ʔ',
     'ʕ ᗒ ᨓ ᗕ ʔ',
-    '¯\\_( ︶︿︶)_/¯',
+    '¯\\_(︶︿︶)_/¯',
     '(;｀O´)o',
     '<(｀^´)>',
     '（｀Δ´）！',
@@ -35,13 +35,28 @@ const NotFoundMessage = (props) => {
   const face = textfaces[Math.floor(Math.random() * textfaces.length)]
 
   return (
-    <div className='text-center'>
-      <br /><br />
-      <Typography use='headline4'>{face}</Typography>
-      <br /><br />
-      <Typography use='subtitle2'>No contents found!</Typography>
-    </div>
+    <Box className={props.className}>
+      <div className='not-found-msg__face'>{face}</div>
+      <div className='not-found-msg__txt'>No contents found!</div>
+    </Box>
   )
 }
+
+const Box = styled.div(props => {
+  return {
+    textAlign: 'center',
+    width: 'fit-content',
+
+    '.not-found-msg__face': {
+      fontSize: '3em',
+      fontWeight: 'bold'
+    },
+
+    '.not-found-msg__txt': {
+      paddingTop: 5,
+      fontSize: '0.8em'
+    }
+  }
+})
 
 export default NotFoundMessage

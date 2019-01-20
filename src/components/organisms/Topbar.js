@@ -21,7 +21,7 @@ class Topbar extends PureComponent {
       <Header>
         <div id='topbar'>
           <Link className='topbar--nav' to='/'>Manga Reader</Link>
-          <Search />
+          <Search location={this.props.location} />
           <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
             Settings
           </Button>
