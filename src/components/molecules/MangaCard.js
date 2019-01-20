@@ -11,7 +11,7 @@ class MangaCard extends React.PureComponent {
     const { manga, artists, classNames, onItemClick, size } = this.props
     const artist = artists[manga.artistId] || {}
 
-    const { id, title } = manga
+    const { id, shortTitle } = manga
     const mangaUrl = toUrl('mangaDetail', { mangaId: id })
     const thumbnail = <Image {...manga.previewImages[0]} />
 
@@ -23,7 +23,7 @@ class MangaCard extends React.PureComponent {
         data-key={id}>
         <Card
           media={thumbnail}
-          title={title}
+          title={shortTitle}
           description={artist.name}
           size={size}
         />
