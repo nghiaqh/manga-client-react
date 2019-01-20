@@ -92,7 +92,7 @@ function SameAuthorMangaList ({ manga }) {
   }
   const renderMangaCard = manga => (
     <MangaCard key={manga.id} manga={manga} size={{
-      height: 240,
+      height: 280,
       width: 180
     }} />
   )
