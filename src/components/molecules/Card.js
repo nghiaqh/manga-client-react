@@ -16,9 +16,11 @@ class Card extends PureComponent {
     const { media, title, description, size } = props
     return (
       <BasicCard className='card--basic' size={size} >
-        <div className='card__title'>{title}</div>
-        <div className='card__description'>{description}</div>
         <div className='card__media'>{media}</div>
+        <div className='card__meta'>
+          <div className='card__title'>{title}</div>
+          <div className='card__description'>{description}</div>
+        </div>
       </BasicCard>
     )
   }
@@ -41,20 +43,22 @@ const BasicCard = styled.div(props => {
   return {
     backgroundColor: colors.surface,
     color: colors.onSurface,
-    padding: padding / 4,
     display: 'flex',
     flexFlow: 'column',
     width: width || 'auto',
     height: height || 'auto',
 
+    '.card__meta': {
+      padding: padding / 3
+    },
     '.card__title': {
       fontSize: `${height
-        ? (height < 300 ? height / 300 : 1) : 1}rem`
+        ? (height < 300 ? height / 300 : 1) : 1}rem`,
+      fontWeight: 'bold'
     },
     '.card__description': {
       fontSize: `${height
-        ? (height < 300 ? height * 0.9 / 300 : 0.9) : 0.9}rem`,
-      marginBottom: padding / 4
+        ? (height < 300 ? height * 0.8 / 300 : 0.8) : 0.8}rem`
     },
     '.card__media': {
       flexGrow: 1,

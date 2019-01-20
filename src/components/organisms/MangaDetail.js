@@ -33,7 +33,7 @@ class MangaDetail extends PureComponent {
           <div className='media'>
             {previewImages.map(img => <Image key={img.id} {...img} />)}
           </div>
-          <h1 className='title'>{manga && manga.title}</h1>
+          <h1 className='title'>{manga && manga.shortTitle}</h1>
           <strong className='artist'>{artist && artist.name}</strong>
           <div className='meta'>
             <div>

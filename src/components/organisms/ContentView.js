@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import List from 'components/organisms/List'
 import Grid from 'components/organisms/Grid'
+import MasonGrid from 'components/organisms/MasonGrid'
 import Slider from 'components/organisms/Slider'
 import WithLoadMore from 'components/organisms/WithLoadMore'
 
@@ -13,6 +14,7 @@ export default class ContentView extends PureComponent {
 
     this.renderList = this.renderList.bind(this)
     this.renderGrid = this.renderGrid.bind(this)
+    this.renderMasonGrid = this.renderMasonGrid.bind(this)
     this.renderSlider = this.renderSlider.bind(this)
   }
 
@@ -34,6 +36,9 @@ export default class ContentView extends PureComponent {
         break
       case 'slider':
         renderLayout = this.renderSlider
+        break
+      case 'masonGrid':
+        renderLayout = this.renderMasonGrid
         break
       case 'grid':
       default:
@@ -85,6 +90,17 @@ export default class ContentView extends PureComponent {
         loadMore={loadMore}
         layoutDirection={this.props.layoutDirection}
         endSlide={this.props.endSlide}
+      />
+    )
+  }
+
+  renderMasonGrid (items, retrievingItems, render) {
+    return (
+      <MasonGrid
+        items={items}
+        retrievingItems={retrievingItems}
+        render={render}
+        layoutDirection={this.props.layoutDirection}
       />
     )
   }

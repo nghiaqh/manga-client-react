@@ -35,6 +35,7 @@ class Home extends PureComponent {
           pageSize={24}
           loadMoreFunc={loadMoreMangas}
           renderItem={renderMangaCard}
+          layout='masonGrid'
         />
 
         { currentManga &&

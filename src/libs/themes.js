@@ -45,7 +45,7 @@ const colors = {
   }
 }
 
-const common = {
+export const common = {
   padding: 20,
   topBarHeight: 48,
   breakpoints: [400, 641, 1008, 1400]
