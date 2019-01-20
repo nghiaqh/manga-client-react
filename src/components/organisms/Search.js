@@ -31,7 +31,7 @@ class Search extends PureComponent {
   render () {
     return (
       <Container>
-        <input id='search-box' type='text'
+        <input id='search-box' type='text' placeholder='Search mangas, chapters, artists'
           onChange={this.handleSearch}
           onFocus={this.showSearch} />
 
