@@ -9,8 +9,8 @@ import styled from '@emotion/styled/macro'
 import themes from 'libs/themes'
 import Topbar from 'components/organisms/Topbar'
 import Home from 'components/pages/Home'
-import ArtistDetail from 'components/pages/ArtistDetail'
-import MangaDetail from 'components/pages/MangaDetail'
+import ArtistDetail from 'components/organisms/ArtistDetail'
+import MangaDetail from 'components/organisms/MangaDetail'
 import ImageViewer from 'components/pages/ImageViewer'
 
 class App extends Component {

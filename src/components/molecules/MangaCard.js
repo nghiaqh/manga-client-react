@@ -9,7 +9,7 @@ import Image from 'components/atoms/Image'
 
 class MangaCard extends React.PureComponent {
   render () {
-    const { manga, artists, classNames } = this.props
+    const { manga, artists, classNames, onItemClick } = this.props
     const artist = artists[manga.artistId] || {}
 
     const { id, title } = manga
@@ -17,8 +17,11 @@ class MangaCard extends React.PureComponent {
     const thumbnail = <Image {...manga.previewImages[0]} />
 
     return (
-      <Link className={`card--manga ${classNames || ''}`} to={mangaUrl}
-        css={anchorOnSurfaceCss}>
+      <Link to={mangaUrl}
+        className={`card--manga ${classNames || ''}`}
+        css={anchorOnSurfaceCss}
+        onClick={onItemClick}
+        data-key={id}>
         <Card
           media={thumbnail}
           title={title}

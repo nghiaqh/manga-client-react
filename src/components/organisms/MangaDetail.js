@@ -20,11 +20,11 @@ class MangaDetail extends PureComponent {
     const artist = manga ? get(artists, manga.artistId) : null
 
     return (
-      <React.Fragment>
+      <div>
         <div>{manga && manga.title}</div>
         <div>{artist && artist.name}</div>
         <div>{this.renderChapterList(manga)}</div>
-      </React.Fragment >
+      </div>
     )
   }
 

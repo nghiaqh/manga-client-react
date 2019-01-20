@@ -41,9 +41,16 @@ class Topbar extends PureComponent {
 const Header = styled.header(props => ({
   backgroundColor: props.theme.colors.primary,
   color: props.theme.colors.onPrimary,
-  padding: props.theme.padding,
-  height: 64,
+  padding: `0 ${props.theme.padding}px`,
+  height: props.theme.topBarHeight,
   boxSizing: 'border-box',
+
+  '#topbar': {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
 
   a: {
     color: props.theme.colors.onPrimary,
@@ -58,10 +65,11 @@ const Header = styled.header(props => ({
   '#settings-menu': {
     position: 'absolute',
     right: props.theme.padding,
-    top: 64,
+    top: props.theme.topBarHeight,
     padding: props.theme.padding,
     backgroundColor: props.theme.colors.primary,
     color: props.theme.colors.onPrimary,
+    zIndex: 100,
 
     '&.hidden': {
       display: 'none'
