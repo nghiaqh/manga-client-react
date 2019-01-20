@@ -17,17 +17,19 @@ class Topbar extends PureComponent {
 
   render () {
     return (
-      <BasicNav id='topbar'>
-        <Link className='topbar--nav' to='/'>Manga Reader</Link>
-        <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
-          Settings
-        </Button>
+      <Header>
+        <div id='topbar'>
+          <Link className='topbar--nav' to='/'>Manga Reader</Link>
+          <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
+            Settings
+          </Button>
+        </div>
 
         <div id='settings-menu'
           className={this.state.showSettings ? 'visible' : 'hidden'}>
           <ThemePicker />
         </div>
-      </BasicNav>
+      </Header>
     )
   }
 
@@ -36,7 +38,7 @@ class Topbar extends PureComponent {
   }
 }
 
-const BasicNav = styled.nav(props => ({
+const Header = styled.header(props => ({
   backgroundColor: props.theme.colors.primary,
   color: props.theme.colors.onPrimary,
   padding: props.theme.padding,
@@ -49,7 +51,8 @@ const BasicNav = styled.nav(props => ({
   },
 
   '#topbar--menu-btn': {
-    float: 'right'
+    float: 'right',
+    cursor: 'pointer'
   },
 
   '#settings-menu': {
