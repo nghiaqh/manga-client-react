@@ -13,10 +13,11 @@ export default class List extends React.PureComponent {
       ? <NotFoundMessage />
       : (retrievingItems ? <Loader /> : '')
     return (
-      <div css={{
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
+      <div className='content-list'
+        css={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
         {items}
         {statusText}
       </div>

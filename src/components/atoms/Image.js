@@ -34,7 +34,7 @@ class Image extends React.PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <BasicImage className='image--basic'
+      <BasicImage className={`image--basic ${props.className || ''}`}
         alt={props.title}
         src={getImageUrl(props.src)}
         ref={this.ref}
