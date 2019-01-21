@@ -52,9 +52,8 @@ export const fetchMangas = (
   order = 'modifiedAt DESC') =>
   dispatch => {
     dispatch(requestMangas(id, pageSize, pageNumber, filter, order))
-    const { artistId, title } = filter
-
-    const where = artistId ? { artistId: artistId } : {}
+    const { title } = filter
+    const where = filter || {}
     if (typeof title !== 'undefined' && title !== '') {
       where.title = {
         regexp: `/.*${title}.*/i`

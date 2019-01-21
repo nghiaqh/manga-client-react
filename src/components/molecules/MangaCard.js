@@ -34,8 +34,7 @@ class MangaCard extends React.PureComponent {
 
 const Container = styled(Link)(props => {
   return {
-    textDecoration: 'none',
-    color: props.theme.colors.onSurface
+    textDecoration: 'none'
   }
 })
 

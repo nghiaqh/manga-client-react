@@ -42,7 +42,7 @@ function fetchArtists (
     dispatch(requestArtists(id, pageSize, pageNumber, filter, order))
     const { name } = filter
 
-    const where = {}
+    const where = filter || {}
     if (typeof name !== 'undefined' && name !== '') {
       where.name = {
         regexp: `/.*${name}.*/i`

@@ -11,10 +11,12 @@ import {
   fetchChapterByIdIfNeeded,
   fetchChapterOfMangaIfNeeded
 } from 'redux/actions/chapter'
+import { loadMoreMangas } from 'redux/actions/mangaList'
 import { loadMoreImages } from 'redux/actions/imageList'
 import Button from 'components/atoms/Button'
 import Image from 'components/atoms/Image'
 import ContentView from 'components/organisms/ContentView'
+import MangaCard from 'components/molecules/MangaCard'
 
 class ImageViewer extends React.PureComponent {
   constructor (props) {
@@ -67,7 +69,7 @@ class ImageViewer extends React.PureComponent {
     const artist = manga ? get(artists, manga.artistId) : null
     const chapter = chapters[chapterId]
 
-    const endSlide = <NextChapterLink
+    const endSlide = <EndSlide
       mangas={mangas}
       mangaId={mangaId}
       chapters={chapters}
@@ -76,13 +78,18 @@ class ImageViewer extends React.PureComponent {
     return (
       <ImageView chapterId={chapterId} ref={this.ref}>
         <header>
-          <StyledLink to={toUrl('mangaDetail', { mangaId: mangaId })}>
-            {manga && manga.title} by {artist && artist.name}
-          </StyledLink>
-          &nbsp;
-          - {chapter && chapter.number}. {chapter && chapter.shortTitle}
-          &nbsp;
-          <Button onClick={this.toggleFullScreen}>Toggle fullscreen</Button>
+          <h1>
+            <Link to={toUrl('mangaDetail', { mangaId: mangaId })}>
+              {manga && manga.shortTitle} by {artist && artist.name}
+            </Link>
+          </h1>
+          <span>
+            {
+              chapter && chapter.number > 0 &&
+              `/ ${chapter.number}. ${chapter.shortTitle}`
+            }
+          </span>
+          <Button onClick={this.toggleFullScreen}>Toggle fullscreen [F]</Button>
         </header>
         <ImageSlider chapterId={chapterId} endSlide={endSlide} />
       </ImageView>
@@ -116,7 +123,7 @@ function ImageSlider ({ chapterId, endSlide }) {
     const parent = document.getElementById(`chapter-${chapterId}-images`)
 
     if (parent && ref && image) {
-      const width = image.width * (parent.offsetHeight - 30) / image.height
+      const width = image.width * (parent.offsetHeight - 25) / image.height
       ref.current.style.width = `${width > image.width ? image.width : width}px`
     }
   }
@@ -132,7 +139,7 @@ function ImageSlider ({ chapterId, endSlide }) {
       id={`chapter-${chapterId}-images`}
       entityType='images'
       filter={filter}
-      pageSize={6}
+      pageSize={20}
       loadMoreFunc={loadMoreImages}
       renderItem={renderImage}
       layout='slider'
@@ -152,34 +159,107 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
       number: number + 1
     })
 
-    return nextChapterKey
-      ? <div style={{ writingMode: 'vertical-rl', direction: 'ltr' }}>
-        <StyledLink
-          id='next-chapter'
-          to={toUrl('imageViewer', {
-            mangaId: mangaId,
-            chapterId: nextChapterKey,
-            imageId: 1
-          })}>
-          Next - Chapter {chapters[nextChapterKey].number}
-          <br /> {chapters[nextChapterKey].shortTitle}
-        </StyledLink>
-      </div> : null
+    return nextChapterKey ? <NextLink
+      id='next-chapter'
+      to={toUrl('imageViewer', {
+        mangaId: mangaId,
+        chapterId: nextChapterKey,
+        imageId: 1
+      })}>
+      Next chapter ({chapters[nextChapterKey].number}) <br />
+      {chapters[nextChapterKey].shortTitle}
+    </NextLink> : null
   }
 
   return null
 }
 
+function SameAuthorMangaList ({ manga }) {
+  if (!manga || !manga.artistId) return null
+
+  const filter = {
+    artistId: manga.artistId,
+    id: {
+      neq: manga.id
+    }
+  }
+  const renderMangaCard = manga => (
+    <MangaCard key={manga.id} manga={manga} size={{
+      height: 150,
+      width: 90
+    }} />
+  )
+
+  return (
+    <>
+      <h2>Same Author</h2>
+      <ContentView
+        id={`mangas-by-artist-${manga.artistId}`}
+        entityType='mangas'
+        filter={filter}
+        pageSize={9}
+        loadMoreFunc={loadMoreMangas}
+        renderItem={renderMangaCard}
+        layout='grid'
+        colWidth={80}
+      />
+    </>
+  )
+}
+
+function EndSlide ({ mangas, mangaId, chapters, chapterId }) {
+  const manga = mangas[mangaId]
+
+  return (
+    <LastSlide>
+      <div><SameAuthorMangaList manga={manga} /></div>
+      <NextChapterLink
+        mangas={mangas}
+        mangaId={mangaId}
+        chapters={chapters}
+        chapterId={chapterId} />
+    </LastSlide>
+  )
+}
+
 // Style
 const ImageView = styled.div(props => {
   const mainId = `chapter-${props.chapterId}-images`
+  const { padding, colors } = props.theme
   return {
     display: 'flex',
     flexFlow: 'column',
     flexGrow: 1,
 
     header: {
-      padding: `${props.theme.padding / 2}px ${props.theme.padding}px`
+      padding: `${padding / 2}px ${padding}px`,
+      background: colors.surface,
+      color: colors.onSurface,
+      fontWeight: 600,
+
+      h1: {
+        margin: 0,
+        display: 'inline-block',
+        color: colors.onSurface,
+        marginRight: 10,
+        fontSize: '1.2rem'
+      },
+
+      span: {
+
+      },
+
+      button: {
+        float: 'right'
+      },
+
+      a: {
+        color: colors.onSurface,
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline'
+        }
+      }
     },
 
     [`#${mainId}`]: {
@@ -189,11 +269,33 @@ const ImageView = styled.div(props => {
   }
 })
 
-const StyledLink = styled(Link)(props => {
-  return {
-    color: props.theme.colors.onBackground
+const NextLink = styled(Link)(props => ({
+  color: props.theme.colors.onSurface,
+  textDecoration: 'none',
+  fontWeight: 600,
+  fontSize: '0.8em',
+  direction: 'ltr',
+
+  '&:hover': {
+    textDecoration: 'underline'
   }
-})
+}))
+
+const LastSlide = styled.div(props => ({
+  display: 'flex',
+  flexFlow: 'column',
+  justifyContent: 'space-evenly',
+  height: '100%',
+
+  '& > div': {
+    minWidth: 400,
+    maxWidth: '100%'
+  },
+
+  '.not-found-msg': {
+    margin: '0 auto'
+  }
+}))
 
 // Connect to redux
 const mapStateToProps = (state, ownProps) => {

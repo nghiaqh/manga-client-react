@@ -30,7 +30,10 @@ class MangaDetail extends PureComponent {
     return (
       <Container>
         <header>
-          <div className='media'>
+          <div className='media'
+            onMouseOver={this.handleMouseOverMedia}
+            onMouseOut={this.handleMouseOverMedia}
+          >
             {previewImages.map(img => <Image key={img.id} {...img} />)}
           </div>
           <h1 className='title'>{manga && manga.shortTitle}</h1>
@@ -49,6 +52,15 @@ class MangaDetail extends PureComponent {
       </Container>
     )
   }
+
+  handleMouseOverMedia (event) {
+    const images = event.currentTarget.querySelectorAll('img')
+    images.forEach(img => {
+      const op = img.style.objectPosition
+      img.style.objectPosition = (!op || op === 'center top')
+        ? 'center bottom' : 'center top'
+    })
+  }
 }
 
 function ChapterList ({ manga }) {
@@ -64,7 +76,7 @@ function ChapterList ({ manga }) {
         imageId: 1
       })}
     >
-      {chapter.number} - {chapter.shortTitle}
+      {chapter.shortTitle}
     </Link>
   )
   return (
@@ -88,7 +100,10 @@ function SameAuthorMangaList ({ manga }) {
   if (!manga || !manga.artistId) return null
 
   const filter = {
-    artistId: manga.artistId
+    artistId: manga.artistId,
+    id: {
+      neq: manga.id
+    }
   }
   const renderMangaCard = manga => (
     <MangaCard key={manga.id} manga={manga} size={{
@@ -126,20 +141,18 @@ const Container = styled.div(props => {
         overflowX: 'auto',
         img: {
           objectFit: 'cover',
-          objectPosition: 'top'
+          objectPosition: 'center top'
         }
       },
       '.title': {
-        marginBottom: 0
+        marginBottom: padding / 5
       },
       '.meta': {
-        marginTop: padding / 2,
         fontSize: '0.8em'
       }
     },
 
     '.content-list': {
-      marginTop: padding
     },
 
     a: {

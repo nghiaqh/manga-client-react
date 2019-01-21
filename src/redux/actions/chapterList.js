@@ -48,13 +48,12 @@ export const fetchChapters = (
   order = 'number') =>
   dispatch => {
     dispatch(requestChapters(id, pageSize, pageNumber, filter, order))
-    const { mangaId, title } = filter
+    const { title } = filter
+    const where = filter || {}
 
-    const where = mangaId ? { mangaId: mangaId } : {}
     if (typeof title !== 'undefined' && title !== '') {
       where.title = {
-        regexp: '.*' + title + '.*',
-        options: 'i'
+        regexp: `/.*${title}.*/i`
       }
     }
 

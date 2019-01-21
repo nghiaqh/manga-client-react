@@ -77,6 +77,7 @@ export default class ContentView extends PureComponent {
         retrievingItems={retrievingItems}
         render={render}
         layoutDirection={this.props.layoutDirection}
+        colWidth={this.props.colWidth}
       />
     )
   }

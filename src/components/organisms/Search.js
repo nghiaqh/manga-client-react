@@ -29,6 +29,7 @@ class Search extends PureComponent {
   }
 
   render () {
+    const { searchText } = this.state
     return (
       <Container>
         <input id='search-box' type='text' placeholder='Search mangas, chapters, artists'
@@ -39,9 +40,14 @@ class Search extends PureComponent {
           className={this.state.showResults ? 'visible' : 'hidden'}>
           <div className='search-results__content'>
             <Button id='search-results--close-btn' onClick={this.closeSearch}>
-              Close
+              Close [ESC]
             </Button>
-            <div>Search results for {this.state.searchText}</div>
+            <h2>
+              Search
+              <span id='search-term'>
+                {searchText ? ` "${searchText}"` : ''}
+              </span>
+            </h2>
             <MangaList searchText={this.state.searchText} />
             <ChapterList searchText={this.state.searchText} />
             <ArtistList searchText={this.state.searchText} />
@@ -124,7 +130,7 @@ function MangaList ({ searchText }) {
 function ChapterList ({ searchText }) {
   if (!searchText) return null
 
-  const filter = { title: searchText }
+  const filter = { title: searchText, number: { gt: 0 } }
   const renderChapter = chapter => (
     <Link
       key={chapter.id}
@@ -134,7 +140,7 @@ function ChapterList ({ searchText }) {
         imageId: 1
       })}
     >
-      {chapter.number} - {chapter.shortTitle}
+      {chapter.shortTitle} [ch.{chapter.number}]
     </Link>
   )
   return (
@@ -184,7 +190,7 @@ function ArtistList ({ searchText }) {
 
 // Styling
 const Container = styled.header(props => {
-  const { colors, padding, topBarHeight } = props.theme
+  const { colors, padding, topBarHeight, transition } = props.theme
   return {
     boxSizing: 'border-box',
     flexGrow: 1,
@@ -196,10 +202,19 @@ const Container = styled.header(props => {
     },
 
     '#search-box': {
+      border: `1px solid ${colors.border}`,
+      outline: 'none',
+      background: colors.background,
+      color: colors.onBackground,
+      padding: padding / 2,
       width: '90%',
-      maxWidth: 1000,
+      maxWidth: 600,
       margin: '0 auto',
-      display: 'block'
+      display: 'block',
+
+      '&:hover': {
+        borderColor: colors.borderHover
+      }
     },
 
     '#search-results': {
@@ -210,15 +225,19 @@ const Container = styled.header(props => {
       width: '100%',
       overflowY: 'auto',
       background: 'rgba(0, 0, 0, 0.7)',
+      transition: transition(0.2),
+      visibility: 'visible',
+      opacity: 1,
 
       '&.hidden': {
-        display: 'none'
+        visibility: 'hidden',
+        opacity: 0
       },
 
       '.search-results__content': {
         margin: `0 auto`,
         minHeight: '100%',
-        maxWidth: 1600,
+        maxWidth: 1200,
         padding: `${padding}px`,
         backgroundColor: colors.background,
         color: colors.onBackground,

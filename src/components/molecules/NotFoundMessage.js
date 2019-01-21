@@ -34,7 +34,7 @@ const NotFoundMessage = (props) => {
   const face = textfaces[Math.floor(Math.random() * textfaces.length)]
 
   return (
-    <Box className={props.className}>
+    <Box className={`${props.className || ''} not-found-msg`}>
       <div className='not-found-msg__face'>{face}</div>
       <div className='not-found-msg__txt'>No contents found!</div>
     </Box>

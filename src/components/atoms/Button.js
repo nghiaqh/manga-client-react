@@ -1,3 +1,4 @@
+import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
@@ -13,12 +14,12 @@ class Button extends PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <button id={props.id}
+      <StyledButton id={props.id}
         className={`button--basic ${props.className || ''}`}
         onClick={props.onClick}
         disabled={props.disabled}>
         {props.children}
-      </button>
+      </StyledButton>
     )
   }
 
@@ -33,6 +34,20 @@ class Button extends PureComponent {
     )
   }
 }
+
+const StyledButton = styled.button(props => {
+  const { padding } = props.theme
+
+  return {
+    padding: padding / 3,
+    outline: 'none',
+    border: 'none',
+    background: 'none',
+    color: 'inherit',
+    cursor: 'pointer',
+    fontWeight: 600
+  }
+})
 
 const mapStateToProps = (state) => {
   return {

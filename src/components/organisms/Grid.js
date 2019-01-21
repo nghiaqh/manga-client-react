@@ -10,7 +10,7 @@ export default class Grid extends React.PureComponent {
   }
 
   render () {
-    const { retrievingItems, render } = this.props
+    const { retrievingItems, render, colWidth } = this.props
 
     const items = this.props.items.filter(item => item && item.id)
       .map(item => <div className='grid__item' key={item.id}>
@@ -23,7 +23,7 @@ export default class Grid extends React.PureComponent {
 
     return (
       <>
-        <GridContainer ref={this.ref}>
+        <GridContainer ref={this.ref} colWidth={colWidth}>
           {items}
         </GridContainer>
         {statusText}
@@ -39,7 +39,7 @@ const GridContainer = styled('div')(props => {
   return {
     display: 'grid',
     gridGap: theme.padding / 2,
-    gridTemplateColumns: `repeat(auto-fill, minmax(${colWidth}, 1fr))`,
+    gridTemplateColumns: `repeat(auto-fill, minmax(${colWidth}px, 1fr))`,
     padding: theme.padding / 2,
 
     '.grid__item': {

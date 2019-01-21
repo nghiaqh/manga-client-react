@@ -65,8 +65,8 @@ class Home extends PureComponent {
       currentManga: mangaId
     })
 
-    // const manga = this.props.mangas[mangaId]
-    // window.history.replaceState({}, manga.title, e.currentTarget.href)
+    const manga = this.props.mangas[mangaId]
+    window.history.replaceState({}, manga.title, e.currentTarget.href)
   }
 
   closeQuickView () {
@@ -76,7 +76,7 @@ class Home extends PureComponent {
       currentManga: null
     })
 
-    // window.history.replaceState({}, 'Home', '/')
+    window.history.replaceState({}, 'Home', '/')
   }
 }
 
@@ -94,7 +94,7 @@ const Container = styled.div(props => {
       '.manga-detail__content': {
         margin: `0 auto`,
         minHeight: '100%',
-        maxWidth: 1600,
+        maxWidth: 1200,
         padding: `${padding}px`,
         backgroundColor: colors.background,
         color: colors.onBackground,
@@ -109,6 +109,10 @@ const Container = styled.div(props => {
           clear: 'both'
         }
       }
+    },
+
+    '.not-found-msg': {
+      margin: '0 auto'
     }
   }
 })

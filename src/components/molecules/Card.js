@@ -18,7 +18,7 @@ class Card extends PureComponent {
       <BasicCard className='card--basic' size={size} >
         <div className='card__media'>{media}</div>
         <div className='card__meta'>
-          <div className='card__title'>{title}</div>
+          <h3 className='card__title'>{title}</h3>
           <div className='card__description'>{description}</div>
         </div>
       </BasicCard>
@@ -39,26 +39,33 @@ class Card extends PureComponent {
 
 const BasicCard = styled.div(props => {
   const { width, height } = props.size || {}
-  const { colors, padding } = props.theme || {}
+  const { colors, padding, transition } = props.theme || {}
   return {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.primaryVariant,
     color: colors.onSurface,
     display: 'flex',
     flexFlow: 'column',
     width: width || 'auto',
     height: height || 'auto',
+    fontSize: `${height
+      ? (height < 200 ? height / 200 : 1) : 1}rem`,
+    border: `1px solid ${colors.border}`,
+    transition: transition(0.2),
+
+    '&:hover': {
+      borderColor: colors.borderHover
+    },
 
     '.card__meta': {
       padding: padding / 3
     },
     '.card__title': {
-      fontSize: `${height
-        ? (height < 300 ? height / 300 : 1) : 1}rem`,
-      fontWeight: 'bold'
+      fontSize: '1em',
+      margin: `0 0 ${padding / 3}px 0`
     },
     '.card__description': {
-      fontSize: `${height
-        ? (height < 300 ? height * 0.8 / 300 : 0.8) : 0.8}rem`
+      fontSize: '0.75em',
+      fontWeight: 500
     },
     '.card__media': {
       flexGrow: 1,

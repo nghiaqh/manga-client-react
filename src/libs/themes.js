@@ -42,43 +42,74 @@ const colors = {
     700: '#616161',
     800: '#424242',
     900: '#212121'
-  }
+  },
+  black: '#000',
+  white: '#fff'
 }
 
 export const common = {
   padding: 20,
   topBarHeight: 48,
-  breakpoints: [400, 641, 1008, 1400]
+  breakpoints: [400, 641, 1008, 1400],
+  transition: (duration = 0.4) => `all ${duration}s ease`
 }
 
 export default {
   light: {
     colors: {
-      primary: colors.blue[500],
-      primaryVariant: colors.blue[700],
-      secondary: colors.orange[200],
+      // background
+      primary: colors.blue[100],
+      primaryVariant: colors.blue[200],
+      secondary: colors.orange[100],
       secondaryVariant: colors.orange[400],
-      background: colors.blue[50],
-      surface: colors.blue[100],
-      onPrimary: colors.grey[50],
-      onSecondary: colors.grey[50],
+      background: colors.grey[50],
+      surface: colors.blue[50],
+      // text
+      onPrimary: colors.grey[900],
+      onPrimaryHover: colors.black,
+      onPrimaryMuted: colors.grey[300],
+      onPrimaryVariant: colors.grey[50],
+      onPrimaryVariantMuted: colors.grey[300],
+      onSecondary: colors.grey[800],
+      onSecondaryMuted: colors.grey[700],
+      onSecondaryVariant: colors.grey[50],
+      onSecondaryVariantmuted: colors.grey[300],
       onBackground: colors.grey[800],
-      onSurface: colors.grey[800]
+      onBackgroundMuted: colors.grey[500],
+      onSurface: colors.grey[900],
+      onSurfaceMuted: colors.grey[500],
+      // border
+      border: colors.grey[400],
+      borderHover: colors.grey[600]
     },
     ...common
   },
   dark: {
     colors: {
+      // background
       primary: colors.grey[800],
       primaryVariant: colors.grey[900],
       secondary: colors.orange[200],
       secondaryVariant: colors.orange[400],
-      background: colors.grey[600],
-      surface: colors.grey[700],
-      onPrimary: colors.grey[50],
+      background: colors.black,
+      surface: colors.grey[800],
+      // text
+      onPrimary: colors.orange[200],
+      onPrimaryHover: colors.grey[50],
+      onPrimaryMuted: colors.grey[500],
+      onPrimaryVariant: colors.grey[50],
+      onPrimaryVariantMuted: colors.grey[500],
       onSecondary: colors.grey[50],
+      onSecondaryMuted: colors.grey[500],
+      onSecondaryVariant: colors.grey[50],
+      onSecondaryVariantMuted: colors.grey[500],
       onBackground: colors.grey[50],
-      onSurface: colors.grey[50]
+      onBackgroundMuted: colors.grey[500],
+      onSurface: colors.grey[50],
+      onSurfaceMuted: colors.grey[500],
+      // border
+      border: colors.grey[800],
+      borderHover: colors.orange[200]
     },
     ...common
   }

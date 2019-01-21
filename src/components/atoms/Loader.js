@@ -13,7 +13,10 @@ class Loader extends PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <span className='loader--basic'>Loading...</span>
+      <span className='loader--basic' style={{
+        display: 'block',
+        textAlign: 'center'
+      }}>Loading...</span>
     )
   }
 

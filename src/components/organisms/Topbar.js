@@ -40,44 +40,56 @@ class Topbar extends PureComponent {
   }
 }
 
-const Header = styled.header(props => ({
-  backgroundColor: props.theme.colors.primary,
-  color: props.theme.colors.onPrimary,
-  padding: `0 ${props.theme.padding}px`,
-  height: props.theme.topBarHeight,
-  boxSizing: 'border-box',
+const Header = styled.header(props => {
+  const { colors, padding, topBarHeight, transition } = props.theme
 
-  '#topbar': {
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
+  return {
+    backgroundColor: colors.primary,
+    color: colors.onPrimary,
+    height: topBarHeight,
+    boxSizing: 'border-box',
+    zIndex: 1,
 
-  a: {
-    color: props.theme.colors.onPrimary,
-    textDecoration: 'none'
-  },
+    '#topbar': {
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: `0 ${padding}px`,
+      borderBottom: `1px solid ${colors.border}`,
 
-  '#topbar--menu-btn': {
-    float: 'right',
-    cursor: 'pointer'
-  },
+      '> a': {
+        fontWeight: 600
+      }
+    },
 
-  '#settings-menu': {
-    position: 'absolute',
-    right: props.theme.padding,
-    top: props.theme.topBarHeight,
-    padding: props.theme.padding,
-    backgroundColor: props.theme.colors.primary,
-    color: props.theme.colors.onPrimary,
-    zIndex: 100,
+    a: {
+      color: colors.onPrimary,
+      textDecoration: 'none'
+    },
 
-    '&.hidden': {
-      display: 'none'
+    '#topbar--menu-btn': {
+      float: 'right'
+    },
+
+    '#settings-menu': {
+      marginTop: 5,
+      float: 'right',
+      minWidth: 200,
+      background: colors.primary,
+      color: colors.onPrimary,
+      border: `1px solid ${colors.border}`,
+      transition: transition(0.2),
+      visibility: 'visible',
+      opacity: 1,
+
+      '&.hidden': {
+        visibility: 'hidden',
+        opacity: 0
+      }
     }
   }
-}))
+})
 
 const mapStateToProps = (state) => {
   return {
