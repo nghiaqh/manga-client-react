@@ -92,6 +92,7 @@ class Search extends PureComponent {
   handleKeyDown (e) {
     switch (e.key) {
       case 'Escape':
+        e.stopPropagation()
         return this.setState({ showResults: false })
       default:
         return null

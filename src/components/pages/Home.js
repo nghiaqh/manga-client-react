@@ -16,6 +16,7 @@ class Home extends PureComponent {
 
     this.quickView = this.quickView.bind(this)
     this.closeQuickView = this.closeQuickView.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   render () {
@@ -42,7 +43,7 @@ class Home extends PureComponent {
           <div className='manga-detail'>
             <div className='manga-detail__content'>
               <Button className='btn--close' onClick={this.closeQuickView}>
-                Close
+                Close [ESC]
               </Button>
               <MangaDetail match={{
                 params: {
@@ -54,6 +55,14 @@ class Home extends PureComponent {
         }
       </Container>
     )
+  }
+
+  componentDidMount () {
+    document.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleKeyDown)
   }
 
   quickView (e) {
@@ -77,6 +86,16 @@ class Home extends PureComponent {
     })
 
     window.history.replaceState({}, 'Home', '/')
+  }
+
+  handleKeyDown (e) {
+    switch (e.key) {
+      case 'Escape':
+        e.stopPropagation()
+        return this.state.currentManga && this.closeQuickView()
+      default:
+        return null
+    }
   }
 }
 
