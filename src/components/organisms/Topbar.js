@@ -82,6 +82,8 @@ const Header = styled.header(props => {
       transition: transition(0.2),
       visibility: 'visible',
       opacity: 1,
+      boxShadow: props.theme.boxShadow(),
+      zIndex: 2,
 
       '&.hidden': {
         visibility: 'hidden',

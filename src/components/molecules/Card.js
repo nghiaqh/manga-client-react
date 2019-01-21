@@ -51,6 +51,7 @@ const BasicCard = styled.div(props => {
       ? (height < 200 ? height / 200 : 1) : 1}rem`,
     border: `1px solid ${colors.border}`,
     transition: transition(0.2),
+    boxShadow: props.theme.boxShadow(),
 
     '&:hover': {
       borderColor: colors.borderHover

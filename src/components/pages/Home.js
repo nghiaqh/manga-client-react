@@ -65,6 +65,8 @@ class Home extends PureComponent {
     document.removeEventListener('keydown', this.handleKeyDown)
   }
 
+  /* TODO: put MangaDetail as component directly under <App/> and click on MangaCard will trigger this view
+  */
   quickView (e) {
     e.preventDefault()
     document.getElementById('latest-mangas-home')

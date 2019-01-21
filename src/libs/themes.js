@@ -51,7 +51,8 @@ export const common = {
   padding: 20,
   topBarHeight: 48,
   breakpoints: [400, 641, 1008, 1400],
-  transition: (duration = 0.4) => `all ${duration}s ease`
+  transition: (duration = 0.4) => `all ${duration}s ease`,
+  boxShadow: (rgba = 'rgba(0,0,0,.3)') => `0 1px 7px ${rgba}`
 }
 
 export default {
@@ -99,7 +100,7 @@ export default {
       onPrimaryMuted: colors.grey[500],
       onPrimaryVariant: colors.grey[50],
       onPrimaryVariantMuted: colors.grey[500],
-      onSecondary: colors.grey[50],
+      onSecondary: colors.grey[900],
       onSecondaryMuted: colors.grey[500],
       onSecondaryVariant: colors.grey[50],
       onSecondaryVariantMuted: colors.grey[500],

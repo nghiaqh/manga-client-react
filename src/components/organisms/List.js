@@ -36,8 +36,12 @@ const Box = styled.div(props => {
         transition: transition(0.2),
 
         '&:hover': {
-          backgroundColor: colors.surface,
-          color: colors.onSurface
+          backgroundColor: colors.secondary,
+          color: colors.onSecondary,
+
+          a: {
+            color: colors.onSecondary
+          }
         },
 
         a: {

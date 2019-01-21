@@ -112,7 +112,7 @@ function MangaList ({ searchText }) {
     }} />
   )
   return (
-    <>
+    <div>
       <h2>Mangas</h2>
 
       <ContentView
@@ -124,7 +124,7 @@ function MangaList ({ searchText }) {
         renderItem={renderMangaCard}
         layout='slider'
       />
-    </>
+    </div>
   )
 }
 
@@ -145,7 +145,7 @@ function ChapterList ({ searchText }) {
     </Link>
   )
   return (
-    <>
+    <div>
       <h2>Chapters</h2>
 
       <ContentView
@@ -157,7 +157,7 @@ function ChapterList ({ searchText }) {
         renderItem={renderChapter}
         layout='list'
       />
-    </>
+    </div>
   )
 }
 
@@ -173,7 +173,7 @@ function ArtistList ({ searchText }) {
     </Link>
   )
   return (
-    <>
+    <div>
       <h2>Artists</h2>
 
       <ContentView
@@ -185,22 +185,17 @@ function ArtistList ({ searchText }) {
         renderItem={renderArtist}
         layout='list'
       />
-    </>
+    </div>
   )
 }
 
 // Styling
-const Container = styled.header(props => {
+const Container = styled.div(props => {
   const { colors, padding, topBarHeight, transition } = props.theme
   return {
     boxSizing: 'border-box',
     flexGrow: 1,
     zIndex: 1,
-
-    a: {
-      color: colors.onBackground,
-      textDecoration: 'none'
-    },
 
     '#search-box': {
       border: `1px solid ${colors.border}`,
@@ -239,18 +234,29 @@ const Container = styled.header(props => {
         margin: `0 auto`,
         minHeight: '100%',
         maxWidth: 1200,
-        padding: `${padding}px`,
         backgroundColor: colors.background,
         color: colors.onBackground,
         boxSizing: 'border-box',
 
         '> button': {
+          margin: `${padding}px`,
           cursor: 'pointer',
           float: 'right'
         },
 
+        '> h2': {
+          backgroundColor: colors.surface,
+          margin: 0,
+          padding
+        },
+
         '> div': {
-          clear: 'both'
+          clear: 'both',
+          padding,
+
+          h2: {
+            marginTop: 0
+          }
         }
       }
     }
