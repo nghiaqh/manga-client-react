@@ -75,7 +75,7 @@ class Home extends PureComponent {
     })
 
     const manga = this.props.mangas[mangaId]
-    window.history.replaceState({}, manga.title, e.currentTarget.href)
+    window.history.pushState({}, manga.title, e.currentTarget.href)
   }
 
   closeQuickView () {
@@ -85,7 +85,7 @@ class Home extends PureComponent {
       currentManga: null
     })
 
-    window.history.replaceState({}, 'Home', '/')
+    window.history.pushState({}, 'Home', '/')
   }
 
   handleKeyDown (e) {
