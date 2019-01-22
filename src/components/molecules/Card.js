@@ -41,8 +41,8 @@ const BasicCard = styled.div(props => {
   const { width, height } = props.size || {}
   const { colors, padding, transition } = props.theme || {}
   return {
-    backgroundColor: colors.primaryVariant,
-    color: colors.onSurface,
+    backgroundColor: colors.primaryLight,
+    color: colors.onPrimaryLight,
     display: 'flex',
     flexFlow: 'column',
     width: width || 'auto',
@@ -54,7 +54,6 @@ const BasicCard = styled.div(props => {
     boxShadow: props.theme.boxShadow(),
 
     '&:hover': {
-      borderColor: colors.borderHover
     },
 
     '.card__meta': {

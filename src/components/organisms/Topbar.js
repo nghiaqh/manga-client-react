@@ -44,8 +44,8 @@ const Header = styled.header(props => {
   const { colors, padding, topBarHeight, transition } = props.theme
 
   return {
-    backgroundColor: colors.primary,
-    color: colors.onPrimary,
+    backgroundColor: colors.primaryDark,
+    color: colors.onPrimaryDark,
     height: topBarHeight,
     boxSizing: 'border-box',
     zIndex: 1,
@@ -64,7 +64,7 @@ const Header = styled.header(props => {
     },
 
     a: {
-      color: colors.onPrimary,
+      color: colors.onPrimaryDark,
       textDecoration: 'none'
     },
 

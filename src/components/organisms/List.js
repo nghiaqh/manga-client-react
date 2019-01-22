@@ -23,7 +23,7 @@ export default class List extends React.PureComponent {
 }
 
 const Box = styled.div(props => {
-  const { colors, padding, transition } = props.theme
+  const { padding, transition } = props.theme
   return {
     display: 'flex',
     flexDirection: 'column',
@@ -34,15 +34,6 @@ const Box = styled.div(props => {
       '> li': {
         padding: padding / 4,
         transition: transition(0.2),
-
-        '&:hover': {
-          backgroundColor: colors.secondary,
-          color: colors.onSecondary,
-
-          a: {
-            color: colors.onSecondary
-          }
-        },
 
         a: {
           textDecoration: 'none',

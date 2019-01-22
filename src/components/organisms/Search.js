@@ -209,7 +209,6 @@ const Container = styled.div(props => {
       display: 'block',
 
       '&:hover': {
-        borderColor: colors.borderHover
       }
     },
 
@@ -237,6 +236,10 @@ const Container = styled.div(props => {
         backgroundColor: colors.background,
         color: colors.onBackground,
         boxSizing: 'border-box',
+
+        a: {
+          color: colors.onBackground
+        },
 
         '> button': {
           margin: `${padding}px`,

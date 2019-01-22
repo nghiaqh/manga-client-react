@@ -3,7 +3,6 @@ import equal from 'deep-equal'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import Button from 'components/atoms/Button'
-import Loader from 'components/atoms/Loader'
 
 class WithLoadMore extends PureComponent {
   constructor (props) {
@@ -51,7 +50,7 @@ class WithLoadMore extends PureComponent {
             disabled={retrievingItems}
             onClick={this.handleClick}
           >
-            {retrievingItems ? <Loader /> : 'Load More'}
+            {!retrievingItems && 'More'}
           </LoadMoreButton>
         }
       </div>
