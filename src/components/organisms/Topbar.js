@@ -10,27 +10,40 @@ class Topbar extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      showSettings: false
+      showSettings: false,
+      showSearch: false
     }
 
     this.toggleSettings = this.toggleSettings.bind(this)
+    this.toggleSearch = this.toggleSearch.bind(this)
   }
 
   render () {
+    const { showSearch, showSettings } = this.state
+
     return (
       <Header>
         <div id='topbar'>
-          <Link className='topbar--nav' to='/'>Manga Reader</Link>
-          <Search location={this.props.location} />
-          <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
-            Settings
-          </Button>
+          <Link className='topbar--logo' to='/'>Manga Reader</Link>
+
+          <div id='topbar--menu'>
+            <Button id='topbar--menu-btn' onClick={this.toggleSearch}>
+              Search
+            </Button>
+            <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
+              Settings
+            </Button>
+          </div>
         </div>
 
-        <div id='settings-menu'
-          className={this.state.showSettings ? 'visible' : 'hidden'}>
+        <div id='settings-menu' className={showSettings ? 'visible' : 'hidden'}>
           <ThemePicker />
         </div>
+
+        <Search
+          visible={showSearch}
+          toggleSearch={this.toggleSearch}
+          location={this.props.location} />
       </Header>
     )
   }
@@ -38,52 +51,58 @@ class Topbar extends PureComponent {
   toggleSettings () {
     this.setState(state => ({ showSettings: !state.showSettings }))
   }
+
+  toggleSearch (open) {
+    this.setState(state => ({
+      showSearch: open !== undefined ? open : !state.showSearch
+    }))
+  }
 }
 
 const Header = styled.header(props => {
   const { colors, padding, topBarHeight, transition } = props.theme
 
   return {
-    backgroundColor: colors.primaryDark,
-    color: colors.onPrimaryDark,
-    height: topBarHeight,
-    boxSizing: 'border-box',
     zIndex: 1,
+    marginBottom: topBarHeight,
 
     '#topbar': {
-      height: '100%',
+      position: 'fixed',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      backgroundColor: colors.primaryDark,
+      color: colors.onPrimaryDark,
+      height: topBarHeight,
+      width: '100%',
+      boxSizing: 'border-box',
       padding: `0 ${padding}px`,
       borderBottom: `1px solid ${colors.border}`,
 
       '> a': {
-        fontWeight: 600
+        fontWeight: 600,
+        color: colors.onPrimaryDark,
+        textDecoration: 'none'
+      },
+
+      '#topbar--menu-btn': {
       }
     },
 
-    a: {
-      color: colors.onPrimaryDark,
-      textDecoration: 'none'
-    },
-
-    '#topbar--menu-btn': {
-      float: 'right'
-    },
-
     '#settings-menu': {
-      marginTop: 5,
+      position: 'absolute',
+      top: topBarHeight,
+      right: 0,
       float: 'right',
+      marginTop: 5,
       minWidth: 200,
       background: colors.primary,
       color: colors.onPrimary,
       border: `1px solid ${colors.border}`,
+      boxShadow: props.theme.boxShadow(),
       transition: transition(0.2),
       visibility: 'visible',
       opacity: 1,
-      boxShadow: props.theme.boxShadow(),
-      zIndex: 2,
 
       '&.hidden': {
         visibility: 'hidden',
