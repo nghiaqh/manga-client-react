@@ -41,8 +41,8 @@ const BasicCard = styled.div(props => {
   const { width, height } = props.size || {}
   const { colors, padding, transition } = props.theme || {}
   return {
-    backgroundColor: colors.primaryLight,
-    color: colors.onPrimaryLight,
+    backgroundColor: colors.surface,
+    color: colors.onSurface,
     display: 'flex',
     flexFlow: 'column',
     width: width || 'auto',

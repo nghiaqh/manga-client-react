@@ -5,7 +5,7 @@ export const common = {
   topBarHeight: 48,
   breakpoints: [400, 641, 1008, 1400],
   transition: (duration = 0.4) => `all ${duration}s ease`,
-  boxShadow: (rgba = 'rgba(0,0,0,.3)') => `0 1px 7px ${rgba}`
+  boxShadow: (rgba = 'rgba(0,0,0,.2)') => `0 1px 7px ${rgba}`
 }
 
 export default {
