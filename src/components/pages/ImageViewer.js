@@ -4,6 +4,7 @@ import findKey from 'lodash/findKey'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toUrl } from 'libs/routes'
 import toggleFullscreen from 'libs/fullscreen'
 import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
@@ -89,7 +90,9 @@ class ImageViewer extends React.PureComponent {
               `/ ${chapter.number}. ${chapter.shortTitle}`
             }
           </span>
-          <Button onClick={this.toggleFullScreen}>Toggle fullscreen [F]</Button>
+          <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
+            <FontAwesomeIcon icon='expand' size='2x' />
+          </Button>
         </header>
         <ImageSlider chapterId={chapterId} endSlide={endSlide} />
       </ImageView>
@@ -236,6 +239,9 @@ const ImageView = styled.div(props => {
       background: colors.surface,
       color: colors.onSurface,
       fontWeight: 600,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
 
       h1: {
         margin: 0,

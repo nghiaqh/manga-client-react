@@ -14,9 +14,10 @@ export default function SearchBox ({ onChange, onFocus, placeHolder, ref }) {
 }
 
 const Input = styled.input(props => {
-  const { colors, padding, transition, topBarHeight } = props.theme
+  const { colors, padding, transition, topBarHeight, borderRadius } = props.theme
   return {
-    border: `3px solid ${colors.primary}`,
+    border: `3px solid ${colors.onBackground}`,
+    borderRadius,
     outline: 'none',
     background: colors.background,
     color: colors.onBackground,

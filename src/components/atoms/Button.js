@@ -1,6 +1,7 @@
 import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Button extends PureComponent {
   render () {
@@ -17,7 +18,8 @@ class Button extends PureComponent {
       <StyledButton id={props.id}
         className={`button--basic ${props.className || ''}`}
         onClick={props.onClick}
-        disabled={props.disabled}>
+        disabled={props.disabled}
+        title={props.title}>
         {props.children}
       </StyledButton>
     )
@@ -56,3 +58,9 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Button)
+
+export function CloseButton ({ onClick }) {
+  return <Button id='search-panel--close-btn' onClick={onClick}>
+    <FontAwesomeIcon icon='times' size='2x' />
+  </Button>
+}

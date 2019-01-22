@@ -2,7 +2,7 @@ import debounce from 'lodash/debounce'
 import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import Button from 'components/atoms/Button'
+import { CloseButton } from 'components/atoms/Button'
 import SearchBox from './SearchBox'
 import MangaSlider from './MangaSlider'
 import ChapterList from './ChapterList'
@@ -32,9 +32,8 @@ class SearchPanel extends PureComponent {
     return (
       <Container id='search-overlay' visible={visible}>
         <div className='search-panel' ref={this.panel}>
-          <Button id='search-panel--close-btn' onClick={this.closeSearch}>
-            Close [ESC]
-          </Button>
+          <CloseButton onClick={this.closeSearch} />
+
           <h1 className='truncate'>
             Search
             <span id='search-term'>

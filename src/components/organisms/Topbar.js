@@ -2,6 +2,7 @@ import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'components/atoms/Button'
 import ThemePicker from 'components/molecules/ThemePicker'
 import Search from 'components/organisms/Search'
@@ -27,11 +28,15 @@ class Topbar extends PureComponent {
           <Link className='topbar--logo' to='/'>Manga Reader</Link>
 
           <div id='topbar--menu'>
-            <Button id='topbar--menu-btn' onClick={this.toggleSearch}>
-              Search
+            <Button className='topbar--menu-btn icon icon-search'
+              onClick={this.toggleSearch}
+              title='Search'>
+              <FontAwesomeIcon icon='search' size='2x' />
             </Button>
-            <Button id='topbar--menu-btn' onClick={this.toggleSettings}>
-              Settings
+            <Button className='topbar--menu-btn icon icon-settings'
+              onClick={this.toggleSettings}
+              title='Settings'>
+              <FontAwesomeIcon icon='cog' size='2x' />
             </Button>
           </div>
         </div>
@@ -73,6 +78,7 @@ const Header = styled.header(props => {
       justifyContent: 'space-between',
       backgroundColor: colors.primaryDark,
       color: colors.onPrimaryDark,
+      fontSize: '1.2em',
       height: topBarHeight,
       width: '100%',
       boxSizing: 'border-box',
@@ -85,7 +91,8 @@ const Header = styled.header(props => {
         textDecoration: 'none'
       },
 
-      '#topbar--menu-btn': {
+      button: {
+        marginLeft: padding
       }
     },
 

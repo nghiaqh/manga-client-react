@@ -100,7 +100,8 @@ const StyledSlider = styled.div(props => {
       display: 'flex',
       flexFlow: 'row nowrap',
       scrollBehavior: 'smooth',
-      overflowX: 'auto'
+      overflowX: 'auto',
+      scrollSnapType: 'x mandatory'
     },
 
     '.slide': {
@@ -108,6 +109,7 @@ const StyledSlider = styled.div(props => {
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
+      scrollSnapAlign: 'start',
 
       '&:last-child': {
         padding: `0 ${direction === 'rtl' ? 0 : theme.padding}px 0 ${

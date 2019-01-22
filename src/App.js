@@ -13,6 +13,16 @@ import ArtistDetail from 'components/organisms/ArtistDetail'
 import MangaDetail from 'components/organisms/MangaDetail'
 import ImageViewer from 'components/pages/ImageViewer'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faSearch,
+  faCog,
+  faTimes,
+  faExpand
+} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSearch, faCog, faTimes, faExpand)
+
 class App extends Component {
   constructor (props) {
     super(props)

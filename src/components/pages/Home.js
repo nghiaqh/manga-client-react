@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import styled from '@emotion/styled/macro'
 import { loadMoreMangas } from 'redux/actions/mangaList'
-import Button from 'components/atoms/Button'
+import { CloseButton } from 'components/atoms/Button'
 import ContentView from 'components/organisms/ContentView'
 import MangaCard from 'components/molecules/MangaCard'
 import MangaDetail from 'components/organisms/MangaDetail'
@@ -42,9 +42,7 @@ class Home extends PureComponent {
         { currentManga &&
           <div className='manga-detail'>
             <div className='manga-detail__content'>
-              <Button className='btn--close' onClick={this.closeQuickView}>
-                Close [ESC]
-              </Button>
+              <CloseButton onClick={this.closeQuickView} />
               <MangaDetail match={{
                 params: {
                   mangaId: currentManga
