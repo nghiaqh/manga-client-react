@@ -87,7 +87,7 @@ class ImageViewer extends React.PureComponent {
           <span>
             {
               chapter && chapter.number > 0 &&
-              `/ ${chapter.number}. ${chapter.shortTitle}`
+              ` ${chapter.number}. ${chapter.shortTitle}`
             }
           </span>
           <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
