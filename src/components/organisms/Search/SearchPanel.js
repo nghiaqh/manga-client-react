@@ -102,12 +102,12 @@ class SearchPanel extends PureComponent {
 // Styling
 const Container = styled.div(props => {
   const { visible } = props
-  const { colors, padding, transition } = props.theme
+  const { colors, padding, transition, boxShadow } = props.theme
   return {
     boxSizing: 'border-box',
     flexGrow: 1,
     zIndex: 1,
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     height: `100%`,
     width: '100%',
@@ -119,11 +119,13 @@ const Container = styled.div(props => {
 
     '.search-panel': {
       margin: `0 auto`,
-      minHeight: '100%',
+      // minHeight: '100%',
       maxWidth: 1600,
       backgroundColor: colors.background,
       color: colors.onBackground,
       boxSizing: 'border-box',
+      paddingBottom: padding,
+      boxShadow,
 
       a: {
         color: colors.onBackground

@@ -79,17 +79,19 @@ class ImageViewer extends React.PureComponent {
     return (
       <ImageView chapterId={chapterId} ref={this.ref}>
         <header>
-          <h1>
-            <Link to={toUrl('mangaDetail', { mangaId: mangaId })}>
-              {manga && manga.shortTitle} by {artist && artist.name}
-            </Link>
-          </h1>
-          <span>
-            {
-              chapter && chapter.number > 0 &&
+          <div className='breadcrumb'>
+            <h1 className='truncate'>
+              <Link to={toUrl('mangaDetail', { mangaId: mangaId })}>
+                {manga && manga.shortTitle} by {artist && artist.name}
+              </Link>
+            </h1>
+            <span className='truncate'>
+              {
+                chapter && chapter.number > 0 &&
               ` ${chapter.number}. ${chapter.shortTitle}`
-            }
-          </span>
+              }
+            </span>
+          </div>
           <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
             <FontAwesomeIcon icon='expand' size='2x' />
           </Button>
@@ -244,21 +246,23 @@ const ImageView = styled.div(props => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      flexFlow: 'row',
 
-      h1: {
-        margin: 0,
-        display: 'inline-block',
-        color: colors.onSurface,
-        marginRight: 10,
-        fontSize: '1.2rem'
-      },
+      '.breadcrumb': {
+        flexBasis: 'calc(100% - 90px)',
+        minWidth: 0,
 
-      span: {
+        h1: {
+          margin: 0,
+          display: 'inline-block',
+          color: colors.onSurface,
+          marginRight: 10,
+          fontSize: '1.2rem'
+        },
 
-      },
-
-      button: {
-        float: 'right'
+        '.truncate': {
+          display: 'block'
+        }
       },
 
       a: {
