@@ -230,6 +230,8 @@ const ImageView = styled.div(props => {
   const mainId = `chapter-${props.chapterId}-images`
   const { padding, colors } = props.theme
   return {
+    minHeight: 0,
+    minWidth: 0,
     display: 'flex',
     flexFlow: 'column',
     flexGrow: 1,

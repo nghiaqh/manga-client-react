@@ -57,18 +57,19 @@ class Home extends PureComponent {
 
   componentDidMount () {
     document.addEventListener('keydown', this.handleKeyDown)
+    this.bodyOverflow = document.body.style.overflow
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.handleKeyDown)
+    document.body.style.overflow = this.bodyOverflow
   }
 
   /* TODO: put MangaDetail as component directly under <App/> and click on MangaCard will trigger this view
   */
   quickView (e) {
     e.preventDefault()
-    document.getElementById('latest-mangas-home')
-      .parentElement.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
     const mangaId = e.currentTarget.dataset.key
     this.setState({
       currentManga: mangaId
@@ -79,8 +80,7 @@ class Home extends PureComponent {
   }
 
   closeQuickView () {
-    document.getElementById('latest-mangas-home')
-      .parentElement.style.overflow = 'auto'
+    document.body.style.overflow = this.bodyOverflow
     this.setState({
       currentManga: null
     })
@@ -103,7 +103,7 @@ const Container = styled.div(props => {
   const { topBarHeight, colors, padding } = props.theme
   return {
     '.manga-detail': {
-      position: 'absolute',
+      position: 'fixed',
       top: topBarHeight,
       height: `calc(100% - ${topBarHeight}px)`,
       width: '100%',

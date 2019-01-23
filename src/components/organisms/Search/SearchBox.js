@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from '@emotion/styled/macro'
 
-export default function SearchBox ({ onChange, onFocus, placeHolder, ref }) {
+const SearchBox = React.forwardRef(({ onChange, placeHolder }, ref) => {
   return (
     <Input
       id='search-box'
       type='text'
       autoFocus
+      ref={ref}
       placeholder={placeHolder || 'Search mangas, chapters, artists'}
-      onChange={onChange}
-      onFocus={onFocus} />
+      onChange={onChange} />
   )
-}
+})
 
 const Input = styled.input(props => {
   const { colors, padding, transition, topBarHeight, borderRadius } = props.theme
@@ -35,3 +35,5 @@ const Input = styled.input(props => {
     }
   }
 })
+
+export default SearchBox

@@ -19,10 +19,7 @@ class SearchPanel extends PureComponent {
     this.handleSearch = this.handleSearch.bind(this)
     this.emitChangeDebounced = debounce(this.emitChange, 250)
     this.closeSearch = () => props.toggleSearch(false)
-
-    document.addEventListener('keydown', this.handleKeyDown)
-
-    this.panel = React.createRef()
+    this.searchBox = React.createRef()
   }
 
   render () {
@@ -31,7 +28,7 @@ class SearchPanel extends PureComponent {
 
     return (
       <Container id='search-overlay' visible={visible}>
-        <div className='search-panel' ref={this.panel}>
+        <div className='search-panel'>
           <CloseButton onClick={this.closeSearch} />
 
           <h1 className='truncate'>
@@ -41,7 +38,7 @@ class SearchPanel extends PureComponent {
             </span>
           </h1>
 
-          <SearchBox onChange={this.handleSearch} />
+          <SearchBox onChange={this.handleSearch} ref={this.searchBox} />
 
           <MangaSlider searchText={searchText} />
           <ChapterList searchText={searchText} />
@@ -51,12 +48,26 @@ class SearchPanel extends PureComponent {
     )
   }
 
+  componentDidMount () {
+    document.addEventListener('keydown', this.handleKeyDown)
+    this.bodyOverflow = document.body.style.overflow
+  }
+
   componentDidUpdate (prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    const input = this.searchBox.current
+    const { location, visible } = this.props
+
+    if (location.pathname !== prevProps.location.pathname) {
       this.closeSearch()
     }
-    if (this.props.visible && !prevProps.visible) {
-      this.panel.current.querySelector('input[type=text]').focus()
+
+    if (visible && !prevProps.visible) {
+      setTimeout(() => { input && input.focus() }, 50)
+      document.body.style.overflow = 'hidden'
+    }
+
+    if (!visible && prevProps.visible) {
+      document.body.style.overflow = this.bodyOverflow
     }
   }
 

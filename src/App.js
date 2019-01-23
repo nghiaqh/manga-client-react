@@ -35,9 +35,9 @@ class App extends Component {
     const theme = themes[this.props.currentTheme || 'light']
     return (
       <ThemeProvider theme={theme}>
-        <Container>
+        <Container id='App'>
           <Topbar location={this.props.location} />
-          <main>{this.setRoutes()}</main>
+          {this.setRoutes()}
         </Container>
       </ThemeProvider>
     )
@@ -65,20 +65,13 @@ class App extends Component {
 // style
 const Container = styled.div(props => {
   return {
-    height: '-webkit-fill-available',
+    height: '100%',
+    minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
     background: props.theme.colors.background,
-    color: props.theme.colors.onBackground,
-
-    main: {
-      flexGrow: 1,
-      minHeight: 0,
-      minWidth: 0,
-      display: 'flex',
-      flexDirection: 'column'
-    }
+    color: props.theme.colors.onBackground
   }
 })
 
