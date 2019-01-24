@@ -4,15 +4,15 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { CloseButton } from 'components/atoms/Button'
 import SearchBox from './SearchBox'
-import MangaSlider from './MangaSlider'
-import ChapterList from './ChapterList'
-import ArtistList from './ArtistList'
+import MangaSlider from 'components/organisms/MangaSlider'
+import ChapterList from 'components/organisms/ChapterList'
+import ArtistList from 'components/organisms/ArtistList'
 
 class SearchPanel extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      searchText: false
+      searchText: null
     }
 
     this.handleKeyDown = this.handleKeyDown.bind(this)
@@ -40,9 +40,29 @@ class SearchPanel extends PureComponent {
 
           <SearchBox onChange={this.handleSearch} ref={this.searchBox} />
 
-          <MangaSlider searchText={searchText} />
-          <ChapterList searchText={searchText} />
-          <ArtistList searchText={searchText} />
+          { searchText !== null && searchText !== '' &&
+            <>
+              <div>
+                <h2>Mangas</h2>
+                <MangaSlider id={`mangas-search-${searchText}`}
+                  filter={{ title: searchText }} />
+              </div>
+              <div>
+                <h2>Chapters</h2>
+                <ChapterList id={`chapters-search-${searchText}`}
+                  filter={{
+                    title: searchText,
+                    number: { gt: 0 }
+                  }}
+                  pageSize={6} />
+              </div>
+              <div>
+                <h2>Artists</h2>
+                <ArtistList id={`artists-search-${searchText}`}
+                  filter={{ name: searchText }} />
+              </div>
+            </>
+          }
         </div>
       </Container>
     )

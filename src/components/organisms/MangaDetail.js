@@ -1,17 +1,13 @@
 import get from 'lodash/get'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import styled from '@emotion/styled/macro'
 import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
-import { loadMoreChapters } from 'redux/actions/chapterList'
-import { loadMoreMangas } from 'redux/actions/mangaList'
-import { toUrl } from 'libs/routes'
-import ContentView from 'components/organisms/ContentView'
-import MangaCard from 'components/molecules/MangaCard'
 import Image from 'components/atoms/Image'
+import ChapterList from 'components/organisms/ChapterList'
+import MangaSlider from 'components/organisms/MangaSlider'
 
-class MangaDetail extends PureComponent {
+class MangaDetail extends React.PureComponent {
   componentDidMount () {
     const { dispatch } = this.props
     dispatch(fetchMangaByIdIfNeeded(this.props.match.params.mangaId))
@@ -47,8 +43,29 @@ class MangaDetail extends PureComponent {
             </div>
           </div>
         </header>
-        <div><ChapterList manga={manga} /></div>
-        <div><SameAuthorMangaList manga={manga} /></div>
+
+        { manga && manga.id &&
+          <div>
+            <h2>Chapters</h2>
+            <ChapterList id={`manga-${manga.id}-chapters`}
+              filter={{ mangaId: manga.id }}
+            />
+          </div>
+        }
+
+        { manga && manga.artistId &&
+          <div>
+            <h2>From same author</h2>
+            <MangaSlider id={`mangas-by-artist-${manga.artistId}`}
+              filter={{
+                artistId: manga.artistId,
+                id: {
+                  neq: manga.id
+                }
+              }}
+            />
+          </div>
+        }
       </Container>
     )
   }
@@ -61,71 +78,6 @@ class MangaDetail extends PureComponent {
         ? 'center bottom' : 'center top'
     })
   }
-}
-
-function ChapterList ({ manga }) {
-  if (!manga || !manga.id) return null
-
-  const filter = { mangaId: manga.id }
-  const renderChapter = chapter => (
-    <Link
-      key={chapter.id}
-      to={toUrl('imageViewer', {
-        mangaId: chapter.mangaId,
-        chapterId: chapter.id,
-        imageId: 1
-      })}
-    >
-      {chapter.shortTitle}
-    </Link>
-  )
-  return (
-    <>
-      <h2>Chapters</h2>
-
-      <ContentView
-        id={`manga-${manga.id}-chapters`}
-        entityType='chapters'
-        filter={filter}
-        pageSize={24}
-        loadMoreFunc={loadMoreChapters}
-        renderItem={renderChapter}
-        layout='list'
-      />
-    </>
-  )
-}
-
-function SameAuthorMangaList ({ manga }) {
-  if (!manga || !manga.artistId) return null
-
-  const filter = {
-    artistId: manga.artistId,
-    id: {
-      neq: manga.id
-    }
-  }
-  const renderMangaCard = manga => (
-    <MangaCard key={manga.id} manga={manga} size={{
-      height: 280,
-      width: 180
-    }} />
-  )
-
-  return (
-    <>
-      <h2>Same Author</h2>
-      <ContentView
-        id={`mangas-by-artist-${manga.artistId}`}
-        entityType='mangas'
-        filter={filter}
-        pageSize={24}
-        loadMoreFunc={loadMoreMangas}
-        renderItem={renderMangaCard}
-        layout='slider'
-      />
-    </>
-  )
 }
 
 const Container = styled.div(props => {
