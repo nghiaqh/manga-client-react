@@ -1,39 +1,38 @@
 import React from 'react'
 import styled from '@emotion/styled/macro'
 
-const SearchBox = React.forwardRef(({ onChange, placeHolder }, ref) => {
-  return (
-    <Input
+export default React.forwardRef(({ onChange, placeHolder }, ref) =>
+  <InputContainer>
+    <input
       id='search-box'
       type='text'
       autoFocus
       ref={ref}
       placeholder={placeHolder || 'Search mangas, chapters, artists'}
       onChange={onChange} />
-  )
-})
+  </InputContainer>
+)
 
-const Input = styled.input(props => {
-  const { colors, padding, transition, topBarHeight, borderRadius } = props.theme
+const InputContainer = styled.div(props => {
+  const { colors, transition, topBarHeight } = props.theme
   return {
-    border: `3px solid ${colors.onBackground}`,
-    borderRadius,
-    outline: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    transition,
     background: colors.background,
     color: colors.onBackground,
-    padding: padding,
-    width: '90%',
-    maxWidth: 600,
-    margin: '0 auto',
-    display: 'block',
-    maxHeight: topBarHeight,
-    boxSizing: 'border-box',
-    transition,
-    fontSize: '1.2em',
 
-    '&:hover': {
+    input: {
+      background: colors.background,
+      color: colors.onBackground,
+      fontSize: '1.1em',
+      border: 'none',
+      borderBottom: `1px solid ${colors.border}`,
+      outline: 'none',
+      boxSizing: 'border-box',
+      height: topBarHeight,
+      maxWidth: 600,
+      width: '100%'
     }
   }
 })
-
-export default SearchBox

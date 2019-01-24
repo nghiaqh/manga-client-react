@@ -29,25 +29,19 @@ class SearchPanel extends PureComponent {
     return (
       <Container id='search-overlay' visible={visible}>
         <div className='search-panel'>
-          <CloseButton onClick={this.closeSearch} />
-
-          <h1 className='truncate'>
-            Search
-            <span id='search-term'>
-              {searchText ? ` "${searchText}"` : ''}
-            </span>
-          </h1>
-
-          <SearchBox onChange={this.handleSearch} ref={this.searchBox} />
+          <div className='search-header'>
+            <SearchBox onChange={this.handleSearch} ref={this.searchBox} />
+            <CloseButton onClick={this.closeSearch} />
+          </div>
 
           { searchText !== null && searchText !== '' &&
             <>
-              <div>
+              <div className='search-results'>
                 <h2>Mangas</h2>
                 <MangaSlider id={`mangas-search-${searchText}`}
                   filter={{ title: searchText }} />
               </div>
-              <div>
+              <div className='search-results'>
                 <h2>Chapters</h2>
                 <ChapterList id={`chapters-search-${searchText}`}
                   filter={{
@@ -56,7 +50,7 @@ class SearchPanel extends PureComponent {
                   }}
                   pageSize={6} />
               </div>
-              <div>
+              <div className='search-results'>
                 <h2>Artists</h2>
                 <ArtistList id={`artists-search-${searchText}`}
                   filter={{ name: searchText }} />
@@ -101,11 +95,9 @@ class SearchPanel extends PureComponent {
   }
 
   emitChange (value) {
-    if (value !== '') {
-      this.setState({
-        searchText: value
-      })
-    }
+    this.setState({
+      searchText: value.trim()
+    })
   }
 
   handleKeyDown (e) {
@@ -122,14 +114,14 @@ class SearchPanel extends PureComponent {
 // Styling
 const Container = styled.div(props => {
   const { visible } = props
-  const { colors, padding, transition, boxShadow } = props.theme
+  const { colors, padding, transition, boxShadow, topBarHeight } = props.theme
   return {
     boxSizing: 'border-box',
     flexGrow: 1,
     zIndex: 1,
     position: 'fixed',
     top: 0,
-    height: `100%`,
+    height: '100%',
     width: '100%',
     overflowY: 'auto',
     background: 'rgba(0, 0, 0, 0.7)',
@@ -138,31 +130,36 @@ const Container = styled.div(props => {
     opacity: visible ? 1 : 0,
 
     '.search-panel': {
-      margin: `0 auto`,
-      // minHeight: '100%',
+      margin: '0 auto',
+      minHeight: topBarHeight,
       maxWidth: 1600,
       backgroundColor: colors.background,
       color: colors.onBackground,
       boxSizing: 'border-box',
-      paddingBottom: padding,
+      padding: '5px 0',
       boxShadow,
 
       a: {
         color: colors.onBackground
       },
 
-      '> button': {
-        margin: `${padding}px`,
-        cursor: 'pointer',
-        float: 'right'
+      '.search-header': {
+        display: 'flex',
+        flexFlow: 'row',
+        alignItems: 'center',
+
+        '> div': {
+          flexGrow: 1,
+          justifyContent: 'center'
+        },
+
+        'button': {
+          margin: `0 ${padding}px`,
+          cursor: 'pointer'
+        }
       },
 
-      '> h1': {
-        margin: 0,
-        padding
-      },
-
-      '> div': {
+      'div.search-results': {
         clear: 'both',
         padding,
 
