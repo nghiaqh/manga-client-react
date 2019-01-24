@@ -30,7 +30,7 @@ class Home extends PureComponent {
     return (
       <Container>
         <ContentView
-          id='latest-mangas-home'
+          id='mangas-latest'
           entityType='mangas'
           filter={filter}
           pageSize={24}

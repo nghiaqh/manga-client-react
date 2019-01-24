@@ -18,13 +18,11 @@ class WithPagination extends PureComponent {
     const {
       withPagination,
       entities,
-      id,
       renderLayout,
       renderItem,
-      entityType,
       pageSize
     } = this.props
-    const data = withPagination[id] || {
+    const data = withPagination || {
       items: [],
       pageNumber: 1,
       total: 0,
@@ -34,7 +32,7 @@ class WithPagination extends PureComponent {
     const { items, retrievingItems } = data
 
     const contents = Array.isArray(items)
-      ? items.map(i => entities[entityType][i])
+      ? items.map(i => entities[i])
       : []
     const content = renderLayout(contents, retrievingItems, renderItem)
     const control = this.renderPaginationControl()
@@ -70,7 +68,7 @@ class WithPagination extends PureComponent {
 
   renderPaginationControl () {
     const { withPagination, id } = this.props
-    const data = withPagination[id] || {
+    const data = withPagination || {
       pageNumber: 1,
       pageSize: 20,
       total: 0
@@ -136,7 +134,7 @@ class WithPagination extends PureComponent {
 
   loadPagination (number) {
     const { dispatch, withPagination, filter, id, load, pageSize } = this.props
-    const { total, pageNumber } = withPagination[id]
+    const { total, pageNumber } = withPagination
     const totalPages = Math.ceil(parseInt(total) / parseInt(pageSize))
 
     if (number <= totalPages && number !== pageNumber) {
@@ -153,12 +151,13 @@ const PaginationControl = styled('div')`
 `
 
 // container
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const { withPagination, entities } = state
+  const { id, entityType } = ownProps
 
   return {
-    withPagination,
-    entities
+    withPagination: withPagination[id],
+    entities: entities[entityType]
   }
 }
 

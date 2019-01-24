@@ -11,7 +11,7 @@ import Topbar from 'components/organisms/Topbar'
 import Home from 'components/pages/Home'
 import ArtistDetail from 'components/organisms/ArtistDetail'
 import MangaDetail from 'components/organisms/MangaDetail'
-import ImageViewer from 'components/pages/ImageViewer'
+import MangaReader from 'components/pages/MangaReader'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -56,7 +56,7 @@ class App extends Component {
         <Route exact path={routes.home} component={Home} />
         <Route exact path={routes.mangaDetail} component={MangaDetail} />
         <Route exact path={routes.artistDetail} component={ArtistDetail} />
-        <Route exact path={routes.imageViewer} component={ImageViewer} />
+        <Route exact path={routes.imageViewer} component={MangaReader} />
       </Switch>
     )
   }

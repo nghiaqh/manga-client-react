@@ -26,7 +26,8 @@ export default class ContentView extends PureComponent {
       id,
       entityType,
       loadMoreFunc,
-      renderItem
+      renderItem,
+      onNoMoreContent
     } = this.props
     let renderLayout
 
@@ -56,6 +57,7 @@ export default class ContentView extends PureComponent {
         pageSize={pageSize}
         order={order}
         hideLoadMoreBtn={this.state.layout === 'slider'}
+        onNoMoreContent={onNoMoreContent}
       />
     )
   }
@@ -90,7 +92,7 @@ export default class ContentView extends PureComponent {
         render={render}
         loadMore={loadMore}
         layoutDirection={this.props.layoutDirection}
-        endSlide={this.props.endSlide}
+        lastSlide={this.props.lastSlide}
       />
     )
   }

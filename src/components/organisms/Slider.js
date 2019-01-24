@@ -18,7 +18,7 @@ export default class Slider extends PureComponent {
   }
 
   render () {
-    const { retrievingItems, render, layoutDirection, endSlide } = this.props
+    const { retrievingItems, render, layoutDirection, lastSlide } = this.props
     const items = this.props.items.filter(item => item && item.id)
 
     const slides = items.map((item, index) =>
@@ -30,7 +30,7 @@ export default class Slider extends PureComponent {
       <div className='slide slide--status' key='status-text'>
         {(items.length === 0 && !retrievingItems)
           ? <NotFoundMessage />
-          : (retrievingItems ? <Loader /> : endSlide || '')}
+          : (retrievingItems ? <Loader /> : lastSlide || '')}
       </div>
 
     slides.push(statusText)
