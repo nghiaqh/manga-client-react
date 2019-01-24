@@ -61,7 +61,7 @@ export default class Slider extends PureComponent {
 
   handleMouseWheel (event) {
     const direction = this.props.layoutDirection || 'ltr'
-    const deltaY = event.deltaMode === 1 ? event.deltaY * 90 : event.deltaY * 3
+    const deltaY = event.deltaMode === 1 ? event.deltaY * 50 : event.deltaY
     if (direction === 'ltr') {
       this.ref.current.scrollLeft += deltaY
     } else {
@@ -100,8 +100,8 @@ const StyledSlider = styled.div(props => {
       display: 'flex',
       flexFlow: 'row nowrap',
       scrollBehavior: 'smooth',
-      overflowX: 'auto',
-      scrollSnapType: 'x mandatory'
+      overflowX: 'auto'
+      // scrollSnapType: 'mandatory'
     },
 
     '.slide': {
@@ -109,7 +109,7 @@ const StyledSlider = styled.div(props => {
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
-      scrollSnapAlign: 'start',
+      // scrollSnapAlign: 'start',
 
       '&:last-child': {
         padding: `0 ${direction === 'rtl' ? 0 : theme.padding}px 0 ${
@@ -117,7 +117,6 @@ const StyledSlider = styled.div(props => {
       },
 
       '&.slide--status': {
-        // minWidth: 200,
         textAlign: 'center'
       }
     }

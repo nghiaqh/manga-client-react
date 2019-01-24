@@ -14,13 +14,14 @@ export default React.forwardRef(({ onChange, placeHolder }, ref) =>
 )
 
 const InputContainer = styled.div(props => {
-  const { colors, transition, topBarHeight } = props.theme
+  const { colors, transition, topBarHeight, padding } = props.theme
   return {
     display: 'flex',
     alignItems: 'center',
     transition,
     background: colors.background,
     color: colors.onBackground,
+    paddingLeft: padding,
 
     input: {
       background: colors.background,
