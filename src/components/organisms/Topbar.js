@@ -97,7 +97,7 @@ const Header = styled.header(props => {
     },
 
     '#settings-menu': {
-      position: 'absolute',
+      position: 'fixed',
       top: topBarHeight,
       right: 0,
       float: 'right',

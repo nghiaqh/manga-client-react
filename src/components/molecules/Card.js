@@ -21,6 +21,7 @@ class Card extends PureComponent {
           <h3 className='card__title'>{title}</h3>
           <div className='card__description'>{description}</div>
         </div>
+        <div className='card__overlay' />
       </BasicCard>
     )
   }
@@ -52,8 +53,18 @@ const BasicCard = styled.div(props => {
     border: `1px solid ${colors.border}`,
     transition: transition(0.2),
     boxShadow: props.theme.boxShadow(),
+    position: 'relative',
 
-    '&:hover': {
+    '.card__overlay': {
+      position: 'absolute',
+      width: '100%',
+      height: '100%'
+    },
+
+    '&:hover, &:focus': {
+      '.card__overlay': {
+        background: 'rgba(255, 255, 255, 0.1)'
+      }
     },
 
     '.card__meta': {
