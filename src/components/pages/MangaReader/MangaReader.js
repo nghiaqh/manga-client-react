@@ -100,7 +100,7 @@ class MangaReader extends React.PureComponent {
 
   toggleFullScreen () {
     const { chapterId } = this.props.match.params
-    const element = document.getElementById(`chapter-${chapterId}-images`)
+    const element = document.getElementById(`images-chapter-${chapterId}`)
     return toggleFullscreen(element)
   }
 
