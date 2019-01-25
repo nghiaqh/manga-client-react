@@ -37,12 +37,15 @@ class MangaDetail extends React.PureComponent {
         <header>
           <div className='media'
             onMouseOver={this.handleMouseOverMedia}
-            onMouseOut={this.handleMouseOverMedia}
-          >
+            onMouseOut={this.handleMouseOverMedia} >
             {previewImages.map(img => <Image key={img.id} {...img} />)}
           </div>
+        </header>
+
+        <div className='zone-container'>
           <h1 className='title'>{manga && manga.shortTitle}</h1>
           <strong className='artist'>{artist && artist.name}</strong>
+
           <div className='meta'>
             <div>
               <span className='meta__label'>Status:</span> {status}
@@ -50,20 +53,25 @@ class MangaDetail extends React.PureComponent {
             <div>
               <span className='meta__label'>Released:</span> {publishedDate}
             </div>
+            <div>
+              <span className='meta__label'>Chapters:</span> {manga.chaptersCount}
+            </div>
+            <div>
+              <span className='meta__label'>{manga.isNSFW && 'NSFW'}</span>
+            </div>
           </div>
-        </header>
+        </div>
 
         { manga && manga.id &&
-          <div>
+          <div className='zone-container'>
             <h2>Chapters</h2>
             <ChapterList id={`chapters-manga-${manga.id}`}
-              filter={{ mangaId: manga.id }}
-            />
+              filter={{ mangaId: manga.id }} />
           </div>
         }
 
         { manga && manga.artistId &&
-          <div>
+          <div className='zone-container'>
             <h2>From same author</h2>
             <MangaSlider id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
               filter={{
@@ -71,8 +79,7 @@ class MangaDetail extends React.PureComponent {
                 id: {
                   neq: manga.id
                 }
-              }}
-            />
+              }} />
           </div>
         }
       </Container>
@@ -93,27 +100,32 @@ const Container = styled.div(props => {
   const { colors, padding } = props.theme
 
   return {
-    padding: padding,
-
     'header': {
       '.media': {
-        height: 300,
+        height: '35vh',
         display: 'flex',
         overflowX: 'auto',
         img: {
           objectFit: 'cover',
           objectPosition: 'center top'
-        }
-      },
-      '.title': {
-        marginBottom: padding / 5
-      },
-      '.meta': {
-        fontSize: '0.8em'
+        },
+        borderBottom: `1px solid ${colors.border}`
       }
     },
 
-    '.content-list': {
+    '.meta': {
+      marginTop: padding,
+      fontSize: '0.9em',
+
+      '.meta__label': {
+        fontWeight: 600
+      }
+    },
+
+    '.zone-container': {
+      maxWidth: 1200,
+      margin: '0 auto',
+      padding
     },
 
     a: {

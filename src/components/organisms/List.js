@@ -36,9 +36,7 @@ const Box = styled.div(props => {
         transition: transition(0.2),
 
         a: {
-          textDecoration: 'none',
-          width: '100%',
-          display: 'block'
+          textDecoration: 'none'
         }
       }
     }

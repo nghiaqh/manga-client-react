@@ -65,7 +65,7 @@ class Topbar extends PureComponent {
 }
 
 const Header = styled.header(props => {
-  const { colors, padding, topBarHeight, transition } = props.theme
+  const { colors, padding, topBarHeight, transition, boxShadow } = props.theme
 
   return {
     zIndex: 1,
@@ -84,6 +84,7 @@ const Header = styled.header(props => {
       boxSizing: 'border-box',
       padding: `0 ${padding}px`,
       borderBottom: `1px solid ${colors.border}`,
+      boxShadow: boxShadow('rgba(0,0,0,0.3)'),
 
       '> a': {
         fontWeight: 600,
