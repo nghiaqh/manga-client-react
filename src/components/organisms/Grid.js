@@ -22,12 +22,12 @@ export default class Grid extends React.PureComponent {
       : (retrievingItems ? <Loader /> : '')
 
     return (
-      <>
+      <div className='content-grid'>
         <GridContainer ref={this.ref} colWidth={colWidth}>
           {items}
         </GridContainer>
         {statusText}
-      </>
+      </div>
     )
   }
 }

@@ -4,13 +4,14 @@ import React, {
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { routes } from 'libs/routes'
+import { Helmet } from 'react-helmet'
 import { ThemeProvider } from 'emotion-theming'
 import styled from '@emotion/styled/macro'
 import themes from 'libs/themes'
 import Topbar from 'components/organisms/Topbar'
 import Home from 'components/pages/Home'
-import ArtistDetail from 'components/organisms/ArtistDetail'
-import MangaDetail from 'components/organisms/MangaDetail'
+import ArtistDetail from 'components/pages/ArtistDetail'
+import MangaDetail from 'components/pages/MangaDetail'
 import MangaReader from 'components/pages/MangaReader'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -36,6 +37,11 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <Container id='App'>
+          <Helmet>
+            <meta charSet='utf-8' />
+            <title>Manga Reader</title>
+            <link rel='canonical' href='http://192.168.0.2:3000' />
+          </Helmet>
           <Topbar location={this.props.location} />
           {this.setRoutes()}
         </Container>

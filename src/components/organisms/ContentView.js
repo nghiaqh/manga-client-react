@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import List from 'components/organisms/List'
 import Grid from 'components/organisms/Grid'
-import MasonGrid from 'components/organisms/MasonGrid'
+import MasonryGrid from 'components/organisms/MasonryGrid'
 import Slider from 'components/organisms/Slider'
 import WithLoadMore from 'components/organisms/WithLoadMore'
 
@@ -14,7 +14,7 @@ export default class ContentView extends PureComponent {
 
     this.renderList = this.renderList.bind(this)
     this.renderGrid = this.renderGrid.bind(this)
-    this.renderMasonGrid = this.renderMasonGrid.bind(this)
+    this.renderMasonryGrid = this.renderMasonryGrid.bind(this)
     this.renderSlider = this.renderSlider.bind(this)
   }
 
@@ -27,7 +27,8 @@ export default class ContentView extends PureComponent {
       entityType,
       loadMoreFunc,
       renderItem,
-      onNoMoreContent
+      onNoMoreContent,
+      hideLoadMoreBtn
     } = this.props
     let renderLayout
 
@@ -38,8 +39,8 @@ export default class ContentView extends PureComponent {
       case 'slider':
         renderLayout = this.renderSlider
         break
-      case 'masonGrid':
-        renderLayout = this.renderMasonGrid
+      case 'masonry-grid':
+        renderLayout = this.renderMasonryGrid
         break
       case 'grid':
       default:
@@ -56,7 +57,7 @@ export default class ContentView extends PureComponent {
         filter={filter}
         pageSize={pageSize}
         order={order}
-        hideLoadMoreBtn={this.state.layout === 'slider'}
+        hideLoadMoreBtn={this.state.layout === 'slider' || hideLoadMoreBtn}
         onNoMoreContent={onNoMoreContent}
       />
     )
@@ -97,9 +98,9 @@ export default class ContentView extends PureComponent {
     )
   }
 
-  renderMasonGrid (items, retrievingItems, render) {
+  renderMasonryGrid (items, retrievingItems, render) {
     return (
-      <MasonGrid
+      <MasonryGrid
         items={items}
         retrievingItems={retrievingItems}
         render={render}

@@ -3,6 +3,7 @@ import get from 'lodash/get'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled/macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import toggleFullscreen from 'libs/fullscreen'
@@ -56,6 +57,16 @@ class MangaReader extends React.PureComponent {
 
     return (
       <ImageView>
+        <Helmet>
+          <title>
+            {`${manga && manga.title} -
+              ${chapter && chapter.number} -
+              ${chapter && chapter.shortTitle} | Manga Reader`}
+          </title>
+          <meta name='description'
+            content={chapter && chapter.shortDescription} />
+        </Helmet>
+
         <header>
           <div className='breadcrumb'>
             <h1 className='truncate'>
@@ -74,6 +85,7 @@ class MangaReader extends React.PureComponent {
             <FontAwesomeIcon icon='expand' size='2x' />
           </Button>
         </header>
+
         <ImageSlider
           chapterId={chapterId}
           lastSlide={lastSlide}

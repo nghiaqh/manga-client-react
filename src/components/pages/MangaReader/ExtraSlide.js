@@ -3,7 +3,7 @@ import styled from '@emotion/styled/macro'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { toUrl } from 'libs/routes'
-import MangaSlider from 'components/organisms/MangaSlider'
+import MangaGrid from 'components/organisms/MangaGrid'
 
 function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
   const { number } = chapters[chapterId] || {}
@@ -34,18 +34,28 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
 export default function ExtraSlide ({ mangas, mangaId, chapters, chapterId }) {
   const manga = mangas[mangaId]
   const filter = {
-    artistId: manga.artistId
+    artistId: manga.artistId,
+    id: {
+      neq: manga.id
+    }
   }
+  const { number } = chapters[chapterId]
 
   return (
     <Container>
+      <i>
+        { manga.chaptersCount === number && 'End of last chapter' }
+        { !number && 'End of manga' }
+      </i>
+
       <div>
         <h2>You might like</h2>
-        <MangaSlider
-          id={`mangas-suggestion-${mangaId}`}
+        <MangaGrid
+          id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
           filter={filter}
           pageSize={6}
-          cardSize={{ height: 200, width: 150 }} />
+          cardSize={{ height: 150, width: 90 }}
+          hideLoadMoreBtn />
       </div>
       <NextChapterLink
         mangas={mangas}
@@ -56,30 +66,38 @@ export default function ExtraSlide ({ mangas, mangaId, chapters, chapterId }) {
   )
 }
 
-const Container = styled.div(props => ({
-  display: 'flex',
-  flexFlow: 'column',
-  justifyContent: 'space-evenly',
-  height: '100%',
+const Container = styled.div(props => {
+  const { colors, padding } = props.theme
+  return {
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'space-evenly',
+    height: '100%',
 
-  '& > div': {
-    minWidth: 400,
-    maxWidth: '100%'
-  },
+    '& > div': {
+      width: `calc(100vw - ${padding * 2}px)`,
+      paddingRight: padding,
 
-  '.not-found-msg': {
-    margin: '0 auto'
-  },
+      '.content-grid': {
+        maxWidth: 700,
+        margin: '0 auto'
+      }
+    },
 
-  '#to-next-chapter': {
-    color: props.theme.colors.onSurface,
-    textDecoration: 'none',
-    fontWeight: 600,
-    fontSize: '0.8em',
-    direction: 'ltr',
+    '.not-found-msg': {
+      margin: '0 auto'
+    },
 
-    '&:hover': {
-      textDecoration: 'underline'
+    '#to-next-chapter': {
+      color: colors.onSurface,
+      textDecoration: 'none',
+      fontWeight: 600,
+      fontSize: '0.8em',
+      direction: 'ltr',
+
+      '&:hover': {
+        textDecoration: 'underline'
+      }
     }
   }
-}))
+})

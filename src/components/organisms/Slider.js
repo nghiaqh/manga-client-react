@@ -37,7 +37,7 @@ export default class Slider extends PureComponent {
 
     return (
       <>
-        <StyledSlider className='slider' direction={layoutDirection}>
+        <StyledSlider className='content-slider' direction={layoutDirection}>
           <div className='slider__main'
             ref={this.ref}
             onScroll={this.handleScroll}

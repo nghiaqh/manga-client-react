@@ -4,7 +4,7 @@ import Loader from 'components/atoms/Loader'
 import NotFoundMessage from 'components/molecules/NotFoundMessage'
 import { common as themeConfig } from 'libs/themes'
 
-export default class MasonGrid extends React.PureComponent {
+export default class MasonryGrid extends React.PureComponent {
   constructor (props) {
     super(props)
     this.ref = React.createRef()

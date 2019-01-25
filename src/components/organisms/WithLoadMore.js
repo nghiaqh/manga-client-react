@@ -62,7 +62,7 @@ class WithLoadMore extends PureComponent {
   componentDidMount () {
     const { dispatch, filter, loadMore, id, pageSize, order } = this.props
     dispatch(loadMore(id, pageSize, 1, filter, order))
-    this.checkNoMoreContent()
+    if (!this.state.onNoMoreContent) this.checkNoMoreContent()
   }
 
   componentDidUpdate (prevProps, prevState) {

@@ -1,6 +1,7 @@
 import get from 'lodash/get'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled/macro'
 import { fetchMangaByIdIfNeeded } from 'redux/actions/manga'
 import Image from 'components/atoms/Image'
@@ -25,6 +26,14 @@ class MangaDetail extends React.PureComponent {
 
     return (
       <Container>
+        <Helmet>
+          <title>
+            {`${manga && manga.title} | Manga Reader`}
+          </title>
+          <meta name='description'
+            content={manga && manga.shortDescription} />
+        </Helmet>
+
         <header>
           <div className='media'
             onMouseOver={this.handleMouseOverMedia}
@@ -56,7 +65,7 @@ class MangaDetail extends React.PureComponent {
         { manga && manga.artistId &&
           <div>
             <h2>From same author</h2>
-            <MangaSlider id={`mangas-artist-${manga.artistId}`}
+            <MangaSlider id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
               filter={{
                 artistId: manga.artistId,
                 id: {
