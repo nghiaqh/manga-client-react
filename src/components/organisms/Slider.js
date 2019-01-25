@@ -111,6 +111,11 @@ const StyledSlider = styled.div(props => {
       justifyContent: 'center',
       // scrollSnapAlign: 'start',
 
+      '&:first-of-type': {
+        padding: `0 ${direction === 'rtl' ? theme.padding : 0}px 0 ${
+          direction === 'rtl' ? 0 : theme.padding}px`
+      },
+
       '&:last-child': {
         padding: `0 ${direction === 'rtl' ? 0 : theme.padding}px 0 ${
           direction === 'rtl' ? theme.padding : 0}px`

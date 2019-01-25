@@ -137,7 +137,7 @@ const Container = styled.div(props => {
       color: colors.onBackground,
       boxSizing: 'border-box',
       padding: '5px 0',
-      boxShadow,
+      boxShadow: boxShadow(),
 
       a: {
         color: colors.onBackground
@@ -161,10 +161,15 @@ const Container = styled.div(props => {
 
       'div.search-results': {
         clear: 'both',
-        padding,
+        padding: `${padding}px 0`,
 
         h2: {
           marginTop: 0
+        },
+
+        '.content-list, .content-grid, h2': {
+          paddingLeft: padding,
+          paddingRight: padding
         }
       }
     }

@@ -6,7 +6,7 @@ export const common = {
   breakpoints: [400, 641, 1008, 1400],
   transition: (duration = 0.4) => `all ${duration}s ease`,
   boxShadow: (rgba = 'rgba(0,0,0,.2)') => `0 1px 7px ${rgba}`,
-  borderRadius: 8
+  borderRadius: 5
 }
 
 export default {
@@ -34,7 +34,7 @@ export default {
       onSurface: colors.grey[800],
       onError: 'white',
       // border
-      border: colors.grey[300]
+      border: colors.grey[400]
     },
     ...common
   },

@@ -40,7 +40,14 @@ class Card extends PureComponent {
 
 const BasicCard = styled.div(props => {
   const { width, height } = props.size || {}
-  const { colors, padding, transition } = props.theme || {}
+  const {
+    colors,
+    padding,
+    transition,
+    borderRadius,
+    boxShadow
+  } = props.theme || {}
+
   return {
     backgroundColor: colors.surface,
     color: colors.onSurface,
@@ -50,10 +57,11 @@ const BasicCard = styled.div(props => {
     height: height || 'auto',
     fontSize: `${height
       ? (height < 200 ? height / 200 : 1) : 1}rem`,
-    border: `1px solid ${colors.border}`,
     transition: transition(0.2),
-    boxShadow: props.theme.boxShadow(),
+    boxShadow: boxShadow(),
     position: 'relative',
+    borderRadius,
+    border: `1px solid ${colors.border}`,
 
     '.card__overlay': {
       position: 'absolute',
@@ -62,22 +70,25 @@ const BasicCard = styled.div(props => {
     },
 
     '&:hover, &:focus': {
+      boxShadow: boxShadow('rgba(0,0,0,.5)'),
       '.card__overlay': {
         background: 'rgba(255, 255, 255, 0.1)'
       }
     },
 
     '.card__meta': {
-      padding: padding / 3
+      padding: padding / 3,
+
+      '.card__title': {
+        fontSize: '1em',
+        margin: `0 0 ${padding / 3}px 0`
+      },
+      '.card__description': {
+        fontSize: '0.75em',
+        fontWeight: 500
+      }
     },
-    '.card__title': {
-      fontSize: '1em',
-      margin: `0 0 ${padding / 3}px 0`
-    },
-    '.card__description': {
-      fontSize: '0.75em',
-      fontWeight: 500
-    },
+
     '.card__media': {
       flexGrow: 1,
       minWidth: 0,
@@ -90,7 +101,9 @@ const BasicCard = styled.div(props => {
         objectPosition: 'top',
         minWidth: 0,
         minHeight: 0,
-        flexGrow: 1
+        flexGrow: 1,
+        borderRadius: `${borderRadius}px ${borderRadius}px 0 0`,
+        borderBottom: `1px solid ${colors.border}`
       }
     }
   }
