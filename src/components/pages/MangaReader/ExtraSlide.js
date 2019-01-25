@@ -76,6 +76,7 @@ const Container = styled.div(props => {
 
     '& > div': {
       width: `calc(100vw - ${padding * 2}px)`,
+      maxWidth: 960,
       paddingRight: padding,
 
       '.content-grid': {
@@ -85,14 +86,14 @@ const Container = styled.div(props => {
     },
 
     '.not-found-msg': {
-      margin: '0 auto'
+      margin: '0 auto',
+      direction: 'ltr'
     },
 
     '#to-next-chapter': {
       color: colors.onSurface,
       textDecoration: 'none',
       fontWeight: 600,
-      fontSize: '0.8em',
       direction: 'ltr',
 
       '&:hover': {
