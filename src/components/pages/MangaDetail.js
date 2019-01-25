@@ -46,6 +46,8 @@ class MangaDetail extends React.PureComponent {
           <h1 className='title'>{manga && manga.shortTitle}</h1>
           <strong className='artist'>{artist && artist.name}</strong>
 
+          <div className='meta'>{manga.description}</div>
+
           <div className='meta'>
             <div>
               <span className='meta__label'>Status:</span> {status}
@@ -56,6 +58,12 @@ class MangaDetail extends React.PureComponent {
             <div>
               <span className='meta__label'>Chapters:</span> {manga.chaptersCount}
             </div>
+            { manga.tags &&
+              <div>
+                <span className='meta__label'>Tags</span>
+                {manga.tags.map(tag => <span key={tag}>{tag} </span>)}
+              </div>
+            }
             <div>
               <span className='meta__label'>{manga.isNSFW && 'NSFW'}</span>
             </div>
@@ -115,7 +123,7 @@ const Container = styled.div(props => {
 
     '.meta': {
       marginTop: padding,
-      fontSize: '0.9em',
+      fontSize: '1em',
 
       '.meta__label': {
         fontWeight: 600

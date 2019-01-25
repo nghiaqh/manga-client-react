@@ -9,7 +9,7 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
   const { number } = chapters[chapterId] || {}
   const { chaptersCount } = mangas[mangaId] || {}
 
-  if (number && number < chaptersCount) {
+  if (number < chaptersCount && chaptersCount > 1) {
     const nextChapterKey = findKey(chapters, {
       mangaId: parseInt(mangaId),
       number: number + 1
