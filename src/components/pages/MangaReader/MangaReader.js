@@ -86,12 +86,13 @@ class MangaReader extends React.PureComponent {
           </Button>
         </header>
 
-        { contentFilter.includeNSFW
-          ? <ImageSlider
+        { !contentFilter.includeNSFW && manga && manga.isNSFW
+          ? <div className='nsfw-overlay'>NSFW content</div>
+          : <ImageSlider
             chapterId={chapterId}
             lastSlide={lastSlide}
             onNoMoreContent={this.fetchNextChapter} />
-          : <div className='nsfw-overlay'>NSFW content</div> }
+        }
       </ImageView>
     )
   }
@@ -103,7 +104,7 @@ class MangaReader extends React.PureComponent {
     if (mangaId && number) {
       this.props.dispatch(fetchChapterOfMangaIfNeeded(mangaId, number + 1))
     }
-    console.log('fetchNextChapter')
+
     // add a bit delay to avoid showing the extra slide
     // while prior slide content is rendering
     setTimeout(() => this.setState({

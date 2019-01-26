@@ -39,9 +39,9 @@ class MangaDetail extends React.PureComponent {
           <div className='media'
             onMouseOver={this.handleMouseOverMedia}
             onMouseOut={this.handleMouseOverMedia} >
-            { includeNSFW
-              ? previewImages.map(img => <Image key={img.id} {...img} />)
-              : <div className='nsfw-overlay'>NSFW content</div>
+            { !includeNSFW && manga && manga.isNSFW
+              ? <div className='nsfw-overlay'>NSFW content</div>
+              : previewImages.map(img => <Image key={img.id} {...img} />)
             }
           </div>
         </header>
