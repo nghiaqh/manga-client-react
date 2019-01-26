@@ -141,10 +141,8 @@ class WithLoadMore extends PureComponent {
     const filter = Object.assign({}, this.state.filter)
     if (includeNSFW) {
       delete filter.isNSFW
-      console.log('show NSFW content')
     } else {
       filter.isNSFW = false
-      console.log('hide NSFW content')
     }
     this.setState({ filter })
   }

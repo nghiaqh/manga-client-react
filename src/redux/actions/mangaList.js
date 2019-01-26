@@ -13,7 +13,6 @@ import {
   createReceiveItemCountAction
 } from './actionCreators'
 import getApiPath from 'libs/apiRoutes'
-// import { updateContentFilter } from './helper'
 
 export const setIsNew = json => json.map(item => {
   const now = new Date()
@@ -114,23 +113,15 @@ export const loadMoreMangas = (
     const { withLoadMore } = getState()
     const data = withLoadMore[id]
 
-    console.log(`current ${id} filter pre-update:`, data && data.filter, '/', filter)
-    // apply global filter for all requests
-    // const updatedFilter = updateContentFilter(filter, contentFilter)
-    // console.log(`current ${id} filter post-update:`, data && data.filter, '/', updatedFilter)
-
     if (
       typeof data !== 'undefined' &&
       equal(data.filter, filter) &&
-      // data.filter.title === filter.title &&
-      // data.filter.artistId === filter.artistId &&
-      // data.filter.isNSFW === filter.isNSFW &&
       data.pageNumber >= pageNumber &&
       data.order === order
     ) {
       return
     }
-    console.log('dispatch count and fetch mangas')
+
     dispatch(countMangas(id, filter))
     dispatch(fetchMangas(id, pageSize, pageNumber, filter, order))
   }
