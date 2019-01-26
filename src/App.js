@@ -40,7 +40,6 @@ class App extends Component {
           <Helmet>
             <meta charSet='utf-8' />
             <title>Manga Reader</title>
-            <link rel='canonical' href='http://192.168.0.2:3000' />
           </Helmet>
           <Topbar location={this.props.location} />
           {this.setRoutes()}
