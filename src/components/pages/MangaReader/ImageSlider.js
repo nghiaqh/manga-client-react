@@ -3,7 +3,11 @@ import { loadMoreImages } from 'redux/actions/imageList'
 import ContentView from 'components/organisms/ContentView'
 import Image from 'components/atoms/Image'
 
-export default function ImageSlider ({ chapterId, lastSlide, onNoMoreContent }) {
+export default function ImageSlider ({
+  chapterId,
+  lastSlide,
+  onNoMoreContent
+}) {
   if (!chapterId) return
   const contentViewId = `images-chapter-${chapterId}`
   const filter = { chapterId }

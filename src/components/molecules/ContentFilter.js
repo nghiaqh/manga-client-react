@@ -1,34 +1,33 @@
 import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { setTheme } from 'redux/actions/style'
+import { setContentFilter } from 'redux/actions/appSettings'
 
-class ThemePicker extends PureComponent {
+class ContentFilter extends PureComponent {
   constructor (props) {
     super(props)
-    this.setTheme = this.setTheme.bind(this)
+    this.toggleNSFW = this.toggleNSFW.bind(this)
   }
 
   render () {
     return (
       <Box>
-        <label htmlFor='night-mode-checkbox'>
-          Night mode
+        <label htmlFor='nsfw-checkbox'>
+          NSFW
         </label>
         <input
           type='checkbox'
-          id='night-mode-checkbox'
-          name='night-mode-checkbox'
-          onChange={this.setTheme}
-          checked={this.props.currentTheme === 'dark'}
+          id='nsfw-checkbox'
+          name='nsfw-checkbox'
+          onChange={this.toggleNSFW}
         />
       </Box>
     )
   }
 
-  setTheme (event) {
-    const theme = event.currentTarget.checked ? 'dark' : 'light'
-    this.props.dispatch(setTheme(theme))
+  toggleNSFW (event) {
+    const nsfw = event.currentTarget.checked
+    this.props.dispatch(setContentFilter({ nsfw }))
   }
 }
 
@@ -51,9 +50,8 @@ const Box = styled.div(props => {
 
 const mapStateToProps = (state) => {
   return {
-    style: state.style,
-    currentTheme: state.theme
+    contentFilter: state.contentFilter
   }
 }
 
-export default connect(mapStateToProps)(ThemePicker)
+export default connect(mapStateToProps)(ContentFilter)

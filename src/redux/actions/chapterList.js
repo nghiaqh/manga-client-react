@@ -105,7 +105,7 @@ export const loadMoreChapters = (
   order = 'number'
 ) =>
   (dispatch, getState) => {
-    const { withLoadMore } = getState()
+    const { withLoadMore, contentFilter } = getState()
     const data = withLoadMore[id]
     if (
       typeof data !== 'undefined' &&
@@ -114,6 +114,10 @@ export const loadMoreChapters = (
       data.pageNumber >= pageNumber
     ) {
       return
+    }
+
+    if (!contentFilter.nsfw) {
+      filter.isNSFW = false
     }
 
     dispatch(countChapters(id, filter))

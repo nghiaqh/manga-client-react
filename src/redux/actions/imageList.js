@@ -122,7 +122,7 @@ export const paginatePages = (
   order = 'number'
 ) =>
   (dispatch, getState) => {
-    const { withPagination } = getState()
+    const { withPagination, contentFilter } = getState()
     const data = withPagination[id]
     if (
       typeof data !== 'undefined' &&
@@ -130,6 +130,10 @@ export const paginatePages = (
       data.pageNumber === pageNumber
     ) {
       return
+    }
+
+    if (!contentFilter.nsfw) {
+      filter.isNSFW = false
     }
 
     const reducer = 'WITH_PAGINATION'

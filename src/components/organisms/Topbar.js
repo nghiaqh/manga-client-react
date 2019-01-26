@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'components/atoms/Button'
 import ThemePicker from 'components/molecules/ThemePicker'
 import Search from 'components/organisms/Search'
+import ContentFilter from 'components/molecules/ContentFilter'
 
 class Topbar extends PureComponent {
   constructor (props) {
@@ -43,6 +44,7 @@ class Topbar extends PureComponent {
 
         <div id='settings-menu' className={showSettings ? 'visible' : 'hidden'}>
           <ThemePicker />
+          <ContentFilter />
         </div>
 
         <Search

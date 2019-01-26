@@ -42,7 +42,7 @@ class MangaReader extends React.PureComponent {
   }
 
   render () {
-    const { mangas, artists, chapters } = this.props
+    const { mangas, artists, chapters, contentFilter } = this.props
     const { mangaId, chapterId } = this.props.match.params
 
     const manga = get(mangas, mangaId)
@@ -86,11 +86,12 @@ class MangaReader extends React.PureComponent {
           </Button>
         </header>
 
-        <ImageSlider
-          chapterId={chapterId}
-          lastSlide={lastSlide}
-          onNoMoreContent={this.fetchNextChapter}
-        />
+        { contentFilter.nsfw
+          ? <ImageSlider
+            chapterId={chapterId}
+            lastSlide={lastSlide}
+            onNoMoreContent={this.fetchNextChapter} />
+          : 'NSFW content' }
       </ImageView>
     )
   }
@@ -189,7 +190,8 @@ const mapStateToProps = (state, ownProps) => {
     mangas: state.entities.mangas || {},
     artists: state.entities.artists || {},
     chapters: state.entities.chapters || {},
-    [`chapter-${chapterId}-images`]: state.withLoadMore[`chapter-${chapterId}-images`]
+    [`chapter-${chapterId}-images`]: state.withLoadMore[`chapter-${chapterId}-images`],
+    contentFilter: state.contentFilter
   }
 }
 

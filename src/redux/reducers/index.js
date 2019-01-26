@@ -5,6 +5,7 @@ import withLoadMoreReducer from './withLoadMore'
 import withPaginationReducer from './withPagination'
 import breadcrumbReducer from './breadcrumb'
 import styleReducer from './style'
+import appSettingsReducer from './appSettings'
 
 /**
  * Combine reducers to make a flat state
@@ -23,5 +24,6 @@ export default reduceReducers(
   withLoadMoreReducer,
   withPaginationReducer,
   breadcrumbReducer,
-  styleReducer
+  styleReducer,
+  appSettingsReducer
 )

@@ -30,6 +30,9 @@ class Home extends PureComponent {
 const Container = styled.div(props => {
   // const { topBarHeight, colors, padding } = props.theme
   return {
+    '.not-found-msg': {
+      margin: '0 auto'
+    }
   }
 })
 

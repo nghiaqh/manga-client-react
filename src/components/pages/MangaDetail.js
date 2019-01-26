@@ -15,7 +15,7 @@ class MangaDetail extends React.PureComponent {
   }
 
   render () {
-    const { match, mangas, artists } = this.props
+    const { match, mangas, artists, contentFilter } = this.props
     const mangaId = parseInt(match.params.mangaId)
     const manga = get(mangas, mangaId, {})
     const artist = manga ? get(artists, manga.artistId) : null
@@ -23,6 +23,7 @@ class MangaDetail extends React.PureComponent {
     const status = manga.isComplete ? 'Complete' : 'On going'
     const publishedDate = manga.publishedAt
       ? new Date(manga.publishedAt).toLocaleDateString() : ''
+    const { nsfw } = contentFilter
 
     return (
       <Container>
@@ -38,7 +39,10 @@ class MangaDetail extends React.PureComponent {
           <div className='media'
             onMouseOver={this.handleMouseOverMedia}
             onMouseOut={this.handleMouseOverMedia} >
-            {previewImages.map(img => <Image key={img.id} {...img} />)}
+            {nsfw
+              ? previewImages.map(img => <Image key={img.id} {...img} />)
+              : 'NSFW content'
+            }
           </div>
         </header>
 
@@ -117,7 +121,8 @@ const Container = styled.div(props => {
           objectFit: 'cover',
           objectPosition: 'center top'
         },
-        borderBottom: `1px solid ${colors.border}`
+        borderBottom: `1px solid ${colors.border}`,
+        alignItems: 'center'
       }
     },
 
@@ -145,7 +150,8 @@ const Container = styled.div(props => {
 const mapStateToProps = (state) => {
   return {
     mangas: state.entities.mangas || {},
-    artists: state.entities.artists || {}
+    artists: state.entities.artists || {},
+    contentFilter: state.contentFilter
   }
 }
 

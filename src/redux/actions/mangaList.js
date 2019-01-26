@@ -109,7 +109,7 @@ export const loadMoreMangas = (
   order = 'publishedAt DESC'
 ) =>
   (dispatch, getState) => {
-    const { withLoadMore } = getState()
+    const { withLoadMore, contentFilter } = getState()
     const data = withLoadMore[id]
     if (
       typeof data !== 'undefined' &&
@@ -120,6 +120,9 @@ export const loadMoreMangas = (
       return
     }
 
+    if (!contentFilter.nsfw) {
+      filter.isNSFW = false
+    }
     dispatch(countMangas(id, filter))
     dispatch(fetchMangas(id, pageSize, pageNumber, filter, order))
   }

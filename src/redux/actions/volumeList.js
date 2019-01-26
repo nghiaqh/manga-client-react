@@ -107,7 +107,7 @@ export const loadMoreVolumes = (
   order = 'number'
 ) =>
   (dispatch, getState) => {
-    const { withLoadMore } = getState()
+    const { withLoadMore, contentFilter } = getState()
     const data = withLoadMore[id]
     if (
       typeof data !== 'undefined' &&
@@ -116,6 +116,10 @@ export const loadMoreVolumes = (
       data.pageNumber >= pageNumber
     ) {
       return
+    }
+
+    if (!contentFilter.nsfw) {
+      filter.isNSFW = false
     }
 
     dispatch(countVolumes(id, filter))
