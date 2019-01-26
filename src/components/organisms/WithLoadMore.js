@@ -96,7 +96,8 @@ class WithLoadMore extends PureComponent {
       dispatch(loadMore(id, pageSize, 1, filter, order))
     }
 
-    if (prevProps.contentFilter !== contentFilter) {
+    if (prevProps.contentFilter !== contentFilter ||
+      prevProps.filter !== this.props.filter) {
       this.updateFilter()
     }
   }
@@ -141,7 +142,7 @@ class WithLoadMore extends PureComponent {
 
   updateFilter () {
     const { includeNSFW } = this.props.contentFilter
-    const filter = Object.assign({}, this.state.filter)
+    const filter = Object.assign({}, this.state.filter, this.props.filter)
     if (includeNSFW) {
       delete filter.isNSFW
     } else {
