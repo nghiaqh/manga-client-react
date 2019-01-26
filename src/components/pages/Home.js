@@ -10,10 +10,14 @@ class Home extends PureComponent {
 
     return (
       <>
-        <Helmet>
-          <title>Latest mangas | Manga Reader</title>
-          <meta name='description' content='Latest mangas' />
-        </Helmet>
+        <Helmet
+          title={'Latest mangas | Manga Reader'}
+          meta={[
+            {
+              name: 'description',
+              content: 'Latest mangas'
+            }
+          ]} />
 
         <Container>
 

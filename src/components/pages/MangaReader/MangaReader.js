@@ -57,15 +57,16 @@ class MangaReader extends React.PureComponent {
 
     return (
       <>
-        <Helmet>
-          <title>
-            {`${manga && manga.title} -
-                ${chapter && chapter.number} -
-                ${chapter && chapter.shortTitle} | Manga Reader`}
-          </title>
-          <meta name='description'
-            content={chapter && chapter.shortDescription} />
-        </Helmet>
+        <Helmet
+          title={`${manga && manga.title} -
+            ${chapter && chapter.number} -
+            ${chapter && chapter.shortTitle} | Manga Reader`}
+          meta={[
+            {
+              name: 'description',
+              content: chapter && chapter.shortDescription
+            }
+          ]} />
 
         <ImageView>
           <header>

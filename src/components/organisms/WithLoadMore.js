@@ -10,7 +10,8 @@ class WithLoadMore extends PureComponent {
     super(props)
     this.state = {
       noMoreContent: false,
-      filter: props.filter
+      filter: props.filter,
+      hasError: false
     }
 
     if (!props.contentFilter.includeNSFW) {
@@ -22,7 +23,22 @@ class WithLoadMore extends PureComponent {
     this.updateFilter = this.updateFilter.bind(this)
   }
 
+  static getDerivedStateFromError (error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true }
+  }
+
+  componentDidCatch (error, info) {
+    // You can also log the error to an error reporting service
+    console.log(error, info)
+  }
+
   render () {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>
+    }
+
     const {
       withLoadMore,
       entities,

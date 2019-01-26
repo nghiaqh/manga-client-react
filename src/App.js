@@ -36,10 +36,15 @@ class App extends Component {
     const theme = themes[this.props.currentTheme || 'light']
     return (
       <>
-        <Helmet>
-          <title>Manga Reader</title>
-          <meta name='description' content='Latest mangas' />
-        </Helmet>
+        {/* Workaround for https://github.com/nfl/react-helmet/issues/373 */}
+        <Helmet
+          title={'Latest mangas | Manga Reader'}
+          meta={[
+            {
+              name: 'description',
+              content: 'Latest mangas'
+            }
+          ]} />
 
         <ThemeProvider theme={theme}>
           <Container id='App'>

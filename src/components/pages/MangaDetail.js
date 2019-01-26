@@ -27,12 +27,14 @@ class MangaDetail extends React.PureComponent {
 
     return (
       <>
-        <Helmet>
-          <title>
-            {`${manga && manga.title} | Manga Reader`}
-          </title>
-          <meta name='description' content={manga && manga.shortDescription} />
-        </Helmet>
+        <Helmet
+          title={`${manga && manga.title} | Manga Reader`}
+          meta={[
+            {
+              name: 'description',
+              content: manga && manga.shortDescription
+            }
+          ]} />
 
         <Container>
           <header>
