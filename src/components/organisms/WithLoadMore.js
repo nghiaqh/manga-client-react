@@ -84,11 +84,11 @@ class WithLoadMore extends PureComponent {
       onNoMoreContent,
       contentFilter
     } = this.props
-    const { filter } = this.state
+    const { filter, noMoreContent } = this.state
 
     this.checkNoMoreContent()
 
-    if (!prevState.noMoreContent && onNoMoreContent) {
+    if (!prevState.noMoreContent && noMoreContent && onNoMoreContent) {
       onNoMoreContent()
     }
 
