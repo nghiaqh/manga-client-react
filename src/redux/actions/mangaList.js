@@ -54,8 +54,9 @@ export const fetchMangas = (
   dispatch => {
     const hash = Date.now()
     dispatch(requestMangas(id, pageSize, pageNumber, filter, order, hash))
+
     const { title } = filter
-    const where = filter || {}
+    const where = Object.assign({}, filter)
     if (typeof title !== 'undefined' && title !== '') {
       where.title = {
         regexp: `/.*${title}.*/i`
@@ -84,11 +85,10 @@ export const countMangas = (id, filter = {}) => dispatch => {
   dispatch(requestNumberOfMangas(id, filter, hash))
 
   const { title } = filter
-  const where = filter
+  const where = Object.assign({}, filter)
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
-      regexp: '.*' + title + '.*',
-      options: 'i'
+      regexp: `/.*${title}.*/i`
     }
   }
 

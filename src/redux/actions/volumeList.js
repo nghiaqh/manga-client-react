@@ -50,13 +50,12 @@ export const fetchVolumes = (
   dispatch => {
     const hash = Date.now()
     dispatch(requestVolumes(id, pageSize, pageNumber, filter, order, hash))
-    const { mangaId, title } = filter
 
-    const where = mangaId ? { mangaId: mangaId } : {}
+    const { title } = filter
+    const where = Object.assign({}, filter)
     if (typeof title !== 'undefined' && title !== '') {
       where.title = {
-        regexp: '.*' + title + '.*',
-        options: 'i'
+        regexp: `/.*${title}.*/i`
       }
     }
 
@@ -82,11 +81,10 @@ export const countVolumes = (id, filter = {}) => dispatch => {
   dispatch(requestNumberOfVolumes(id, filter, hash))
 
   const { title } = filter
-  const where = filter
+  const where = Object.assign({}, filter)
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
-      regexp: '.*' + title + '.*',
-      options: 'i'
+      regexp: `/.*${title}.*/i`
     }
   }
 

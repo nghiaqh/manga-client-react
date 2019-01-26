@@ -23,7 +23,7 @@ class WithLoadMore extends PureComponent {
     this.updateFilter = this.updateFilter.bind(this)
   }
 
-  static getDerivedStateFromError (error) {
+  static getDerivedStateFromError () {
     // Update state so the next render will show the fallback UI.
     return { hasError: true }
   }
@@ -148,7 +148,7 @@ class WithLoadMore extends PureComponent {
     const totalPages = 1 + Math.ceil((total - data.pageSize) / pageSize)
 
     this.setState(({ noMoreContent }) => {
-      if (!retrievingItems && totalPages === pageNumber) {
+      if (!retrievingItems && (totalPages === pageNumber || total === 0)) {
         return !noMoreContent ? { noMoreContent: true } : null
       } else if (!retrievingItems && totalPages > pageNumber) {
         return noMoreContent ? { noMoreContent: false } : null

@@ -41,9 +41,9 @@ function fetchArtists (
   return (dispatch) => {
     const hash = Date.now()
     dispatch(requestArtists(id, pageSize, pageNumber, filter, order, hash))
-    const { name } = filter
 
-    const where = filter || {}
+    const { name } = filter
+    const where = Object.assign({}, filter)
     if (typeof name !== 'undefined' && name !== '') {
       where.name = {
         regexp: `/.*${name}.*/i`
@@ -74,11 +74,10 @@ function countArtists (id, filter = {}) {
     dispatch(requestNumberOfArtists(id, filter, hash))
 
     const { name } = filter
-    const where = {}
+    const where = Object.assign({}, filter)
     if (typeof name !== 'undefined' && name !== '') {
       where.name = {
-        regexp: '.*' + name + '.*',
-        options: 'i'
+        regexp: `/.*${name}.*/i`
       }
     }
 

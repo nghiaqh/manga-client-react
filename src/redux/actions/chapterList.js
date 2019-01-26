@@ -50,14 +50,16 @@ export const fetchChapters = (
   dispatch => {
     const hash = Date.now()
     dispatch(requestChapters(id, pageSize, pageNumber, filter, order, hash))
-    const { title } = filter
-    const where = filter || {}
 
+    const title = filter.title
+    const where = Object.assign({}, filter)
     if (typeof title !== 'undefined' && title !== '') {
       where.title = {
         regexp: `/.*${title}.*/i`
       }
     }
+
+    console.log(filter, where)
 
     const filterObj = {
       where: where,
@@ -80,8 +82,8 @@ export const countChapters = (id, filter = {}) => dispatch => {
   const hash = Date.now()
   dispatch(requestNumberOfChapters(id, filter, hash))
 
-  const { title } = filter
-  const where = filter
+  const title = filter.title
+  const where = Object.assign({}, filter)
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
       regexp: `/.*${title}.*/i`

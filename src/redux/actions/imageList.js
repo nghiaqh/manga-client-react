@@ -74,7 +74,7 @@ export const countImages = (id, filter = {}) => dispatch => {
   dispatch(requestNumberOfImages(id, filter, hash))
 
   const { title } = filter
-  const where = filter
+  const where = Object.assign({}, filter)
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
       regexp: '.*' + title + '.*',
