@@ -26,75 +26,76 @@ class MangaDetail extends React.PureComponent {
     const { includeNSFW } = contentFilter
 
     return (
-      <Container>
+      <>
         <Helmet>
           <title>
             {`${manga && manga.title} | Manga Reader`}
           </title>
-          <meta name='description'
-            content={manga && manga.shortDescription} />
+          <meta name='description' content={manga && manga.shortDescription} />
         </Helmet>
 
-        <header>
-          <div className='media'
-            onMouseOver={this.handleMouseOverMedia}
-            onMouseOut={this.handleMouseOverMedia} >
-            { !includeNSFW && manga && manga.isNSFW
-              ? <div className='nsfw-overlay'>NSFW content</div>
-              : previewImages.map(img => <Image key={img.id} {...img} />)
-            }
-          </div>
-        </header>
-
-        <div className='zone-container'>
-          <h1 className='title'>{manga && manga.shortTitle}</h1>
-          <strong className='artist'>{artist && artist.name}</strong>
-
-          <div className='meta'>{manga.description}</div>
-
-          <div className='meta'>
-            <div>
-              <span className='meta__label'>Status:</span> {status}
+        <Container>
+          <header>
+            <div className='media'
+              onMouseOver={this.handleMouseOverMedia}
+              onMouseOut={this.handleMouseOverMedia} >
+              { !includeNSFW && manga && manga.isNSFW
+                ? <div className='nsfw-overlay'>NSFW content</div>
+                : previewImages.map(img => <Image key={img.id} {...img} />)
+              }
             </div>
-            <div>
-              <span className='meta__label'>Released:</span> {publishedDate}
-            </div>
-            <div>
-              <span className='meta__label'>Chapters:</span> {manga.chaptersCount}
-            </div>
-            { manga.tags &&
+          </header>
+
+          <div className='zone-container'>
+            <h1 className='title'>{manga && manga.shortTitle}</h1>
+            <strong className='artist'>{artist && artist.name}</strong>
+
+            <div className='meta'>{manga.description}</div>
+
+            <div className='meta'>
               <div>
-                <span className='meta__label'>Tags</span>
-                {manga.tags.map(tag => <span key={tag}>{tag} </span>)}
+                <span className='meta__label'>Status:</span> {status}
               </div>
-            }
-            <div>
-              <span className='meta__label'>{manga.isNSFW && 'NSFW'}</span>
+              <div>
+                <span className='meta__label'>Released:</span> {publishedDate}
+              </div>
+              <div>
+                <span className='meta__label'>Chapters:</span> {manga.chaptersCount}
+              </div>
+              { manga.tags &&
+                <div>
+                  <span className='meta__label'>Tags</span>
+                  {manga.tags.map(tag => <span key={tag}>{tag} </span>)}
+                </div>
+              }
+              <div>
+                <span className='meta__label'>{manga.isNSFW && 'NSFW'}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        { manga && manga.id &&
-          <div className='zone-container'>
-            <h2>Chapters</h2>
-            <ChapterList id={`chapters-manga-${manga.id}`}
-              filter={{ mangaId: manga.id }} />
-          </div>
-        }
+          { manga && manga.id &&
+            <div className='zone-container'>
+              <h2>Chapters</h2>
+              <ChapterList id={`chapters-manga-${manga.id}`}
+                filter={{ mangaId: manga.id }} />
+            </div>
+          }
 
-        { manga && manga.artistId &&
-          <div className='zone-container'>
-            <h2>From same author</h2>
-            <MangaSlider id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
-              filter={{
-                artistId: manga.artistId,
-                id: {
-                  neq: manga.id
-                }
-              }} />
-          </div>
-        }
-      </Container>
+          { manga && manga.artistId &&
+            <div className='zone-container'>
+              <h2>From same author</h2>
+              <MangaSlider id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
+                filter={{
+                  artistId: manga.artistId,
+                  id: {
+                    neq: manga.id
+                  }
+                }} />
+            </div>
+          }
+        </Container>
+      </>
     )
   }
 

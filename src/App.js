@@ -35,16 +35,19 @@ class App extends Component {
   render () {
     const theme = themes[this.props.currentTheme || 'light']
     return (
-      <ThemeProvider theme={theme}>
-        <Container id='App'>
-          <Helmet>
-            <meta charSet='utf-8' />
-            <title>Manga Reader</title>
-          </Helmet>
-          <Topbar location={this.props.location} />
-          {this.setRoutes()}
-        </Container>
-      </ThemeProvider>
+      <>
+        <Helmet>
+          <title>Manga Reader</title>
+          <meta name='description' content='Latest mangas' />
+        </Helmet>
+
+        <ThemeProvider theme={theme}>
+          <Container id='App'>
+            <Topbar location={this.props.location} />
+            {this.setRoutes()}
+          </Container>
+        </ThemeProvider>
+      </>
     )
   }
 

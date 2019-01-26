@@ -1,5 +1,5 @@
 import styled from '@emotion/styled/macro'
-import equal from 'deep-equal'
+import isEqual from 'lodash/isEqual'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import Button from 'components/atoms/Button'
@@ -58,7 +58,7 @@ class WithPagination extends PureComponent {
   componentDidUpdate (prevProps) {
     const { dispatch, filter, id, load, pageSize, pageNumber } = this.props
     if (
-      equal(filter, prevProps.filter) &&
+      isEqual(filter, prevProps.filter) &&
       pageSize === prevProps.pageSize &&
       pageNumber === prevProps.pageNumber
     ) return

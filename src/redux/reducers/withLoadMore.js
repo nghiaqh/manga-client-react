@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
 import get from 'lodash/get'
-import equal from 'deep-equal'
+import isEqual from 'lodash/isEqual'
 import {
   REQUEST_ARTISTS,
   RECEIVE_ARTISTS,
@@ -40,7 +40,7 @@ const onDataRequested = (state, action) => {
   } = action.payload
 
   const prevFilter = state.withLoadMore[id].filter || {}
-  const toConcatItems = equal(filter, prevFilter)
+  const toConcatItems = isEqual(filter, prevFilter)
 
   return {
     ...state,

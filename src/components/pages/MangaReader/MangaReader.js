@@ -56,44 +56,46 @@ class MangaReader extends React.PureComponent {
       chapterId={chapterId} />
 
     return (
-      <ImageView>
+      <>
         <Helmet>
           <title>
             {`${manga && manga.title} -
-              ${chapter && chapter.number} -
-              ${chapter && chapter.shortTitle} | Manga Reader`}
+                ${chapter && chapter.number} -
+                ${chapter && chapter.shortTitle} | Manga Reader`}
           </title>
           <meta name='description'
             content={chapter && chapter.shortDescription} />
         </Helmet>
 
-        <header>
-          <div className='breadcrumb'>
-            <h1 className='truncate'>
-              <Link to={toUrl('mangaDetail', { mangaId: mangaId })}>
-                {manga && manga.shortTitle} by {artist && artist.name}
-              </Link>
-            </h1>
-            <span className='truncate'>
-              {
-                chapter && manga.chaptersCount > 1 &&
-              ` ${chapter.shortTitle} (${chapter.number}/${manga.chaptersCount})`
-              }
-            </span>
-          </div>
-          <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
-            <FontAwesomeIcon icon='expand' size='2x' />
-          </Button>
-        </header>
+        <ImageView>
+          <header>
+            <div className='breadcrumb'>
+              <h1 className='truncate'>
+                <Link to={toUrl('mangaDetail', { mangaId: mangaId })}>
+                  {manga && manga.shortTitle} by {artist && artist.name}
+                </Link>
+              </h1>
+              <span className='truncate'>
+                {
+                  chapter && manga.chaptersCount > 1 &&
+                ` ${chapter.shortTitle} (${chapter.number}/${manga.chaptersCount})`
+                }
+              </span>
+            </div>
+            <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
+              <FontAwesomeIcon icon='expand' size='2x' />
+            </Button>
+          </header>
 
-        { !contentFilter.includeNSFW && manga && manga.isNSFW
-          ? <div className='nsfw-overlay'>NSFW content</div>
-          : <ImageSlider
-            chapterId={chapterId}
-            lastSlide={lastSlide}
-            onNoMoreContent={this.fetchNextChapter} />
-        }
-      </ImageView>
+          { !contentFilter.includeNSFW && manga && manga.isNSFW
+            ? <div className='nsfw-overlay'>NSFW content</div>
+            : <ImageSlider
+              chapterId={chapterId}
+              lastSlide={lastSlide}
+              onNoMoreContent={this.fetchNextChapter} />
+          }
+        </ImageView>
+      </>
     )
   }
 

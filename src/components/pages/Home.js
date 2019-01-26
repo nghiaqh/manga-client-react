@@ -9,20 +9,23 @@ class Home extends PureComponent {
     const filter = {}
 
     return (
-      <Container>
+      <>
         <Helmet>
           <title>Latest mangas | Manga Reader</title>
           <meta name='description' content='Latest mangas' />
         </Helmet>
 
-        <MangaGrid
-          id={`mangas-latest`}
-          filter={filter}
-          pageSize={24}
-          // cardSize={{ height: 150, width: 90 }}
-          layout='masonry-grid'
-        />
-      </Container>
+        <Container>
+
+          <MangaGrid
+            id={`mangas-latest`}
+            filter={filter}
+            pageSize={24}
+            // cardSize={{ height: 150, width: 90 }}
+            layout='masonry-grid'
+          />
+        </Container>
+      </>
     )
   }
 }

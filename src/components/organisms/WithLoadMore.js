@@ -1,5 +1,5 @@
 import styled from '@emotion/styled/macro'
-import equal from 'deep-equal'
+import isEqual from 'lodash/isEqual'
 // import merge from 'lodash/merge'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
@@ -92,7 +92,7 @@ class WithLoadMore extends PureComponent {
       onNoMoreContent()
     }
 
-    if (!equal(filter, prevState.filter) || order !== prevProps.order) {
+    if (!isEqual(filter, prevState.filter) || order !== prevProps.order) {
       dispatch(loadMore(id, pageSize, 1, filter, order))
     }
 

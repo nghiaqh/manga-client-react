@@ -1,4 +1,4 @@
-import equal from 'deep-equal'
+import isEqual from 'lodash/isEqual'
 import { normalize, schema } from 'normalizr'
 import {
   REQUEST_VOLUMES,
@@ -114,7 +114,7 @@ export const loadMoreVolumes = (
     const data = withLoadMore[id]
     if (
       typeof data !== 'undefined' &&
-      equal(data.filter, filter) &&
+      isEqual(data.filter, filter) &&
       data.pageNumber >= pageNumber
     ) {
       return
