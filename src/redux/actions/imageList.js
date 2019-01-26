@@ -40,7 +40,8 @@ export const fetchImages = (
   filter = {},
   order = 'number') =>
   dispatch => {
-    dispatch(requestImages(id, pageSize, pageNumber, filter, order))
+    const hash = Date.now()
+    dispatch(requestImages(id, pageSize, pageNumber, filter, order, hash))
     const { chapterId, title } = filter
 
     const where = chapterId ? { chapterId: chapterId } : {}
@@ -60,7 +61,7 @@ export const fetchImages = (
 
     return fetch(`${getApiPath('images')}?filter=${JSON.stringify(filterObj)}`)
       .then(res => res.json())
-      .then(json => dispatch(receiveImages(id, json)))
+      .then(json => dispatch(receiveImages(id, json, hash)))
   }
 
 /**
@@ -69,7 +70,8 @@ export const fetchImages = (
  * @param {Object} filter { title: x, artist: y }
  */
 export const countImages = (id, filter = {}) => dispatch => {
-  dispatch(requestNumberOfImages(id, filter))
+  const hash = Date.now()
+  dispatch(requestNumberOfImages(id, filter, hash))
 
   const { title } = filter
   const where = filter
@@ -82,7 +84,7 @@ export const countImages = (id, filter = {}) => dispatch => {
 
   return fetch(`${getApiPath('countImages')}?where=${JSON.stringify(where)}`)
     .then(res => res.json())
-    .then(json => dispatch(receiveNumberOfImages(id, json)))
+    .then(json => dispatch(receiveNumberOfImages(id, json, hash)))
 }
 
 /**

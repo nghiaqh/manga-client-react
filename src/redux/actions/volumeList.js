@@ -48,7 +48,8 @@ export const fetchVolumes = (
   filter = {},
   order = 'number') =>
   dispatch => {
-    dispatch(requestVolumes(id, pageSize, pageNumber, filter, order))
+    const hash = Date.now()
+    dispatch(requestVolumes(id, pageSize, pageNumber, filter, order, hash))
     const { mangaId, title } = filter
 
     const where = mangaId ? { mangaId: mangaId } : {}
@@ -68,7 +69,7 @@ export const fetchVolumes = (
 
     return fetch(`${getApiPath('volumes')}?filter=${JSON.stringify(filterObj)}`)
       .then(res => res.json())
-      .then(json => dispatch(receiveVolumes(id, json)))
+      .then(json => dispatch(receiveVolumes(id, json, hash)))
   }
 
 /**
@@ -77,7 +78,8 @@ export const fetchVolumes = (
  * @param {Object} filter { title: x, artist: y }
  */
 export const countVolumes = (id, filter = {}) => dispatch => {
-  dispatch(requestNumberOfVolumes(id, filter))
+  const hash = Date.now()
+  dispatch(requestNumberOfVolumes(id, filter, hash))
 
   const { title } = filter
   const where = filter
@@ -90,7 +92,7 @@ export const countVolumes = (id, filter = {}) => dispatch => {
 
   return fetch(`${getApiPath('countVolumes')}?where=${JSON.stringify(where)}`)
     .then(res => res.json())
-    .then(json => dispatch(receiveNumberOfVolumes(id, json)))
+    .then(json => dispatch(receiveNumberOfVolumes(id, json, hash)))
 }
 
 /**

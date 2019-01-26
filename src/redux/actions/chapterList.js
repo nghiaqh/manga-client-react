@@ -48,7 +48,8 @@ export const fetchChapters = (
   filter = {},
   order = 'number') =>
   dispatch => {
-    dispatch(requestChapters(id, pageSize, pageNumber, filter, order))
+    const hash = Date.now()
+    dispatch(requestChapters(id, pageSize, pageNumber, filter, order, hash))
     const { title } = filter
     const where = filter || {}
 
@@ -67,7 +68,7 @@ export const fetchChapters = (
 
     return fetch(`${getApiPath('chapters')}?filter=${JSON.stringify(filterObj)}`)
       .then(res => res.json())
-      .then(json => dispatch(receiveChapters(id, json)))
+      .then(json => dispatch(receiveChapters(id, json, hash)))
   }
 
 /**
@@ -76,7 +77,8 @@ export const fetchChapters = (
  * @param {Object} filter { title: x, artist: y }
  */
 export const countChapters = (id, filter = {}) => dispatch => {
-  dispatch(requestNumberOfChapters(id, filter))
+  const hash = Date.now()
+  dispatch(requestNumberOfChapters(id, filter, hash))
 
   const { title } = filter
   const where = filter
@@ -88,7 +90,7 @@ export const countChapters = (id, filter = {}) => dispatch => {
 
   return fetch(`${getApiPath('countChapters')}?where=${JSON.stringify(where)}`)
     .then(res => res.json())
-    .then(json => dispatch(receiveNumberOfChapters(id, json)))
+    .then(json => dispatch(receiveNumberOfChapters(id, json, hash)))
 }
 
 /**

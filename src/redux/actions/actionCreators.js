@@ -1,27 +1,30 @@
 export const createRequestItemsAction = actionType =>
-  (id, pageSize, pageNumber, filter, order) => ({
+  (id, pageSize, pageNumber, filter, order, hash) => ({
     type: actionType,
     payload: {
       id,
       pageSize,
       pageNumber,
       filter,
-      order
+      order,
+      hash
     }
   })
 
-export const createReceiveItemsAction = (actionType, normalizeData) => (id, json) => {
-  const data = normalizeData(json)
-  return {
-    type: actionType,
-    payload: {
-      id,
-      items: data.result,
-      entities: data.entities,
-      receivedAt: Date.now()
+export const createReceiveItemsAction = (actionType, normalizeData) =>
+  (id, json, hash) => {
+    const data = normalizeData(json)
+    return {
+      type: actionType,
+      payload: {
+        id,
+        items: data.result,
+        entities: data.entities,
+        receivedAt: Date.now(),
+        hash
+      }
     }
   }
-}
 
 export const createRequestItemCountAction = actionType => (id, filter) => ({
   type: actionType,

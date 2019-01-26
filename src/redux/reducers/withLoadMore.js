@@ -1,4 +1,5 @@
 import merge from 'lodash/merge'
+import get from 'lodash/get'
 import equal from 'deep-equal'
 import {
   REQUEST_ARTISTS,
@@ -34,7 +35,8 @@ const onDataRequested = (state, action) => {
     filter,
     pageSize,
     pageNumber,
-    id
+    id,
+    hash
   } = action.payload
 
   const prevFilter = state.withLoadMore[id].filter || {}
@@ -51,17 +53,21 @@ const onDataRequested = (state, action) => {
         filter,
         order,
         retrievingItems: true,
-        toConcatItems
+        toConcatItems,
+        itemsHash: hash
       }
     }
   }
 }
 
 const onDataReceived = (state, action) => {
-  const { id, receivedAt, entities, items } = action.payload
+  const { id, receivedAt, entities, items, hash } = action.payload
+  const collection = get(state, `withLoadMore[${id}]`)
 
-  const currentItems = state.withLoadMore[id].items || []
-  const { toConcatItems } = state.withLoadMore[id]
+  if (!collection || get(collection, 'itemsHash') !== hash) return state
+
+  const currentItems = collection.items || []
+  const { toConcatItems } = collection
   const newItems = toConcatItems ? currentItems.concat(items) : items
 
   return {
@@ -69,7 +75,7 @@ const onDataReceived = (state, action) => {
     withLoadMore: {
       ...state.withLoadMore,
       [id]: {
-        ...state.withLoadMore[id],
+        ...collection,
         items: newItems,
         retrievingItems: false,
         receivedItemsAt: receivedAt
@@ -80,7 +86,7 @@ const onDataReceived = (state, action) => {
 }
 
 const onTotalRequested = (state, action) => {
-  const { id } = action.payload
+  const { id, hash } = action.payload
 
   return {
     ...state,
@@ -88,14 +94,18 @@ const onTotalRequested = (state, action) => {
       ...state.withLoadMore,
       [id]: {
         ...state.withLoadMore[id],
-        retrievingTotal: true
+        retrievingTotal: true,
+        totalHash: hash
       }
     }
   }
 }
 
 const onTotalReceived = (state, action) => {
-  const { id, total, receivedAt } = action.payload
+  const { id, total, receivedAt, hash } = action.payload
+  const collection = get(state, `withLoadMore[${id}]`)
+
+  if (!collection || get(collection, 'totalHash') !== hash) return state
 
   return {
     ...state,

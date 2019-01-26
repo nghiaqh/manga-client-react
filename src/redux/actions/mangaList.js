@@ -52,7 +52,8 @@ export const fetchMangas = (
   filter = {},
   order = 'modifiedAt DESC') =>
   dispatch => {
-    dispatch(requestMangas(id, pageSize, pageNumber, filter, order))
+    const hash = Date.now()
+    dispatch(requestMangas(id, pageSize, pageNumber, filter, order, hash))
     const { title } = filter
     const where = filter || {}
     if (typeof title !== 'undefined' && title !== '') {
@@ -70,7 +71,7 @@ export const fetchMangas = (
 
     return fetch(`${getApiPath('mangas')}?filter=${JSON.stringify(filterObj)}`)
       .then(res => res.json())
-      .then(json => dispatch(receiveMangas(id, json)))
+      .then(json => dispatch(receiveMangas(id, json, hash)))
   }
 
 /**
@@ -78,8 +79,9 @@ export const fetchMangas = (
  * @param {String} id
  * @param {Object} filter { title: x, artist: y }
  */
-export const countMangas = (id, filter = {}) => (dispatch, getState) => {
-  dispatch(requestNumberOfMangas(id, filter))
+export const countMangas = (id, filter = {}) => dispatch => {
+  const hash = Date.now()
+  dispatch(requestNumberOfMangas(id, filter, hash))
 
   const { title } = filter
   const where = filter
@@ -92,7 +94,7 @@ export const countMangas = (id, filter = {}) => (dispatch, getState) => {
 
   return fetch(`${getApiPath('countMangas')}?where=${JSON.stringify(where)}`)
     .then(res => res.json())
-    .then(json => dispatch(receiveNumberOfMangas(id, json)))
+    .then(json => dispatch(receiveNumberOfMangas(id, json, hash)))
 }
 
 /**

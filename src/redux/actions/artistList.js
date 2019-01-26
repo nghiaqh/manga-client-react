@@ -39,7 +39,8 @@ function fetchArtists (
   order = 'name'
 ) {
   return (dispatch) => {
-    dispatch(requestArtists(id, pageSize, pageNumber, filter, order))
+    const hash = Date.now()
+    dispatch(requestArtists(id, pageSize, pageNumber, filter, order, hash))
     const { name } = filter
 
     const where = filter || {}
@@ -58,7 +59,7 @@ function fetchArtists (
 
     return fetch(`${getApiPath('artists')}?filter=${JSON.stringify(filterObj)}`)
       .then(res => res.json())
-      .then(json => dispatch(receiveArtists(id, json)))
+      .then(json => dispatch(receiveArtists(id, json, hash)))
   }
 }
 
@@ -69,7 +70,8 @@ function fetchArtists (
  */
 function countArtists (id, filter = {}) {
   return (dispatch) => {
-    dispatch(requestNumberOfArtists(id, filter))
+    const hash = Date.now()
+    dispatch(requestNumberOfArtists(id, filter, hash))
 
     const { name } = filter
     const where = {}
@@ -82,7 +84,7 @@ function countArtists (id, filter = {}) {
 
     return fetch(`${getApiPath('countArtists')}?where=${JSON.stringify(where)}`)
       .then(res => res.json())
-      .then(json => dispatch(receiveNumberOfArtists(id, json)))
+      .then(json => dispatch(receiveNumberOfArtists(id, json, hash)))
   }
 }
 
