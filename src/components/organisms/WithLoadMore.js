@@ -84,11 +84,11 @@ class WithLoadMore extends PureComponent {
       onNoMoreContent,
       contentFilter
     } = this.props
-    const { noMoreContent, filter } = this.state
+    const { filter } = this.state
 
-    if (!noMoreContent) {
-      this.checkNoMoreContent()
-    } else if (!prevState.noMoreContent && onNoMoreContent) {
+    this.checkNoMoreContent()
+
+    if (!prevState.noMoreContent && onNoMoreContent) {
       onNoMoreContent()
     }
 
@@ -112,6 +112,9 @@ class WithLoadMore extends PureComponent {
     }
   }
 
+  /**
+   * Set noMoreContent state
+   */
   checkNoMoreContent () {
     const {
       withLoadMore,
@@ -125,15 +128,15 @@ class WithLoadMore extends PureComponent {
       retrievingItems: true
     }
     const { pageNumber, total, retrievingItems } = data
-
     const totalPages = 1 + Math.ceil((total - data.pageSize) / pageSize)
 
-    if (!retrievingItems && totalPages <= pageNumber &&
-      !this.state.noMoreContent) {
-      this.setState({
-        noMoreContent: true
-      })
-    }
+    this.setState(({ noMoreContent }) => {
+      if (!retrievingItems && totalPages === pageNumber) {
+        return !noMoreContent ? { noMoreContent: true } : null
+      } else if (!retrievingItems && totalPages > pageNumber) {
+        return noMoreContent ? { noMoreContent: false } : null
+      }
+    })
   }
 
   updateFilter () {
