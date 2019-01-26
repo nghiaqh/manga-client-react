@@ -13,12 +13,13 @@ class ContentFilter extends PureComponent {
     return (
       <Box>
         <label htmlFor='nsfw-checkbox'>
-          NSFW
+          NSFW Content
         </label>
         <input
           type='checkbox'
           id='nsfw-checkbox'
           name='nsfw-checkbox'
+          checked={this.props.contentFilter.includeNSFW}
           onChange={this.toggleNSFW}
         />
       </Box>
@@ -26,8 +27,9 @@ class ContentFilter extends PureComponent {
   }
 
   toggleNSFW (event) {
-    const nsfw = event.currentTarget.checked
-    this.props.dispatch(setContentFilter({ nsfw }))
+    this.props.dispatch(setContentFilter({
+      includeNSFW: event.currentTarget.checked
+    }))
   }
 }
 

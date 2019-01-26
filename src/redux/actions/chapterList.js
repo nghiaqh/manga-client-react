@@ -1,3 +1,4 @@
+import equal from 'deep-equal'
 import { normalize, schema } from 'normalizr'
 import {
   REQUEST_CHAPTERS,
@@ -77,8 +78,8 @@ export const fetchChapters = (
 export const countChapters = (id, filter = {}) => dispatch => {
   dispatch(requestNumberOfChapters(id, filter))
 
-  const { mangaId, title } = filter
-  const where = mangaId ? { mangaId: mangaId } : {}
+  const { title } = filter
+  const where = filter
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
       regexp: `/.*${title}.*/i`
@@ -105,19 +106,15 @@ export const loadMoreChapters = (
   order = 'number'
 ) =>
   (dispatch, getState) => {
-    const { withLoadMore, contentFilter } = getState()
+    const { withLoadMore } = getState()
     const data = withLoadMore[id]
+
     if (
       typeof data !== 'undefined' &&
-      data.filter.title === filter.title &&
-      data.filter.mangaId === filter.mangaId &&
+      equal(data.filter, filter) &&
       data.pageNumber >= pageNumber
     ) {
       return
-    }
-
-    if (!contentFilter.nsfw) {
-      filter.isNSFW = false
     }
 
     dispatch(countChapters(id, filter))

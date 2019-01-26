@@ -23,7 +23,7 @@ class MangaDetail extends React.PureComponent {
     const status = manga.isComplete ? 'Complete' : 'On going'
     const publishedDate = manga.publishedAt
       ? new Date(manga.publishedAt).toLocaleDateString() : ''
-    const { nsfw } = contentFilter
+    const { includeNSFW } = contentFilter
 
     return (
       <Container>
@@ -39,9 +39,9 @@ class MangaDetail extends React.PureComponent {
           <div className='media'
             onMouseOver={this.handleMouseOverMedia}
             onMouseOut={this.handleMouseOverMedia} >
-            {nsfw
+            { includeNSFW
               ? previewImages.map(img => <Image key={img.id} {...img} />)
-              : 'NSFW content'
+              : <div className='nsfw-overlay'>NSFW content</div>
             }
           </div>
         </header>
@@ -121,8 +121,16 @@ const Container = styled.div(props => {
           objectFit: 'cover',
           objectPosition: 'center top'
         },
-        borderBottom: `1px solid ${colors.border}`,
-        alignItems: 'center'
+        borderBottom: `1px solid ${colors.border}`
+      },
+      '.nsfw-overlay': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 600,
+        fontSize: '2rem',
+        width: '100%',
+        background: colors.border
       }
     },
 

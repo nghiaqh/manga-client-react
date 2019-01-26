@@ -86,12 +86,12 @@ class MangaReader extends React.PureComponent {
           </Button>
         </header>
 
-        { contentFilter.nsfw
+        { contentFilter.includeNSFW
           ? <ImageSlider
             chapterId={chapterId}
             lastSlide={lastSlide}
             onNoMoreContent={this.fetchNextChapter} />
-          : 'NSFW content' }
+          : <div className='nsfw-overlay'>NSFW content</div> }
       </ImageView>
     )
   }
@@ -179,6 +179,15 @@ const ImageView = styled.div(props => {
     '> div': {
       flexGrow: 1,
       minHeight: 0
+    },
+
+    '.nsfw-overlay': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 600,
+      fontSize: '2rem',
+      background: colors.border
     }
   }
 })

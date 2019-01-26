@@ -1,3 +1,4 @@
+import equal from 'deep-equal'
 import { normalize, schema } from 'normalizr'
 import {
   REQUEST_MANGAS,
@@ -12,6 +13,7 @@ import {
   createReceiveItemCountAction
 } from './actionCreators'
 import getApiPath from 'libs/apiRoutes'
+// import { updateContentFilter } from './helper'
 
 export const setIsNew = json => json.map(item => {
   const now = new Date()
@@ -77,11 +79,11 @@ export const fetchMangas = (
  * @param {String} id
  * @param {Object} filter { title: x, artist: y }
  */
-export const countMangas = (id, filter = {}) => dispatch => {
+export const countMangas = (id, filter = {}) => (dispatch, getState) => {
   dispatch(requestNumberOfMangas(id, filter))
 
-  const { artistId, title } = filter
-  const where = artistId ? { artistId: artistId } : {}
+  const { title } = filter
+  const where = filter
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
       regexp: '.*' + title + '.*',
@@ -109,20 +111,26 @@ export const loadMoreMangas = (
   order = 'publishedAt DESC'
 ) =>
   (dispatch, getState) => {
-    const { withLoadMore, contentFilter } = getState()
+    const { withLoadMore } = getState()
     const data = withLoadMore[id]
+
+    console.log(`current ${id} filter pre-update:`, data && data.filter, '/', filter)
+    // apply global filter for all requests
+    // const updatedFilter = updateContentFilter(filter, contentFilter)
+    // console.log(`current ${id} filter post-update:`, data && data.filter, '/', updatedFilter)
+
     if (
       typeof data !== 'undefined' &&
-      data.filter.title === filter.title &&
-      data.filter.artistId === filter.artistId &&
-      data.pageNumber >= pageNumber
+      equal(data.filter, filter) &&
+      // data.filter.title === filter.title &&
+      // data.filter.artistId === filter.artistId &&
+      // data.filter.isNSFW === filter.isNSFW &&
+      data.pageNumber >= pageNumber &&
+      data.order === order
     ) {
       return
     }
-
-    if (!contentFilter.nsfw) {
-      filter.isNSFW = false
-    }
+    console.log('dispatch count and fetch mangas')
     dispatch(countMangas(id, filter))
     dispatch(fetchMangas(id, pageSize, pageNumber, filter, order))
   }

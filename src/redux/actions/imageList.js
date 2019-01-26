@@ -1,3 +1,4 @@
+import equal from 'deep-equal'
 import { normalize, schema } from 'normalizr'
 import {
   REQUEST_IMAGES,
@@ -70,8 +71,8 @@ export const fetchImages = (
 export const countImages = (id, filter = {}) => dispatch => {
   dispatch(requestNumberOfImages(id, filter))
 
-  const { chapterId, title } = filter
-  const where = chapterId ? { chapterId: chapterId } : {}
+  const { title } = filter
+  const where = filter
   if (typeof title !== 'undefined' && title !== '') {
     where.title = {
       regexp: '.*' + title + '.*',
@@ -100,11 +101,11 @@ export const loadMoreImages = (
 ) =>
   (dispatch, getState) => {
     const { withLoadMore } = getState()
+
     const data = withLoadMore[id]
     if (
       typeof data !== 'undefined' &&
-      data.filter.title === filter.title &&
-      data.filter.chapterId === filter.chapterId &&
+      equal(data.filter, filter) &&
       data.pageNumber >= pageNumber
     ) {
       return
@@ -122,18 +123,15 @@ export const paginatePages = (
   order = 'number'
 ) =>
   (dispatch, getState) => {
-    const { withPagination, contentFilter } = getState()
+    const { withPagination } = getState()
     const data = withPagination[id]
+
     if (
       typeof data !== 'undefined' &&
-      data.filter.chapterId === filter.chapterId &&
+      equal(data.filter, filter) &&
       data.pageNumber === pageNumber
     ) {
       return
-    }
-
-    if (!contentFilter.nsfw) {
-      filter.isNSFW = false
     }
 
     const reducer = 'WITH_PAGINATION'

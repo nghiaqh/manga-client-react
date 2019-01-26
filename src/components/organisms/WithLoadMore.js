@@ -1,5 +1,6 @@
 import styled from '@emotion/styled/macro'
 import equal from 'deep-equal'
+// import merge from 'lodash/merge'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import Button from 'components/atoms/Button'
@@ -8,10 +9,17 @@ class WithLoadMore extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      noMoreContent: false
+      noMoreContent: false,
+      filter: props.filter
     }
+
+    if (!props.contentFilter.includeNSFW) {
+      this.state.filter.isNSFW = false
+    }
+
     this.handleClick = this.handleClick.bind(this)
     this.checkNoMoreContent = this.checkNoMoreContent.bind(this)
+    this.updateFilter = this.updateFilter.bind(this)
   }
 
   render () {
@@ -60,22 +68,23 @@ class WithLoadMore extends PureComponent {
   }
 
   componentDidMount () {
-    const { dispatch, filter, loadMore, id, pageSize, order } = this.props
+    const { dispatch, loadMore, id, pageSize, order } = this.props
+    const { filter, onNoMoreContent } = this.state
     dispatch(loadMore(id, pageSize, 1, filter, order))
-    if (!this.state.onNoMoreContent) this.checkNoMoreContent()
+    if (!onNoMoreContent) this.checkNoMoreContent()
   }
 
   componentDidUpdate (prevProps, prevState) {
     const {
       dispatch,
-      filter,
       id,
       loadMore,
       pageSize,
       order,
-      onNoMoreContent
+      onNoMoreContent,
+      contentFilter
     } = this.props
-    const { noMoreContent } = this.state
+    const { noMoreContent, filter } = this.state
 
     if (!noMoreContent) {
       this.checkNoMoreContent()
@@ -83,8 +92,12 @@ class WithLoadMore extends PureComponent {
       onNoMoreContent()
     }
 
-    if (!equal(filter, prevProps.filter) || order !== prevProps.order) {
+    if (!equal(filter, prevState.filter) || order !== prevProps.order) {
       dispatch(loadMore(id, pageSize, 1, filter, order))
+    }
+
+    if (prevProps.contentFilter !== contentFilter) {
+      this.updateFilter()
     }
   }
 
@@ -122,6 +135,19 @@ class WithLoadMore extends PureComponent {
       })
     }
   }
+
+  updateFilter () {
+    const { includeNSFW } = this.props.contentFilter
+    const filter = Object.assign({}, this.state.filter)
+    if (includeNSFW) {
+      delete filter.isNSFW
+      console.log('show NSFW content')
+    } else {
+      filter.isNSFW = false
+      console.log('hide NSFW content')
+    }
+    this.setState({ filter })
+  }
 }
 
 const LoadMoreButton = styled(Button)`
@@ -131,12 +157,13 @@ const LoadMoreButton = styled(Button)`
 
 // container
 const mapStateToProps = (state, ownProps) => {
-  const { withLoadMore, entities } = state
+  const { withLoadMore, entities, contentFilter } = state
   const { id, entityType } = ownProps
 
   return {
     withLoadMore: withLoadMore[id],
-    entities: entities[entityType]
+    entities: entities[entityType],
+    contentFilter: contentFilter || {}
   }
 }
 
