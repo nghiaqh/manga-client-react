@@ -47,10 +47,11 @@ class App extends Component {
     this.state = {
       sideBarDisplay: true
     }
+    this.defaultTheme = Object.keys(themes)[0]
   }
 
   render () {
-    const theme = themes[this.props.currentTheme || 'light']
+    const theme = themes[this.props.currentTheme || this.defaultTheme]
     return (
       <>
         {/* Workaround for https://github.com/nfl/react-helmet/issues/373 */}
@@ -75,7 +76,7 @@ class App extends Component {
 
   componentDidUpdate (prevProps) {
     if (prevProps.currentTheme !== this.props.currentTheme) {
-      const theme = themes[this.props.currentTheme || 'light']
+      const theme = themes[this.props.currentTheme || this.defaultTheme]
       document.body.style.backgroundColor = theme.colors.background
     }
   }

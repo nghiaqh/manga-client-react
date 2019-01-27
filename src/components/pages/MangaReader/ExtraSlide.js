@@ -43,7 +43,7 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
     <Container>
       <i>
         { manga.chaptersCount !== number && `End of ${shortTitle}` }
-        { (!number || manga.chaptersCount === number) && 'End of manga' }
+        { (manga.chaptersCount === number) && `End of ${manga.shortTitle}` }
       </i>
 
       <div>

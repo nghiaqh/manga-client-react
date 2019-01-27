@@ -46,7 +46,7 @@ class ThemePicker extends PureComponent {
 }
 
 const Container = styled.div(props => {
-  const { padding, highlight } = props.theme
+  const { padding, highlight, borderRadius } = props.theme
   return {
     padding: padding,
     textTransform: 'capitalize',
@@ -92,7 +92,8 @@ const Container = styled.div(props => {
         height: padding * 1.5,
         display: 'inline-block',
         marginLeft: padding / 4,
-        border: '1px solid'
+        border: '2px solid',
+        borderRadius
       }
     }
   }
@@ -107,7 +108,7 @@ const Theme = styled.div(props => {
     },
 
     '.color--primary': {
-      background: colors.primary
+      background: colors.primaryDark
     },
 
     '.color--secondary': {

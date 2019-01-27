@@ -11,7 +11,7 @@ export const common = {
 }
 
 export default {
-  light: {
+  'light blue': {
     colors: {
       // primary: components (top bar, button)
       // secondary: optional (action button, selection controls, progress bar, link, headlines)
@@ -39,16 +39,70 @@ export default {
     },
     ...common
   },
-  dark: {
+  'lime': {
     colors: {
       // background
-      primary: colors.grey[900],
-      primaryDark: 'black',
-      primaryLight: colors.grey[700],
+      primary: colors.lime[500],
+      primaryDark: colors.lime[600],
+      primaryLight: colors.lime[300],
+      secondary: colors.teal[500],
+      secondaryDark: colors.teal[700],
+      secondaryLight: colors.teal[300],
+      background: colors.lime[300],
+      surface: colors.grey[50],
+      error: colors.red[900],
+      // typography & iconography
+      onPrimary: colors.grey[900],
+      onPrimaryDark: 'white',
+      onPrimaryLight: colors.grey[900],
+      onSecondary: 'white',
+      onSecondaryDark: colors.grey[50],
+      onSecondaryLight: colors.grey[900],
+      onBackground: colors.grey[800],
+      onSurface: colors.grey[800],
+      onError: 'white',
+      // border
+      border: colors.grey[400]
+    },
+    ...common
+  },
+  'low chroma': {
+    colors: {
+      // background
+      primary: colors.grey[500],
+      primaryDark: colors.grey[600],
+      primaryLight: colors.grey[300],
+      secondary: colors.lightblue[300],
+      secondaryDark: colors.lightblue[500],
+      secondaryLight: colors.lightblue[100],
+      background: 'white',
+      surface: colors.grey[50],
+      error: colors.red[900],
+      // typography & iconography
+      onPrimary: 'white',
+      onPrimaryDark: 'white',
+      onPrimaryLight: colors.grey[900],
+      onSecondary: 'white',
+      onSecondaryDark: colors.grey[50],
+      onSecondaryLight: colors.grey[900],
+      onBackground: colors.grey[800],
+      onSurface: colors.grey[800],
+      onError: 'white',
+      // border
+      border: colors.grey[700]
+    },
+    ...common
+  },
+  'night': {
+    colors: {
+      // background
+      primary: colors.grey[700],
+      primaryDark: colors.grey[900],
+      primaryLight: colors.grey[600],
       secondary: colors.amber[500],
       secondaryDark: colors.amber[700],
       secondaryLight: colors.amber[300],
-      background: colors.grey[900],
+      background: colors.grey[800],
       surface: colors.grey[900],
       error: colors.red[900],
       // typography & iconography

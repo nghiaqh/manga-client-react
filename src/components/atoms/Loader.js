@@ -30,7 +30,7 @@ class Loader extends PureComponent {
 const Spinner = styled.div(props => {
   const { colors, padding } = props.theme
   return {
-    color: colors.primary,
+    color: colors.secondaryDark,
     margin: padding,
     display: 'block',
     textAlign: 'center',
