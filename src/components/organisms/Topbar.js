@@ -7,6 +7,7 @@ import Button from 'components/atoms/Button'
 import ThemePicker from 'components/molecules/ThemePicker'
 import Search from 'components/organisms/Search'
 import ContentFilter from 'components/molecules/ContentFilter'
+import { noAuto } from '@fortawesome/fontawesome-svg-core'
 
 class Topbar extends PureComponent {
   constructor (props) {
@@ -43,8 +44,10 @@ class Topbar extends PureComponent {
         </div>
 
         <div id='settings-menu' className={showSettings ? 'visible' : 'hidden'}>
-          <ThemePicker />
-          <ContentFilter />
+          <div>
+            <ThemePicker />
+            <ContentFilter />
+          </div>
         </div>
 
         <Search
@@ -112,7 +115,6 @@ const Header = styled.header(props => {
       right: padding / 4,
       float: 'right',
       marginTop: padding / 2,
-      minWidth: 200,
       background: colors.primary,
       color: colors.onPrimary,
       border: `1px solid ${colors.border}`,
@@ -125,6 +127,12 @@ const Header = styled.header(props => {
       '&.hidden': {
         visibility: 'hidden',
         opacity: 0
+      },
+
+      '> div:first-of-type': {
+        maxHeight: `calc(100vh - ${topBarHeight}px)`,
+        minWidth: 200,
+        overflow: 'auto'
       },
 
       '&:before, &:after': {

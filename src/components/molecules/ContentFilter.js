@@ -13,7 +13,7 @@ class ContentFilter extends PureComponent {
   render () {
     return (
       <Container>
-        <div>Content</div>
+        <div>Content options</div>
         <div className='content-setting'
           onClick={this.toggleNSFW}>
           <label htmlFor='nsfw-checkbox'>
