@@ -38,9 +38,7 @@ class MangaDetail extends React.PureComponent {
 
         <Container>
           <header>
-            <div className='media'
-              onMouseOver={this.handleMouseOverMedia}
-              onMouseOut={this.handleMouseOverMedia} >
+            <div className='media'>
               { !includeNSFW && manga && manga.isNSFW
                 ? <div className='nsfw-overlay'>NSFW content</div>
                 : previewImages.map(img => <Image key={img.id} {...img} />)
@@ -102,19 +100,10 @@ class MangaDetail extends React.PureComponent {
       </>
     )
   }
-
-  handleMouseOverMedia (event) {
-    const images = event.currentTarget.querySelectorAll('img')
-    images.forEach(img => {
-      const op = img.style.objectPosition
-      img.style.objectPosition = (!op || op === 'center top')
-        ? 'center bottom' : 'center top'
-    })
-  }
 }
 
 const Container = styled.div(props => {
-  const { colors, padding } = props.theme
+  const { colors, padding, transition, highlight } = props.theme
 
   return {
     'header': {
@@ -124,9 +113,14 @@ const Container = styled.div(props => {
         overflowX: 'auto',
         img: {
           objectFit: 'cover',
-          objectPosition: 'center top'
+          objectPosition: 'center top',
+          transition: transition()
         },
-        borderBottom: `1px solid ${colors.border}`
+        borderBottom: `1px solid ${colors.border}`,
+
+        '&:hover img': {
+          objectPosition: 'center bottom'
+        }
       },
       '.nsfw-overlay': {
         display: 'flex',
@@ -156,6 +150,10 @@ const Container = styled.div(props => {
 
     a: {
       color: colors.onBackground
+    },
+
+    '.content-list li:hover': {
+      background: highlight
     }
   }
 })
