@@ -112,13 +112,13 @@ const StyledSlider = styled.div(props => {
       // scrollSnapAlign: 'start',
 
       '&:first-of-type': {
-        padding: `0 ${direction === 'rtl' ? theme.padding : 0}px 0 ${
-          direction === 'rtl' ? 0 : theme.padding}px`
+        paddingRight: direction === 'rtl' ? theme.padding : 0,
+        paddingLeft: direction === 'rtl' ? 0 : theme.padding
       },
 
       '&:last-child': {
-        padding: `0 ${direction === 'rtl' ? 0 : theme.padding}px 0 ${
-          direction === 'rtl' ? theme.padding : 0}px`
+        paddingRight: direction === 'rtl' ? 0 : theme.padding,
+        paddingLeft: direction === 'rtl' ? theme.padding : 0
       },
 
       '&.slide--status': {
