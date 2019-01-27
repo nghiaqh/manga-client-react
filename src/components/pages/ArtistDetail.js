@@ -16,7 +16,7 @@ class ArtistDetail extends PureComponent {
 
     return (
       <React.Fragment>
-        {artist && artist.name}
+        {artist && <h1>artist.name</h1>}
       </React.Fragment >
     )
   }

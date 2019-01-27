@@ -12,7 +12,7 @@ const renderArtist = artist => (
   </Link>
 )
 
-export default function ArtistList ({ id, filter, pageSize }) {
+export default function ArtistList ({ id, filter, pageSize, children }) {
   return (
     <ContentView
       id={id}
@@ -22,6 +22,8 @@ export default function ArtistList ({ id, filter, pageSize }) {
       loadMoreFunc={loadMoreArtists}
       renderItem={renderArtist}
       layout='list'
-    />
+    >
+      {children}
+    </ContentView>
   )
 }

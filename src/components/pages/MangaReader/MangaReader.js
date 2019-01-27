@@ -16,17 +16,21 @@ import {
 import Button from 'components/atoms/Button'
 import ExtraSlide from './ExtraSlide'
 import ImageSlider from './ImageSlider'
+import ImageGrid from './ImageGrid'
 
 class MangaReader extends React.PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      showExtraSlide: false
+      showExtraSlide: false,
+      viewMode: 'slider'
     }
 
     this.toggleFullScreen = this.toggleFullScreen.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.fetchNextChapter = this.fetchNextChapter.bind(this)
+    this.toggleImageGrid = this.toggleImageGrid.bind(this)
+    this.toggleImageSlider = this.toggleImageSlider.bind(this)
   }
 
   componentWillMount () {
@@ -42,15 +46,14 @@ class MangaReader extends React.PureComponent {
   }
 
   render () {
-    const { mangas, artists, chapters, contentFilter } = this.props
+    const { viewMode } = this.state
+    const { manga, artists, chapters, contentFilter } = this.props
     const { mangaId, chapterId } = this.props.match.params
-
-    const manga = get(mangas, mangaId)
     const artist = manga ? get(artists, manga.artistId) : null
     const chapter = chapters[chapterId]
 
-    const lastSlide = this.state.showExtraSlide && <ExtraSlide
-      mangas={mangas}
+    const lastSlide = this.state.showExtraSlide && manga && <ExtraSlide
+      manga={manga}
       mangaId={mangaId}
       chapters={chapters}
       chapterId={chapterId} />
@@ -83,6 +86,16 @@ class MangaReader extends React.PureComponent {
                 }
               </span>
             </div>
+
+            {/* View options */}
+            <Button onClick={this.toggleImageGrid} title='See Thumbnails'
+              disabled={viewMode === 'thumbnail'}>
+              <FontAwesomeIcon icon='th-large' size='2x' />
+            </Button>
+            <Button onClick={this.toggleImageSlider} title='Start reading'
+              disabled={viewMode === 'slider'}>
+              <FontAwesomeIcon icon='columns' size='2x' />
+            </Button>
             <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
               <FontAwesomeIcon icon='expand' size='2x' />
             </Button>
@@ -90,10 +103,18 @@ class MangaReader extends React.PureComponent {
 
           { !contentFilter.includeNSFW && manga && manga.isNSFW
             ? <div className='nsfw-overlay'>NSFW content</div>
-            : <ImageSlider
-              chapterId={chapterId}
-              lastSlide={lastSlide}
-              onNoMoreContent={this.fetchNextChapter} />
+            : (
+              /* View Slider */
+              (this.state.viewMode === 'slider' &&
+              <ImageSlider
+                chapterId={chapterId}
+                lastSlide={lastSlide}
+                onNoMoreContent={this.fetchNextChapter} />) ||
+
+              /* Thumbnail gird */
+              (this.state.viewMode === 'thumbnail' &&
+              <ImageGrid chapterId={chapterId} />)
+            )
           }
         </ImageView>
       </>
@@ -104,6 +125,7 @@ class MangaReader extends React.PureComponent {
     const { chapterId, mangaId } = this.props.match.params
     const { chapters } = this.props
     const { number } = chapters[chapterId] || {}
+
     if (mangaId && number) {
       this.props.dispatch(fetchChapterOfMangaIfNeeded(mangaId, number + 1))
     }
@@ -131,6 +153,14 @@ class MangaReader extends React.PureComponent {
           return null
       }
     }
+  }
+
+  toggleImageGrid () {
+    this.setState({ viewMode: 'thumbnail' })
+  }
+
+  toggleImageSlider () {
+    this.setState({ viewMode: 'slider' })
   }
 }
 
@@ -177,6 +207,10 @@ const ImageView = styled.div(props => {
         '&:hover': {
           textDecoration: 'underline'
         }
+      },
+
+      'button:disabled': {
+        opacity: 0.5
       }
     },
 
@@ -198,12 +232,12 @@ const ImageView = styled.div(props => {
 
 // Connect to redux
 const mapStateToProps = (state, ownProps) => {
-  const { chapterId } = ownProps.match.params
+  const { chapterId, mangaId } = ownProps.match.params
   return {
-    mangas: state.entities.mangas || {},
+    manga: get(state, `entities.mangas[${mangaId}`),
     artists: state.entities.artists || {},
     chapters: state.entities.chapters || {},
-    [`chapter-${chapterId}-images`]: state.withLoadMore[`chapter-${chapterId}-images`],
+    [`images-chapter-${chapterId}`]: state.withLoadMore[`images-chapter-${chapterId}`],
     contentFilter: state.contentFilter
   }
 }

@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import { toUrl } from 'libs/routes'
 import MangaGrid from 'components/organisms/MangaGrid'
 
-function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
+function NextChapterLink ({ manga, mangaId, chapters, chapterId }) {
   const { number } = chapters[chapterId] || {}
-  const { chaptersCount } = mangas[mangaId] || {}
+  const { chaptersCount } = manga
 
   if (number < chaptersCount && chaptersCount > 1) {
     const nextChapterKey = findKey(chapters, {
@@ -23,42 +23,41 @@ function NextChapterLink ({ mangas, mangaId, chapters, chapterId }) {
           chapterId: nextChapterKey,
           imageId: 1
         })}>
-        Next chapter ({chapters[nextChapterKey].number}) <br />
-        {chapters[nextChapterKey].shortTitle}
+        Next chapter - {chapters[nextChapterKey].shortTitle}
       </Link> : null
   }
 
   return null
 }
 
-export default function ExtraSlide ({ mangas, mangaId, chapters, chapterId }) {
-  const manga = mangas[mangaId]
+export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
   const filter = {
     artistId: manga.artistId,
     id: {
       neq: manga.id
     }
   }
-  const { number } = chapters[chapterId]
+  const { number, shortTitle } = chapters[chapterId]
 
   return (
     <Container>
       <i>
-        { manga.chaptersCount === number && 'End of last chapter' }
-        { !number && 'End of manga' }
+        { manga.chaptersCount !== number && `End of ${shortTitle}` }
+        { (!number || manga.chaptersCount === number) && 'End of manga' }
       </i>
 
       <div>
-        <h2>You might like</h2>
         <MangaGrid
           id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
           filter={filter}
           pageSize={6}
           cardSize={{ height: 150, width: 90 }}
-          hideLoadMoreBtn />
+          hideLoadMoreBtn>
+          <h2>You might like</h2>
+        </MangaGrid>
       </div>
       <NextChapterLink
-        mangas={mangas}
+        manga={manga}
         mangaId={mangaId}
         chapters={chapters}
         chapterId={chapterId} />
@@ -81,13 +80,17 @@ const Container = styled.div(props => {
 
       '.content-grid': {
         maxWidth: 700,
-        margin: '0 auto'
-      }
-    },
+        margin: '0 auto',
 
-    '.not-found-msg': {
-      margin: '0 auto',
-      direction: 'ltr'
+        '&.empty': {
+          display: 'none'
+        },
+
+        '.not-found-msg': {
+          margin: '0 auto',
+          direction: 'ltr'
+        }
+      }
     },
 
     '#to-next-chapter': {

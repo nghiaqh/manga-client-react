@@ -22,7 +22,10 @@ import {
   faExpand,
   faCheck,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faGripVertical,
+  faColumns,
+  faThLarge
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -32,7 +35,10 @@ library.add(
   faExpand,
   faCheck,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faGripVertical,
+  faColumns,
+  faThLarge
 )
 
 class App extends Component {

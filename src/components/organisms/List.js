@@ -12,7 +12,8 @@ export default class List extends React.PureComponent {
       ? <NotFoundMessage />
       : (retrievingItems ? <Loader /> : '')
     return (
-      <Box className='content-list'>
+      <Box className={`content-list ${items.length === 0 && 'empty'}`}>
+        {this.props.children}
         <ol className='items'>
           {items}
         </ol>

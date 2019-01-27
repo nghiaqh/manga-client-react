@@ -37,23 +37,26 @@ class SearchPanel extends PureComponent {
           { searchText !== null && searchText !== '' &&
             <>
               <div className='search-results'>
-                <h2>Mangas</h2>
                 <MangaSlider id={`mangas-search-${searchText}`}
-                  filter={{ title: searchText }} />
+                  filter={{ title: searchText }}>
+                  <h2>Mangas</h2>
+                </MangaSlider>
               </div>
               <div className='search-results'>
-                <h2>Chapters</h2>
                 <ChapterList id={`chapters-search-${searchText}`}
                   filter={{
                     title: searchText,
                     number: { gt: 0 }
                   }}
-                  pageSize={6} />
+                  pageSize={6} >
+                  <h2>Chapters</h2>
+                </ChapterList>
               </div>
               <div className='search-results'>
-                <h2>Artists</h2>
                 <ArtistList id={`artists-search-${searchText}`}
-                  filter={{ name: searchText }} />
+                  filter={{ name: searchText }} >
+                  <h2>Artists</h2>
+                </ArtistList>
               </div>
             </>
           }
@@ -167,7 +170,7 @@ const Container = styled.div(props => {
           marginTop: 0
         },
 
-        '.content-list, .content-grid, h2': {
+        '.content-list, .content-grid, .content-slider h2': {
           paddingLeft: padding,
           paddingRight: padding
         }

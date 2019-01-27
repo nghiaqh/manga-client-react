@@ -17,7 +17,7 @@ const renderChapter = chapter => (
   </Link>
 )
 
-export default function ChapterList ({ id, filter, pageSize }) {
+export default function ChapterList ({ id, filter, pageSize, children }) {
   return (
     <ContentView
       id={id}
@@ -27,6 +27,8 @@ export default function ChapterList ({ id, filter, pageSize }) {
       loadMoreFunc={loadMoreChapters}
       renderItem={renderChapter}
       layout='list'
-    />
+    >
+      {children}
+    </ContentView>
   )
 }

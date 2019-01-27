@@ -69,7 +69,9 @@ export default class ContentView extends PureComponent {
         items={items}
         retrievingItems={retrievingItems}
         render={render}
-      />
+      >
+        {this.props.children}
+      </List>
     )
   }
 
@@ -81,7 +83,9 @@ export default class ContentView extends PureComponent {
         render={render}
         layoutDirection={this.props.layoutDirection}
         colWidth={this.props.colWidth}
-      />
+      >
+        {this.props.children}
+      </Grid>
     )
   }
 
@@ -94,7 +98,9 @@ export default class ContentView extends PureComponent {
         loadMore={loadMore}
         layoutDirection={this.props.layoutDirection}
         lastSlide={this.props.lastSlide}
-      />
+      >
+        {this.props.children}
+      </Slider>
     )
   }
 
@@ -105,7 +111,9 @@ export default class ContentView extends PureComponent {
         retrievingItems={retrievingItems}
         render={render}
         layoutDirection={this.props.layoutDirection}
-      />
+      >
+        {this.props.children}
+      </MasonryGrid>
     )
   }
 }

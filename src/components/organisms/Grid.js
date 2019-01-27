@@ -22,7 +22,8 @@ export default class Grid extends React.PureComponent {
       : (retrievingItems ? <Loader /> : '')
 
     return (
-      <div className='content-grid'>
+      <div className={`content-grid ${items.length === 0 && 'empty'}`}>
+        {this.props.children}
         <GridContainer ref={this.ref} colWidth={colWidth}>
           {items}
         </GridContainer>

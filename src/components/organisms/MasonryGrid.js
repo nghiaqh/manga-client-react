@@ -34,7 +34,8 @@ export default class MasonryGrid extends React.PureComponent {
       : (retrievingItems ? <Loader /> : '')
 
     return (
-      <>
+      <div className={`content-grid ${items.length === 0 && 'empty'}`}>
+        {this.props.children}
         <GridContainer ref={this.ref} cols={cols}>
           {gridCols.map((col, i) =>
             <div className='grid__column' key={`${this.state.cols}-${i}`}>
@@ -42,7 +43,7 @@ export default class MasonryGrid extends React.PureComponent {
             </div>)}
         </GridContainer>
         {statusText}
-      </>
+      </div>
     )
   }
 

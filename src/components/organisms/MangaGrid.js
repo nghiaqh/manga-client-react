@@ -9,7 +9,8 @@ export default function MangaGrid ({
   pageSize,
   cardSize,
   layout,
-  hideLoadMoreBtn
+  hideLoadMoreBtn,
+  children
 }) {
   const renderMangaCard = manga => (
     <MangaCard key={manga.id} manga={manga} size={cardSize} />
@@ -26,6 +27,8 @@ export default function MangaGrid ({
       layout={layout || 'grid'}
       colWidth={cardSize && cardSize.width}
       hideLoadMoreBtn={hideLoadMoreBtn}
-    />
+    >
+      {children}
+    </ContentView>
   )
 }

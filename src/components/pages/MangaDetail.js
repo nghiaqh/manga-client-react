@@ -78,22 +78,24 @@ class MangaDetail extends React.PureComponent {
 
           { manga && manga.id &&
             <div className='zone-container'>
-              <h2>Chapters</h2>
               <ChapterList id={`chapters-manga-${manga.id}`}
-                filter={{ mangaId: manga.id }} />
+                filter={{ mangaId: manga.id }} >
+                <h2>Chapters</h2>
+              </ChapterList>
             </div>
           }
 
           { manga && manga.artistId &&
             <div className='zone-container'>
-              <h2>From same author</h2>
               <MangaSlider id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
                 filter={{
                   artistId: manga.artistId,
                   id: {
                     neq: manga.id
                   }
-                }} />
+                }} >
+                <h2>{artist && `${artist.name}'s other works`}</h2>
+              </MangaSlider>
             </div>
           }
         </Container>

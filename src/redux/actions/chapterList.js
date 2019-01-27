@@ -59,8 +59,6 @@ export const fetchChapters = (
       }
     }
 
-    console.log(filter, where)
-
     const filterObj = {
       where: where,
       limit: pageSize,

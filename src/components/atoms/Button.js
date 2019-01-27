@@ -47,7 +47,11 @@ const StyledButton = styled.button(props => {
     background: 'none',
     color: 'inherit',
     cursor: 'pointer',
-    fontWeight: 600
+    fontWeight: 600,
+
+    '&:disabled': {
+      cursor: 'not-allowed'
+    }
   }
 })
 
