@@ -23,13 +23,14 @@ class MangaReader extends React.PureComponent {
     super(props)
     this.state = {
       showExtraSlide: false,
-      viewMode: 'slider'
+      viewMode: 'slider',
+      showThumbnail: false
     }
 
     this.toggleFullScreen = this.toggleFullScreen.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.fetchNextChapter = this.fetchNextChapter.bind(this)
-    this.toggleImageGrid = this.toggleImageGrid.bind(this)
+    this.toggleThumbnailGrid = this.toggleThumbnailGrid.bind(this)
     this.toggleImageSlider = this.toggleImageSlider.bind(this)
   }
 
@@ -48,7 +49,7 @@ class MangaReader extends React.PureComponent {
   render () {
     const { viewMode } = this.state
     const { manga, artists, chapters, contentFilter } = this.props
-    const { mangaId, chapterId } = this.props.match.params
+    const { mangaId, chapterId, imageNumber } = this.props.match.params
     const artist = manga ? get(artists, manga.artistId) : null
     const chapter = chapters[chapterId]
 
@@ -88,7 +89,7 @@ class MangaReader extends React.PureComponent {
             </div>
 
             {/* View options */}
-            <Button onClick={this.toggleImageGrid} title='See Thumbnails'
+            <Button onClick={this.toggleThumbnailGrid} title='See Thumbnails'
               disabled={viewMode === 'thumbnail'}>
               <FontAwesomeIcon icon='th-large' size='2x' />
             </Button>
@@ -103,18 +104,22 @@ class MangaReader extends React.PureComponent {
 
           { !contentFilter.includeNSFW && manga && manga.isNSFW
             ? <div className='nsfw-overlay'>NSFW content</div>
-            : (
-              /* View Slider */
-              (this.state.viewMode === 'slider' &&
-              <ImageSlider
-                chapterId={chapterId}
-                lastSlide={lastSlide}
-                onNoMoreContent={this.fetchNextChapter} />) ||
+            : (<>
+              { /* View Slider */
+                this.state.viewMode === 'slider' &&
+                <ImageSlider
+                  chapterId={chapterId}
+                  lastSlide={lastSlide}
+                  onNoMoreContent={this.fetchNextChapter}
+                  scrollTo={imageNumber} />}
 
-              /* Thumbnail gird */
-              (this.state.viewMode === 'thumbnail' &&
-              <ImageGrid chapterId={chapterId} />)
-            )
+              { /* Thumbnail gird */
+                this.state.showThumbnail &&
+                <ImageGrid
+                  chapterId={chapterId} mangaId={mangaId}
+                  onItemClick={this.toggleThumbnailGrid}
+                />}
+            </>)
           }
         </ImageView>
       </>
@@ -155,8 +160,8 @@ class MangaReader extends React.PureComponent {
     }
   }
 
-  toggleImageGrid () {
-    this.setState({ viewMode: 'thumbnail' })
+  toggleThumbnailGrid () {
+    this.setState(prevState => ({ showThumbnail: !prevState.showThumbnail }))
   }
 
   toggleImageSlider () {
@@ -226,6 +231,14 @@ const ImageView = styled.div(props => {
       fontWeight: 600,
       fontSize: '2rem',
       background: colors.border
+    },
+
+    'div[id^=\'grid-images-chapter-\']': {
+      position: 'absolute',
+      top: 115,
+      width: '100%',
+      height: '100%',
+      background: colors.background
     }
   }
 })

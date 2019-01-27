@@ -18,10 +18,10 @@ function NextChapterLink ({ manga, mangaId, chapters, chapterId }) {
     return nextChapterKey
       ? <Link
         id='to-next-chapter'
-        to={toUrl('imageViewer', {
+        to={toUrl('mangaReader', {
           mangaId: mangaId,
           chapterId: nextChapterKey,
-          imageId: 1
+          imageNumber: 1
         })}>
         Next chapter - {chapters[nextChapterKey].shortTitle}
       </Link> : null

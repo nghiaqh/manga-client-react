@@ -86,7 +86,7 @@ class App extends Component {
         <Route exact path={routes.home} component={Home} />
         <Route exact path={routes.mangaDetail} component={MangaDetail} />
         <Route exact path={routes.artistDetail} component={ArtistDetail} />
-        <Route exact path={routes.imageViewer} component={MangaReader} />
+        <Route exact path={routes.mangaReader} component={MangaReader} />
       </Switch>
     )
   }

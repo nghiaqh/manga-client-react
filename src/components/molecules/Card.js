@@ -13,9 +13,10 @@ class Card extends PureComponent {
   }
 
   renderBasicVersion (props) {
-    const { media, title, description, size } = props
+    const { media, title, description, size, onClick } = props
+
     return (
-      <BasicCard className='card--basic' size={size} >
+      <BasicCard className='card--basic' size={size} onClick={onClick}>
         <div className='card__media'>{media}</div>
         <div className='card__meta'>
           <h3 className='card__title'>{title}</h3>

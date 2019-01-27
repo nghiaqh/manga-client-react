@@ -7,10 +7,10 @@ import ContentView from 'components/organisms/ContentView'
 const renderChapter = chapter => (
   <Link
     key={chapter.id}
-    to={toUrl('imageViewer', {
+    to={toUrl('mangaReader', {
       mangaId: chapter.mangaId,
       chapterId: chapter.id,
-      imageId: 1
+      imageNumber: 1
     })}
   >
     {chapter.shortTitle}
