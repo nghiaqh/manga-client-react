@@ -49,7 +49,8 @@ export default class ContentView extends PureComponent {
 
     return (
       <WithLoadMore
-        id={`${this.state.layout}-${id}`}
+        id={id}
+        domId={`${this.state.layout}-${id}`}
         entityType={entityType}
         renderLayout={renderLayout}
         renderItem={renderItem}

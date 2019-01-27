@@ -23,12 +23,15 @@ export default class ImageSlider extends React.PureComponent {
     if (!chapterId) return
     const contentViewId = `images-chapter-${chapterId}`
     const filter = { chapterId }
-    const setImageWidth = (ref, image) => {
+    const setImageWidth = (elRef, image) => {
       const parent = document.getElementById('slider-' + contentViewId)
+      const wH = window.innerHeight
+      const height = parent.offsetHeight <= wH ? parent.offsetHeight : wH
 
-      if (parent && ref && image) {
-        const width = image.width * (parent.offsetHeight - 25) / image.height
-        ref.current.style.width = `${width > image.width ? image.width : width}px`
+      if (parent && elRef && image) {
+        const width = image.width * (height - 25) / image.height
+        elRef.current.style.width =
+          `${width > image.width ? image.width : width}px`
       }
     }
 
@@ -60,9 +63,7 @@ export default class ImageSlider extends React.PureComponent {
 
   componentDidUpdate (prevProps) {
     if (prevProps.scrollTo !== this.props.scrollTo) {
-      this.scrollToItem({
-        inline: 'end'
-      })
+      this.scrollToItem()
     }
   }
 

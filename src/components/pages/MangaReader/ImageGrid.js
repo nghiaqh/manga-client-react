@@ -22,8 +22,8 @@ export default function ImageGrid ({ chapterId, mangaId, onItemClick }) {
         media={<Image key={image.id} {...image} />}
         description={image.number}
         size={{
-          height: '240px',
-          width: '200px'
+          height: '200px',
+          width: '140px'
         }}
       />
     </Link>
@@ -37,7 +37,7 @@ export default function ImageGrid ({ chapterId, mangaId, onItemClick }) {
       loadMoreFunc={loadMoreImages}
       renderItem={renderImage}
       layout='grid'
-      colWidth={200}
+      colWidth={140}
     />
   )
 }

@@ -42,7 +42,7 @@ class WithLoadMore extends PureComponent {
     const {
       withLoadMore,
       entities,
-      id,
+      domId,
       renderLayout,
       renderItem,
       pageSize,
@@ -66,7 +66,7 @@ class WithLoadMore extends PureComponent {
     const showButton = !this.state.noMoreContent && !hideLoadMoreBtn
 
     return (
-      <div id={id}>
+      <div id={domId}>
         {dom}
 
         {showButton &&

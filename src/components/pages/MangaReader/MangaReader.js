@@ -47,7 +47,7 @@ class MangaReader extends React.PureComponent {
   }
 
   render () {
-    const { viewMode } = this.state
+    const { showThumbnail } = this.state
     const { manga, artists, chapters, contentFilter } = this.props
     const { mangaId, chapterId, imageNumber } = this.props.match.params
     const artist = manga ? get(artists, manga.artistId) : null
@@ -89,14 +89,12 @@ class MangaReader extends React.PureComponent {
             </div>
 
             {/* View options */}
-            <Button onClick={this.toggleThumbnailGrid} title='See Thumbnails'
-              disabled={viewMode === 'thumbnail'}>
-              <FontAwesomeIcon icon='th-large' size='2x' />
+            <Button onClick={this.toggleThumbnailGrid}
+              title={showThumbnail ? 'Start reading' : 'See Thumbnails'} >
+              <FontAwesomeIcon icon={showThumbnail ? 'columns' : 'th-large'}
+                size='2x' />
             </Button>
-            <Button onClick={this.toggleImageSlider} title='Start reading'
-              disabled={viewMode === 'slider'}>
-              <FontAwesomeIcon icon='columns' size='2x' />
-            </Button>
+
             <Button onClick={this.toggleFullScreen} title='Fullscreen mode'>
               <FontAwesomeIcon icon='expand' size='2x' />
             </Button>
@@ -144,7 +142,7 @@ class MangaReader extends React.PureComponent {
 
   toggleFullScreen () {
     const { chapterId } = this.props.match.params
-    const element = document.getElementById(`images-chapter-${chapterId}`)
+    const element = document.getElementById(`slider-images-chapter-${chapterId}`)
     return toggleFullscreen(element)
   }
 
@@ -171,7 +169,7 @@ class MangaReader extends React.PureComponent {
 
 // Style
 const ImageView = styled.div(props => {
-  const { padding, colors } = props.theme
+  const { padding, colors, topBarHeight } = props.theme
   return {
     minHeight: 0,
     minWidth: 0,
@@ -235,9 +233,9 @@ const ImageView = styled.div(props => {
 
     'div[id^=\'grid-images-chapter-\']': {
       position: 'absolute',
-      top: 115,
+      top: topBarHeight + 65,
+      bottom: 0,
       width: '100%',
-      height: '100%',
       background: colors.background
     }
   }
