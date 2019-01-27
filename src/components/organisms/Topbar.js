@@ -67,7 +67,14 @@ class Topbar extends PureComponent {
 }
 
 const Header = styled.header(props => {
-  const { colors, padding, topBarHeight, transition, boxShadow } = props.theme
+  const {
+    colors,
+    padding,
+    topBarHeight,
+    transition,
+    boxShadow,
+    borderRadius
+  } = props.theme
 
   return {
     zIndex: 1,
@@ -102,13 +109,14 @@ const Header = styled.header(props => {
     '#settings-menu': {
       position: 'fixed',
       top: topBarHeight,
-      right: 0,
+      right: padding / 4,
       float: 'right',
-      marginTop: 5,
+      marginTop: padding / 2,
       minWidth: 200,
       background: colors.primary,
       color: colors.onPrimary,
       border: `1px solid ${colors.border}`,
+      borderRadius,
       boxShadow: props.theme.boxShadow(),
       transition: transition(0.2),
       visibility: 'visible',
@@ -117,6 +125,32 @@ const Header = styled.header(props => {
       '&.hidden': {
         visibility: 'hidden',
         opacity: 0
+      },
+
+      '&:before, &:after': {
+        display: 'block',
+        position: 'absolute',
+        bottom: '100%',
+        border: 'solid transparent',
+        content: `" "`,
+        width: 0,
+        height: 0,
+        transition: transition(0.2),
+        pointerEvents: 'none'
+      },
+
+      '&:after': {
+        right: padding + 1,
+        borderBottomColor: colors.primary,
+        borderWidth: padding / 2,
+        marginLeft: 0 - padding / 2
+      },
+
+      '&:before': {
+        right: padding,
+        borderBottomColor: colors.border,
+        borderWidth: padding / 2 + 1,
+        marginLeft: 0 - padding / 2 - 1
       }
     }
   }
