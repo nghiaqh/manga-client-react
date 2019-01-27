@@ -103,10 +103,6 @@ const Theme = styled.div(props => {
   const { colors } = props
 
   return {
-    span: {
-      borderColor: colors.border
-    },
-
     '.color--primary': {
       background: colors.primaryDark
     },

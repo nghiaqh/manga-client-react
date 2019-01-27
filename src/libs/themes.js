@@ -89,7 +89,7 @@ export default {
       onSurface: colors.grey[800],
       onError: 'white',
       // border
-      border: colors.grey[700]
+      border: colors.grey[400]
     },
     ...common
   },
