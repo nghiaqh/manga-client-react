@@ -99,7 +99,7 @@ const BasicCard = styled.div(props => {
 
       img: {
         objectFit: 'cover',
-        objectPosition: 'top',
+        objectPosition: 'top left',
         minWidth: 0,
         minHeight: 0,
         flexGrow: 1,
