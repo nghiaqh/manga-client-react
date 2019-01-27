@@ -18,13 +18,17 @@ import ExtraSlide from './ExtraSlide'
 import ImageSlider from './ImageSlider'
 import ImageGrid from './ImageGrid'
 
+const storageKey = '[manga-client-react] slider-direction'
+
 class MangaReader extends React.PureComponent {
   constructor (props) {
     super(props)
+
     this.state = {
       showExtraSlide: false,
       viewMode: 'slider',
-      showThumbnail: false
+      showThumbnail: false,
+      sliderDirection: props.direction || localStorage.getItem(storageKey) || 'rtl'
     }
 
     this.toggleFullScreen = this.toggleFullScreen.bind(this)
@@ -32,6 +36,7 @@ class MangaReader extends React.PureComponent {
     this.fetchNextChapter = this.fetchNextChapter.bind(this)
     this.toggleThumbnailGrid = this.toggleThumbnailGrid.bind(this)
     this.toggleImageSlider = this.toggleImageSlider.bind(this)
+    this.toggleSliderDirection = this.toggleSliderDirection.bind(this)
   }
 
   componentWillMount () {
@@ -47,7 +52,7 @@ class MangaReader extends React.PureComponent {
   }
 
   render () {
-    const { showThumbnail } = this.state
+    const { showThumbnail, sliderDirection } = this.state
     const { manga, artists, chapters, contentFilter } = this.props
     const { mangaId, chapterId, imageNumber } = this.props.match.params
     const artist = manga ? get(artists, manga.artistId) : null
@@ -89,6 +94,10 @@ class MangaReader extends React.PureComponent {
             </div>
 
             {/* View options */}
+            <Button onClick={this.toggleSliderDirection} title='View direction'>
+              {sliderDirection.toUpperCase()}
+            </Button>
+
             <Button onClick={this.toggleThumbnailGrid}
               title={showThumbnail ? 'Start reading' : 'See Thumbnails'} >
               <FontAwesomeIcon icon={showThumbnail ? 'columns' : 'th-large'}
@@ -109,7 +118,8 @@ class MangaReader extends React.PureComponent {
                   chapterId={chapterId}
                   lastSlide={lastSlide}
                   onNoMoreContent={this.fetchNextChapter}
-                  scrollTo={imageNumber} />}
+                  scrollTo={imageNumber}
+                  direction={sliderDirection} />}
 
               { /* Thumbnail gird */
                 this.state.showThumbnail &&
@@ -164,6 +174,16 @@ class MangaReader extends React.PureComponent {
 
   toggleImageSlider () {
     this.setState({ viewMode: 'slider' })
+  }
+
+  toggleSliderDirection () {
+    this.setState(prevState => {
+      const direction = prevState.sliderDirection === 'rtl' ? 'ltr' : 'rtl'
+      localStorage.setItem(storageKey, direction)
+      return {
+        sliderDirection: direction
+      }
+    })
   }
 }
 

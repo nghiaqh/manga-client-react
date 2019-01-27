@@ -17,7 +17,8 @@ export default class ImageSlider extends React.PureComponent {
     const {
       chapterId,
       lastSlide,
-      onNoMoreContent
+      onNoMoreContent,
+      direction
     } = this.props
 
     if (!chapterId) return
@@ -50,7 +51,7 @@ export default class ImageSlider extends React.PureComponent {
         loadMoreFunc={loadMoreImages}
         renderItem={renderImage}
         layout='slider'
-        layoutDirection='rtl'
+        layoutDirection={direction}
         lastSlide={lastSlide}
         onNoMoreContent={onNoMoreContent}
       />
