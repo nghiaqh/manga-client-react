@@ -2,6 +2,7 @@ import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { setContentFilter } from 'redux/actions/appSettings'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class ContentFilter extends PureComponent {
   constructor (props) {
@@ -11,41 +12,57 @@ class ContentFilter extends PureComponent {
 
   render () {
     return (
-      <Box>
-        <label htmlFor='nsfw-checkbox'>
-          NSFW Content
-        </label>
-        <input
-          type='checkbox'
-          id='nsfw-checkbox'
-          name='nsfw-checkbox'
-          checked={this.props.contentFilter.includeNSFW}
-          onChange={this.toggleNSFW}
-        />
-      </Box>
+      <Container>
+        <div>Content</div>
+        <div className='content-setting'
+          onClick={this.toggleNSFW}>
+          <label htmlFor='nsfw-checkbox'>
+            NSFW
+          </label>
+
+          { this.props.contentFilter.includeNSFW
+            ? <FontAwesomeIcon icon='eye' size='lg' />
+            : <FontAwesomeIcon icon='eye-slash' size='lg' />
+          }
+        </div>
+      </Container>
     )
   }
 
   toggleNSFW (event) {
     this.props.dispatch(setContentFilter({
-      includeNSFW: event.currentTarget.checked
+      includeNSFW: !this.props.contentFilter.includeNSFW
     }))
   }
 }
 
-const Box = styled.div(props => {
+const Container = styled.div(props => {
+  const { padding, highlight } = props.theme
   return {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: props.theme.padding,
+    padding: padding,
+    textTransform: 'capitalize',
 
-    label: {
-      cursor: 'pointer',
-      userSelect: 'none'
+    '> div:first-of-type': {
+      marginBottom: padding / 2,
+      fontSize: '1.2em',
+      fontWeight: 600
     },
 
-    'input[type=checkbox]': {
-      cursor: 'pointer'
+    '.content-setting': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingTop: padding / 4,
+      paddingBottom: padding / 4,
+      cursor: 'pointer',
+
+      '&:hover, &:focus, &:active': {
+        background: highlight
+      },
+
+      label: {
+        cursor: 'pointer'
+      }
     }
   }
 })

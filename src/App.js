@@ -19,10 +19,21 @@ import {
   faSearch,
   faCog,
   faTimes,
-  faExpand
+  faExpand,
+  faCheck,
+  faEye,
+  faEyeSlash
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faSearch, faCog, faTimes, faExpand)
+library.add(
+  faSearch,
+  faCog,
+  faTimes,
+  faExpand,
+  faCheck,
+  faEye,
+  faEyeSlash
+)
 
 class App extends Component {
   constructor (props) {

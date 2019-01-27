@@ -45,7 +45,8 @@ const BasicCard = styled.div(props => {
     padding,
     transition,
     borderRadius,
-    boxShadow
+    boxShadow,
+    highlight
   } = props.theme || {}
 
   return {
@@ -72,7 +73,7 @@ const BasicCard = styled.div(props => {
     '&:hover, &:focus': {
       boxShadow: boxShadow('rgba(0,0,0,.5)'),
       '.card__overlay': {
-        background: 'rgba(255, 255, 255, 0.1)'
+        background: highlight
       }
     },
 
