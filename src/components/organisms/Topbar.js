@@ -7,7 +7,6 @@ import Button from 'components/atoms/Button'
 import ThemePicker from 'components/molecules/ThemePicker'
 import Search from 'components/organisms/Search'
 import ContentFilter from 'components/molecules/ContentFilter'
-import { noAuto } from '@fortawesome/fontawesome-svg-core'
 
 class Topbar extends PureComponent {
   constructor (props) {
