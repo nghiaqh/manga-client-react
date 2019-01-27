@@ -3,10 +3,10 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Button from 'components/atoms/Button'
 import ThemePicker from 'components/molecules/ThemePicker'
 import Search from 'components/organisms/Search'
 import ContentFilter from 'components/molecules/ContentFilter'
+import Button from 'components/atoms/Button'
 
 class Topbar extends PureComponent {
   constructor (props) {
@@ -29,15 +29,21 @@ class Topbar extends PureComponent {
           <Link className='topbar--logo' to='/'>Manga Reader</Link>
 
           <div id='topbar--menu'>
-            <Button className='topbar--menu-btn icon icon-search'
+            <Button className='btn--no-border'
               onClick={this.toggleSearch}
-              title='Search'>
-              <FontAwesomeIcon icon='search' size='2x' />
+              title='Search'
+              ariaHasPopUp
+              ariaControls='search-overlay'
+              ariaLabelledBy='search-overlay'>
+              <FontAwesomeIcon icon='search' size='lg' />
             </Button>
-            <Button className='topbar--menu-btn icon icon-settings'
+            <Button className='btn--no-border'
               onClick={this.toggleSettings}
-              title='Settings'>
-              <FontAwesomeIcon icon='cog' size='2x' />
+              title='Settings'
+              ariaHasPopUp
+              ariaControls='settings-menu'
+              ariaLabelledBy='settings-menu'>
+              <FontAwesomeIcon icon='cog' size='lg' />
             </Button>
           </div>
         </div>
@@ -101,10 +107,13 @@ const Header = styled.header(props => {
         fontWeight: 600,
         color: colors.onPrimaryDark,
         textDecoration: 'none'
-      },
+      }
+    },
 
+    '#topbar--menu': {
       button: {
-        marginLeft: padding
+        marginLeft: padding,
+        color: colors.onPrimaryDark
       }
     },
 

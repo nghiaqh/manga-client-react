@@ -38,19 +38,32 @@ class Button extends PureComponent {
 }
 
 const StyledButton = styled.button(props => {
-  const { padding } = props.theme
+  const { colors, borderRadius, transition } = props.theme
 
   return {
-    padding: padding / 3,
     outline: 'none',
-    border: 'none',
+    border: `2px solid ${colors.secondary}`,
     background: 'none',
-    color: 'inherit',
+    color: colors.secondary,
     cursor: 'pointer',
     fontWeight: 600,
+    fontSize: '1em',
+    borderRadius,
+    transition,
+
+    '&:hover': {
+      color: colors.secondaryDark,
+      borderColor: colors.secondaryDark
+    },
 
     '&:disabled': {
+      color: colors.border,
+      borderColor: colors.border,
       cursor: 'not-allowed'
+    },
+
+    '&.btn--no-border': {
+      border: 'none'
     }
   }
 })
@@ -64,7 +77,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(Button)
 
 export function CloseButton ({ onClick }) {
-  return <Button id='search-panel--close-btn' onClick={onClick}>
+  return <Button className='btn--no-border' onClick={onClick}>
     <FontAwesomeIcon icon='times' size='2x' />
   </Button>
 }

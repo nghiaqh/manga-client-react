@@ -94,9 +94,10 @@ export default class Slider extends PureComponent {
 
 const StyledSlider = styled.div(props => {
   const { theme, direction } = props
+  const { padding, colors } = theme
   return {
     height: '100%',
-    background: theme.colors.background,
+    background: colors.background,
     direction: direction,
 
     '.slider__main': {
@@ -117,18 +118,23 @@ const StyledSlider = styled.div(props => {
       // scrollSnapAlign: 'start',
 
       '&:first-of-type': {
-        paddingRight: direction === 'rtl' ? theme.padding : 0,
-        paddingLeft: direction === 'rtl' ? 0 : theme.padding
+        paddingRight: direction === 'rtl' ? padding : 0,
+        paddingLeft: direction === 'rtl' ? 0 : padding
       },
 
       '&:last-child': {
-        paddingRight: direction === 'rtl' ? 0 : theme.padding,
-        paddingLeft: direction === 'rtl' ? theme.padding : 0
+        paddingRight: direction === 'rtl' ? 0 : padding,
+        paddingLeft: direction === 'rtl' ? padding : 0
       },
 
       '&.slide--status': {
         textAlign: 'center'
       }
+    },
+
+    '&.empty .slide': {
+      paddingLeft: padding,
+      paddingRight: padding
     }
   }
 })

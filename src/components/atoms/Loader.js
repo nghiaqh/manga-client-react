@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import styled from '@emotion/styled/macro'
 
 class Loader extends PureComponent {
   render () {
@@ -13,10 +14,9 @@ class Loader extends PureComponent {
 
   renderBasicVersion (props) {
     return (
-      <span className='loader--basic' style={{
-        display: 'block',
-        textAlign: 'center'
-      }}>Loading...</span>
+      <Spinner className='loader--basic'>
+        Loading...
+      </Spinner>
     )
   }
 
@@ -26,6 +26,17 @@ class Loader extends PureComponent {
     )
   }
 }
+
+const Spinner = styled.div(props => {
+  const { colors, padding } = props.theme
+  return {
+    color: colors.primary,
+    margin: padding,
+    display: 'block',
+    textAlign: 'center',
+    fontWeight: 600
+  }
+})
 
 const mapStateToProps = (state) => {
   return {

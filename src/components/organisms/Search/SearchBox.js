@@ -28,7 +28,7 @@ const InputContainer = styled.div(props => {
       color: colors.onBackground,
       fontSize: '1.1em',
       border: 'none',
-      borderBottom: `1px solid ${colors.border}`,
+      borderBottom: `2px solid ${colors.secondary}`,
       outline: 'none',
       boxSizing: 'border-box',
       height: topBarHeight,

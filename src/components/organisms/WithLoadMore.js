@@ -63,7 +63,7 @@ class WithLoadMore extends PureComponent {
     const dom = renderLayout(contents, retrievingItems, renderItem,
       this.handleClick)
 
-    const showButton = !this.state.noMoreContent && !hideLoadMoreBtn
+    const showButton = !this.state.noMoreContent && !hideLoadMoreBtn && !retrievingItems
 
     return (
       <div id={domId}>
@@ -76,7 +76,7 @@ class WithLoadMore extends PureComponent {
             disabled={retrievingItems}
             onClick={this.handleClick}
           >
-            {!retrievingItems && 'More'}
+            More
           </LoadMoreButton>
         }
       </div>
@@ -168,10 +168,15 @@ class WithLoadMore extends PureComponent {
   }
 }
 
-const LoadMoreButton = styled(Button)`
-  display: block;
-  margin: 10px auto;
-`
+const LoadMoreButton = styled(Button)(props => {
+  const { padding } = props.theme
+  return {
+    display: 'block',
+    margin: `${padding}px auto`,
+    padding: `${padding / 2}px ${padding}px`,
+    fontWeight: 600
+  }
+})
 
 // container
 const mapStateToProps = (state, ownProps) => {

@@ -71,7 +71,7 @@ const BasicCard = styled.div(props => {
       height: '100%'
     },
 
-    '&:hover, &:focus': {
+    '&:hover, &:focus, &:active': {
       boxShadow: boxShadow('rgba(0,0,0,.5)'),
       '.card__overlay': {
         background: highlight
