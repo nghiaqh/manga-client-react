@@ -48,7 +48,7 @@ export default {
       secondary: colors.teal[500],
       secondaryDark: colors.teal[700],
       secondaryLight: colors.teal[300],
-      background: colors.lime[300],
+      background: colors.lime[100],
       surface: colors.grey[50],
       error: colors.red[900],
       // typography & iconography
