@@ -4,7 +4,7 @@ const storageKey = '[manga-client-react] theme'
 
 const initialState = {
   style: 'basic',
-  theme: localStorage.getItem(storageKey) || 'light'
+  theme: localStorage.getItem(storageKey)
 }
 
 export default (prevState, action) => {

@@ -51,6 +51,7 @@ class App extends Component {
   }
 
   render () {
+    console.log(this.props.currentTheme, this.defaultTheme)
     const theme = themes[this.props.currentTheme || this.defaultTheme]
     return (
       <>
