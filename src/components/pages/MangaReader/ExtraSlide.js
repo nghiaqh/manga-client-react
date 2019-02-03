@@ -72,6 +72,7 @@ const Container = styled.div(props => {
     flexFlow: 'column',
     justifyContent: 'space-evenly',
     height: '100%',
+    direction: 'ltr',
 
     '& > div': {
       width: `calc(100vw - ${padding * 2}px)`,
@@ -87,8 +88,7 @@ const Container = styled.div(props => {
         },
 
         '.not-found-msg': {
-          margin: '0 auto',
-          direction: 'ltr'
+          margin: '0 auto'
         }
       }
     },
@@ -97,7 +97,6 @@ const Container = styled.div(props => {
       color: colors.onSurface,
       textDecoration: 'none',
       fontWeight: 600,
-      direction: 'ltr',
 
       '&:hover': {
         textDecoration: 'underline'

@@ -54,17 +54,17 @@ class MangaDetail extends React.PureComponent {
 
             <div className='meta'>
               <div>
-                <span className='meta__label'>Status:</span> {status}
+                <span className='meta__label'>{status}</span>
+              </div>
+              <div>
+                <span className='meta__label'>{manga.chaptersCount} {manga.chaptersCount > 1 ? 'chapters' : 'chapter'}</span>
               </div>
               <div>
                 <span className='meta__label'>Released:</span> {publishedDate}
               </div>
-              <div>
-                <span className='meta__label'>Chapters:</span> {manga.chaptersCount}
-              </div>
               { manga.tags &&
                 <div>
-                  <span className='meta__label'>Tags</span>
+                  <span className='meta__label'>Tags:</span>
                   {manga.tags.map(tag => <span key={tag}>{tag} </span>)}
                 </div>
               }
