@@ -23,6 +23,8 @@ class MangaDetail extends React.PureComponent {
     const status = manga.isComplete ? 'Complete' : 'On going'
     const publishedDate = manga.publishedAt
       ? new Date(manga.publishedAt).toLocaleDateString() : ''
+    const latestPublishedDate = manga.latestPublishedAt
+      ? new Date(manga.latestPublishedAt).toLocaleDateString() : ''
     const { includeNSFW } = contentFilter
 
     return (
@@ -60,7 +62,9 @@ class MangaDetail extends React.PureComponent {
                 <span className='meta__label'>{manga.chaptersCount} {manga.chaptersCount > 1 ? 'chapters' : 'chapter'}</span>
               </div>
               <div>
-                <span className='meta__label'>Released:</span> {publishedDate}
+                <span className='meta__label'>Released: </span>
+                {publishedDate}
+                {latestPublishedDate !== publishedDate && ' - ' + latestPublishedDate}
               </div>
               { manga.tags &&
                 <div>

@@ -27,6 +27,7 @@ class Home extends PureComponent {
             pageSize={24}
             // cardSize={{ height: 150, width: 90 }}
             layout='masonry-grid'
+            order='latestPublishedAt DESC'
           />
         </Container>
       </>

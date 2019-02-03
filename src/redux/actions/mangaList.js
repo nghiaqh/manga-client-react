@@ -50,7 +50,7 @@ export const fetchMangas = (
   pageSize = 12,
   pageNumber = 1,
   filter = {},
-  order = 'modifiedAt DESC') =>
+  order = 'latestPublishedDate DESC') =>
   dispatch => {
     const hash = Date.now()
     dispatch(requestMangas(id, pageSize, pageNumber, filter, order, hash))
