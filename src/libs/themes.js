@@ -3,7 +3,7 @@ import colors from './material-colors'
 export const common = {
   padding: 20,
   topBarHeight: 50,
-  breakpoints: [400, 641, 1008, 1400],
+  breakpoints: [361, 641, 1008, 1400], // min-width breakpoints
   transition: (duration = 0.4) => `all ${duration}s ease`,
   boxShadow: (rgba = 'rgba(0,0,0,.2)') => `0 1px 7px ${rgba}`,
   borderRadius: 5,

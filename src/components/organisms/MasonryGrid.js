@@ -70,7 +70,7 @@ export default class MasonryGrid extends React.PureComponent {
       breakpoint >= window.innerWidth)
 
     const key = index < 0 ? 'xlarge'
-      : ['xsmall', 'small', 'medium', 'large', 'xlarge'][index]
+      : ['xsmall', 'small', 'medium', 'large', 'xlarge'][index + 1]
     this.setState({
       cols: cols[key]
     })

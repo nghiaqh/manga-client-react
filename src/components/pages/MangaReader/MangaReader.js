@@ -104,13 +104,13 @@ class MangaReader extends React.PureComponent {
               className='btn--no-border'
               title={showThumbnail ? 'Start reading' : 'See Thumbnails'} >
               <FontAwesomeIcon icon={showThumbnail ? 'columns' : 'th-large'}
-                size='2x' />
+                size='lg' />
             </Button>
 
             <Button onClick={this.toggleFullScreen}
               className='btn--no-border'
               title='Fullscreen mode'>
-              <FontAwesomeIcon icon='expand' size='2x' />
+              <FontAwesomeIcon icon='expand' size='lg' />
             </Button>
           </header>
 
@@ -258,9 +258,10 @@ const ImageView = styled.div(props => {
 
     'div[id^=\'grid-images-chapter-\']': {
       position: 'absolute',
-      top: topBarHeight + 65,
+      top: topBarHeight + 63,
       bottom: 0,
       width: '100%',
+      height: '100%',
       background: colors.background
     }
   }
