@@ -10,10 +10,13 @@ export default function MangaGrid ({
   cardSize,
   layout,
   hideLoadMoreBtn,
-  children
+  children,
+  order,
+  noTags,
+  maxItems
 }) {
   const renderMangaCard = manga => (
-    <MangaCard key={manga.id} manga={manga} size={cardSize} />
+    <MangaCard key={manga.id} manga={manga} size={cardSize} noTags={noTags} />
   )
 
   return (
@@ -27,6 +30,8 @@ export default function MangaGrid ({
       layout={layout || 'grid'}
       colWidth={cardSize && cardSize.width}
       hideLoadMoreBtn={hideLoadMoreBtn}
+      order={order}
+      maxItems={maxItems}
     >
       {children}
     </ContentView>

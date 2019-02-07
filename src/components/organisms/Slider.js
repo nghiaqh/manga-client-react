@@ -128,7 +128,8 @@ const StyledSlider = styled.div(props => {
       },
 
       '&.slide--status': {
-        textAlign: 'center'
+        textAlign: 'center',
+        direction: 'initial'
       }
     },
 

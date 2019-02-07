@@ -22,18 +22,20 @@ export default class Grid extends React.PureComponent {
       : (retrievingItems ? <Loader /> : '')
 
     return (
-      <div className={`content-grid ${items.length === 0 && 'empty'}`}>
+      <Container className={`content-grid ${items.length === 0 && 'empty'}`}>
         {this.props.children}
-        <GridContainer ref={this.ref} colWidth={colWidth}>
-          {items}
-        </GridContainer>
+        {items.length > 0 &&
+          <StyledGrid ref={this.ref} colWidth={colWidth}>
+            {items}
+          </StyledGrid>
+        }
         {statusText}
-      </div>
+      </Container>
     )
   }
 }
 
-const GridContainer = styled('div')(props => {
+const StyledGrid = styled('div')(props => {
   const { theme } = props
   const colWidth = props.colWidth || '200px'
 
@@ -47,6 +49,22 @@ const GridContainer = styled('div')(props => {
 
     '.grid__item': {
       height: 'max-content'
+    }
+  }
+})
+
+const Container = styled('div')(props => {
+  return {
+    '.not-found-msg': {
+      display: 'flex',
+      flexGrow: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      margin: '0 auto'
+    },
+
+    '&.empty': {
+      display: 'flex'
     }
   }
 })

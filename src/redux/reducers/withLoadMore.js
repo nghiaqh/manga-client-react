@@ -40,7 +40,8 @@ const onDataRequested = (state, action) => {
   } = action.payload
 
   const prevFilter = state.withLoadMore[id].filter || {}
-  const toConcatItems = isEqual(filter, prevFilter)
+  const prevOrder = state.withLoadMore[id].order
+  const toConcatItems = isEqual(filter, prevFilter) && order === prevOrder
 
   return {
     ...state,

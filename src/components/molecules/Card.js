@@ -13,7 +13,7 @@ class Card extends PureComponent {
   }
 
   renderBasicVersion (props) {
-    const { media, title, description, size, onClick } = props
+    const { media, title, description, size, onClick, children } = props
 
     return (
       <BasicCard className='card--basic' size={size} onClick={onClick}>
@@ -23,6 +23,7 @@ class Card extends PureComponent {
           <div className='card__description'>{description}</div>
         </div>
         <div className='card__overlay' />
+        {children}
       </BasicCard>
     )
   }

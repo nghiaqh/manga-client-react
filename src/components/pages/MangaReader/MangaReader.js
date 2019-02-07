@@ -52,7 +52,7 @@ class MangaReader extends React.PureComponent {
   }
 
   render () {
-    const { showThumbnail, sliderDirection } = this.state
+    const { showThumbnail, sliderDirection, viewMode } = this.state
     const { manga, artists, chapters, contentFilter } = this.props
     const { mangaId, chapterId, imageNumber } = this.props.match.params
     const artist = manga ? get(artists, manga.artistId) : null
@@ -103,7 +103,7 @@ class MangaReader extends React.PureComponent {
             <Button onClick={this.toggleThumbnailGrid}
               className='btn--no-border'
               title={showThumbnail ? 'Start reading' : 'See Thumbnails'} >
-              <FontAwesomeIcon icon={showThumbnail ? 'columns' : 'th-large'}
+              <FontAwesomeIcon icon={showThumbnail ? 'columns' : 'th'}
                 size='lg' />
             </Button>
 
@@ -118,7 +118,7 @@ class MangaReader extends React.PureComponent {
             ? <div className='nsfw-overlay'>NSFW content</div>
             : (<>
               { /* View Slider */
-                this.state.viewMode === 'slider' &&
+                viewMode === 'slider' && !showThumbnail &&
                 <ImageSlider
                   chapterId={chapterId}
                   lastSlide={lastSlide}
@@ -127,7 +127,7 @@ class MangaReader extends React.PureComponent {
                   direction={sliderDirection} />}
 
               { /* Thumbnail gird */
-                this.state.showThumbnail &&
+                showThumbnail &&
                 <ImageGrid
                   chapterId={chapterId} mangaId={mangaId}
                   onItemClick={this.toggleThumbnailGrid}
@@ -194,7 +194,7 @@ class MangaReader extends React.PureComponent {
 
 // Style
 const ImageView = styled.div(props => {
-  const { padding, colors, topBarHeight } = props.theme
+  const { padding, colors } = props.theme
   return {
     minHeight: 0,
     minWidth: 0,
@@ -244,7 +244,23 @@ const ImageView = styled.div(props => {
 
     '> div': {
       flexGrow: 1,
-      minHeight: 0
+      minHeight: 0,
+      display: 'flex',
+      flexDirection: 'column',
+
+      '.content-slider.empty': {
+        flexGrow: 1,
+        minHeight: 0,
+        height: 'auto',
+
+        '.slide--status': {
+          margin: '0 auto'
+        }
+      },
+
+      '.content-grid': {
+        width: '100%'
+      }
     },
 
     '.nsfw-overlay': {
@@ -257,11 +273,7 @@ const ImageView = styled.div(props => {
     },
 
     'div[id^=\'grid-images-chapter-\']': {
-      position: 'absolute',
-      top: topBarHeight + 63,
-      bottom: 0,
       width: '100%',
-      height: '100%',
       background: colors.background
     }
   }

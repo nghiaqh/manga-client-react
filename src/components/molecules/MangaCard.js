@@ -8,12 +8,24 @@ import Image from 'components/atoms/Image'
 
 class MangaCard extends React.PureComponent {
   render () {
-    const { manga, artists, classNames, onItemClick, size } = this.props
+    const { manga, artists, classNames, onItemClick, size, noTags } = this.props
     const artist = artists[manga.artistId] || {}
 
-    const { id, shortTitle } = manga
+    const { id, shortTitle, isSeries, isTankoubou, isDoujinshi, isNSFW } = manga
     const mangaUrl = toUrl('mangaDetail', { mangaId: id })
     const thumbnail = <Image {...manga.previewImages[0]} />
+    const releasedDate = manga.latestPublishedAt
+      ? new Date(manga.latestPublishedAt).toLocaleDateString(
+        'en-US',
+        { year: 'numeric', month: 'numeric' }
+      )
+      : ''
+
+    const tags = [ releasedDate ]
+    if (isSeries) tags.push('series')
+    if (isTankoubou) tags.push('tank')
+    if (isDoujinshi) tags.push('douji')
+    if (isNSFW) tags.push('nsfw')
 
     return (
       <Container
@@ -26,15 +38,30 @@ class MangaCard extends React.PureComponent {
           title={shortTitle}
           description={artist.name}
           size={size}
-        />
+        >
+          {!noTags && <div className='tags'>
+            {tags.join(', ')}
+          </div>}
+        </Card>
       </Container>
     )
   }
 }
 
 const Container = styled(Link)(props => {
+  const { colors, padding, borderRadius } = props.theme
+
   return {
-    textDecoration: 'none'
+    textDecoration: 'none',
+    '.tags': {
+      borderTop: `1px dashed ${colors.border}`,
+      borderRadius: `0 0 ${borderRadius}px ${borderRadius}px`,
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: padding / 2,
+      padding: padding / 3,
+      fontSize: '0.75em'
+    }
   }
 })
 

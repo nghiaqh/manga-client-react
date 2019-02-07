@@ -8,9 +8,6 @@ import WithLoadMore from 'components/organisms/WithLoadMore'
 export default class ContentView extends PureComponent {
   constructor (props) {
     super(props)
-    this.state = {
-      layout: props.layout || 'grid'
-    }
 
     this.renderList = this.renderList.bind(this)
     this.renderGrid = this.renderGrid.bind(this)
@@ -28,11 +25,13 @@ export default class ContentView extends PureComponent {
       loadMoreFunc,
       renderItem,
       onNoMoreContent,
-      hideLoadMoreBtn
+      hideLoadMoreBtn,
+      layout,
+      maxItems
     } = this.props
     let renderLayout
 
-    switch (this.state.layout) {
+    switch (layout) {
       case 'list':
         renderLayout = this.renderList
         break
@@ -50,7 +49,7 @@ export default class ContentView extends PureComponent {
     return (
       <WithLoadMore
         id={id}
-        domId={`${this.state.layout}-${id}`}
+        domId={`${layout}-${id}`}
         entityType={entityType}
         renderLayout={renderLayout}
         renderItem={renderItem}
@@ -58,8 +57,9 @@ export default class ContentView extends PureComponent {
         filter={filter}
         pageSize={pageSize}
         order={order}
-        hideLoadMoreBtn={this.state.layout === 'slider' || hideLoadMoreBtn}
+        hideLoadMoreBtn={layout === 'slider' || hideLoadMoreBtn}
         onNoMoreContent={onNoMoreContent}
+        maxItems={maxItems}
       />
     )
   }

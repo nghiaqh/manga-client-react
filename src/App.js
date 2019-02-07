@@ -25,7 +25,12 @@ import {
   faEyeSlash,
   faGripVertical,
   faColumns,
-  faThLarge
+  faTh,
+  faSortNumericDown,
+  faSortNumericUp,
+  faThList,
+  faAlignLeft,
+  faAlignRight
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -38,7 +43,12 @@ library.add(
   faEyeSlash,
   faGripVertical,
   faColumns,
-  faThLarge
+  faTh,
+  faSortNumericDown,
+  faSortNumericUp,
+  faThList,
+  faAlignLeft,
+  faAlignRight
 )
 
 class App extends Component {
@@ -51,7 +61,6 @@ class App extends Component {
   }
 
   render () {
-    console.log(this.props.currentTheme, this.defaultTheme)
     const theme = themes[this.props.currentTheme || this.defaultTheme]
     return (
       <>

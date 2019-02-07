@@ -50,9 +50,11 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
         <MangaGrid
           id={`mangas-artist-${manga.artistId}-neq-${manga.id}`}
           filter={filter}
-          pageSize={6}
+          pageSize={8}
+          maxItems={8}
           cardSize={{ height: 150, width: 90 }}
-          hideLoadMoreBtn>
+          hideLoadMoreBtn
+          noTags>
           <h2>You might like</h2>
         </MangaGrid>
       </div>
@@ -80,7 +82,7 @@ const Container = styled.div(props => {
       paddingRight: padding,
 
       '.content-grid': {
-        maxWidth: 700,
+        maxWidth: 500,
         margin: '0 auto',
 
         '&.empty': {
@@ -89,6 +91,10 @@ const Container = styled.div(props => {
 
         '.not-found-msg': {
           margin: '0 auto'
+        },
+
+        '& .card__description': {
+          display: 'none'
         }
       }
     },

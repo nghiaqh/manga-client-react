@@ -46,7 +46,8 @@ class WithLoadMore extends PureComponent {
       renderLayout,
       renderItem,
       pageSize,
-      hideLoadMoreBtn
+      hideLoadMoreBtn,
+      maxItems
     } = this.props
     const data = withLoadMore || {
       items: [],
@@ -58,7 +59,7 @@ class WithLoadMore extends PureComponent {
     const { items, retrievingItems } = data
 
     const contents = Array.isArray(items)
-      ? items.map(i => entities[i])
+      ? items.map(id => entities[id]).splice(0, maxItems || items.length)
       : []
     const dom = renderLayout(contents, retrievingItems, renderItem,
       this.handleClick)
