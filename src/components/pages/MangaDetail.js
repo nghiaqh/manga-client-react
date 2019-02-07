@@ -149,7 +149,12 @@ const Container = styled.div(props => {
     '.zone-container': {
       maxWidth: 1200,
       margin: '0 auto',
-      padding
+      paddingBottom: padding / 2,
+
+      'h1, h2, .meta, .artist': {
+        paddingLeft: padding,
+        paddingRight: padding
+      }
     },
 
     a: {
