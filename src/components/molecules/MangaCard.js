@@ -54,10 +54,11 @@ const Container = styled(Link)(props => {
   return {
     textDecoration: 'none',
     '.tags': {
-      borderTop: `1px dashed ${colors.border}`,
+      borderTop: `1px dashed ${colors.secondary}`,
       borderRadius: `0 0 ${borderRadius}px ${borderRadius}px`,
       display: 'flex',
       alignItems: 'center',
+      flexShrink: 0,
       marginTop: padding / 2,
       padding: padding / 3,
       fontSize: '0.75em'

@@ -29,7 +29,7 @@ class Topbar extends PureComponent {
           <Link className='topbar--logo' to='/'>Manga Reader</Link>
 
           <div id='topbar--menu'>
-            <Button className='btn--no-border'
+            <Button className='btn--plain'
               onClick={this.toggleSearch}
               title='Search'
               ariaHasPopUp
@@ -37,7 +37,7 @@ class Topbar extends PureComponent {
               ariaLabelledBy='search-overlay'>
               <FontAwesomeIcon icon='search' size='lg' />
             </Button>
-            <Button className='btn--no-border'
+            <Button className='btn--plain'
               onClick={this.toggleSettings}
               title='Settings'
               ariaHasPopUp

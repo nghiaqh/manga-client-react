@@ -39,19 +39,19 @@ class Home extends PureComponent {
         <Container>
           <div className='ui-controller'>
             <Button onClick={this.toggleLayout}
-              className='btn--no-border waterfall'
+              className='btn--plain waterfall'
               title='Waterfall'
               disabled={layout === 'masonry-grid'}>
               <FontAwesomeIcon icon='align-left' size='lg' />
             </Button>
             <Button onClick={this.toggleLayout}
-              className='btn--no-border'
+              className='btn--plain'
               title='Uniform'
               disabled={layout === 'grid'}>
               <FontAwesomeIcon icon='th' size='lg' />
             </Button>
             <Button onClick={this.toggleOrder}
-              className='btn--no-border'
+              className='btn--plain'
               title={`Sort: ${order === 'DESC' ? 'Old' : 'New'}`}>
               <FontAwesomeIcon
                 icon={order === 'DESC' ? 'sort-numeric-up' : 'sort-numeric-down'}

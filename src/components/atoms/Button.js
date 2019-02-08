@@ -41,29 +41,45 @@ const StyledButton = styled.button(props => {
   const { colors, borderRadius, transition } = props.theme
 
   return {
+    border: 'none',
     outline: 'none',
-    border: `2px solid ${colors.secondary}`,
-    background: 'none',
-    color: colors.secondary,
     cursor: 'pointer',
     fontWeight: 600,
     fontSize: '1em',
     borderRadius,
     transition,
+    background: colors.secondary,
+    color: colors.onSecondary,
 
     '&:hover': {
-      color: colors.secondaryDark,
-      borderColor: colors.secondaryDark
+      background: colors.secondaryDark,
+      color: colors.onSecondaryDark
     },
 
-    '&:disabled': {
+    '&.btn--plain': {
+      border: 'none',
+      background: 'none',
+      color: colors.secondary,
+
+      '&:hover': {
+        color: colors.secondaryDark
+      }
+    },
+
+    '&.btn--outlined': {
+      border: `2px solid ${colors.secondary}`,
+      color: colors.secondary,
+
+      '&:hover': {
+        color: colors.secondaryDark,
+        borderColor: colors.secondaryDark
+      }
+    },
+
+    '&:disabled, &:disabled:hover': {
       color: colors.border,
       borderColor: colors.border,
       cursor: 'not-allowed'
-    },
-
-    '&.btn--no-border': {
-      border: 'none'
     }
   }
 })
@@ -77,7 +93,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(Button)
 
 export function CloseButton ({ onClick }) {
-  return <Button className='btn--no-border' onClick={onClick}>
+  return <Button className='btn--plain' onClick={onClick}>
     <FontAwesomeIcon icon='times' size='2x' />
   </Button>
 }

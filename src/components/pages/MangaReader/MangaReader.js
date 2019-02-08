@@ -95,20 +95,20 @@ class MangaReader extends React.PureComponent {
 
             {/* View options */}
             <Button onClick={this.toggleSliderDirection}
-              className='btn--no-border'
+              className='btn--plain'
               title='View direction'>
               {sliderDirection.toUpperCase()}
             </Button>
 
             <Button onClick={this.toggleThumbnailGrid}
-              className='btn--no-border'
+              className='btn--plain'
               title={showThumbnail ? 'Start reading' : 'See Thumbnails'} >
               <FontAwesomeIcon icon={showThumbnail ? 'columns' : 'th'}
                 size='lg' />
             </Button>
 
             <Button onClick={this.toggleFullScreen}
-              className='btn--no-border'
+              className='btn--plain'
               title='Fullscreen mode'>
               <FontAwesomeIcon icon='expand' size='lg' />
             </Button>

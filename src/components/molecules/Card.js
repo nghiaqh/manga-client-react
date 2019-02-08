@@ -106,7 +106,7 @@ const BasicCard = styled.div(props => {
         minHeight: 0,
         flexGrow: 1,
         borderRadius: `${borderRadius}px ${borderRadius}px 0 0`,
-        borderBottom: `1px solid ${colors.border}`
+        borderBottom: `1px inset ${colors.border}`
       }
     }
   }
