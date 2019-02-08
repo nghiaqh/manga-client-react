@@ -37,12 +37,13 @@ export default class Grid extends React.PureComponent {
 
 const StyledGrid = styled('div')(props => {
   const { theme } = props
-  const colWidth = props.colWidth || '200px'
+  let colWidth = props.colWidth || '200px'
+  if (Number.isInteger(colWidth)) colWidth = `${colWidth}px`
 
   return {
     display: 'grid',
     gridGap: theme.padding / 2,
-    gridTemplateColumns: `repeat(auto-fill, minmax(${colWidth}px, 1fr))`,
+    gridTemplateColumns: `repeat(auto-fill, minmax(${colWidth}, 1fr))`,
     padding: theme.padding / 2,
     justifyItems: 'center',
     justifyContent: 'center',

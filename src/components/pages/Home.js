@@ -63,7 +63,7 @@ class Home extends PureComponent {
             id={`mangas-latest`}
             filter={filter}
             pageSize={24}
-            cardSize={layout === 'grid' ? { height: 325, width: 200 } : null}
+            cardSize={layout === 'grid' ? { height: 300 } : null}
             layout={layout}
             order={`latestPublishedAt ${order}`}
           />

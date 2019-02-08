@@ -13,7 +13,8 @@ export default function MangaGrid ({
   children,
   order,
   noTags,
-  maxItems
+  maxItems,
+  colWidth
 }) {
   const renderMangaCard = manga => (
     <MangaCard key={manga.id} manga={manga} size={cardSize} noTags={noTags} />
@@ -28,7 +29,7 @@ export default function MangaGrid ({
       loadMoreFunc={loadMoreMangas}
       renderItem={renderMangaCard}
       layout={layout || 'grid'}
-      colWidth={cardSize && cardSize.width}
+      colWidth={colWidth || (cardSize && cardSize.width)}
       hideLoadMoreBtn={hideLoadMoreBtn}
       order={order}
       maxItems={maxItems}
