@@ -29,7 +29,7 @@ export default {
       onPrimaryDark: 'white',
       onPrimaryLight: 'white',
       onSecondary: 'black',
-      onSecondaryDark: 'black',
+      onSecondaryDark: 'white',
       onSecondaryLight: 'black',
       onBackground: colors.grey[800],
       onSurface: colors.grey[800],

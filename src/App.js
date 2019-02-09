@@ -29,7 +29,8 @@ import {
   faSortNumericUp,
   faThList,
   faAlignLeft,
-  faAlignRight
+  faAlignRight,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -46,7 +47,8 @@ library.add(
   faSortNumericUp,
   faThList,
   faAlignLeft,
-  faAlignRight
+  faAlignRight,
+  faSpinner
 )
 
 class App extends Component {

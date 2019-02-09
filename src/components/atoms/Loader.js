@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import styled from '@emotion/styled/macro'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Loader extends PureComponent {
   render () {
@@ -15,7 +16,8 @@ class Loader extends PureComponent {
   renderBasicVersion (props) {
     return (
       <Spinner className='loader--basic'>
-        Loading...
+        {/* Loading... */}
+        <FontAwesomeIcon icon='spinner' size='2x' />
       </Spinner>
     )
   }
@@ -34,7 +36,10 @@ const Spinner = styled.div(props => {
     margin: padding,
     display: 'block',
     textAlign: 'center',
-    fontWeight: 600
+    fontWeight: 600,
+    animationIterationCount: 'infinite',
+    animationName: 'spin',
+    animationDuration: '2s'
   }
 })
 
