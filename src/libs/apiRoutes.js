@@ -26,6 +26,14 @@ const apiRoutes = {
   image: `${imgServer}/:src`
 }
 
-export const getImageUrl = src => `${imgServer}${src}`
+export const getImageUrl = (src, type) => {
+  if (type) {
+    const parts = src.split('/')
+    const fileName = parts.pop()
+    return `${imgServer}${parts.join('/')}/thumbnails/${type}/${fileName}`
+  } else {
+    return `${imgServer}${src}`
+  }
+}
 
 export default (id, params = {}) => pathToRegexp.compile(apiRoutes[id])(params)

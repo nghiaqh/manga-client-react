@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toUrl } from 'libs/routes'
 import Card from 'components/molecules/Card'
-import Image from 'components/atoms/Image'
+import ProgressiveImage from 'components/atoms/ProgressiveImage'
 
 class MangaCard extends React.PureComponent {
   render () {
@@ -13,7 +13,7 @@ class MangaCard extends React.PureComponent {
 
     const { id, shortTitle, isSeries, isTankoubou, isDoujinshi, isNSFW } = manga
     const mangaUrl = toUrl('mangaDetail', { mangaId: id })
-    const thumbnail = <Image {...manga.previewImages[0]} />
+    const thumbnail = <ProgressiveImage {...manga.previewImages[0]} />
     const releasedDate = manga.latestPublishedAt
       ? new Date(manga.latestPublishedAt).toLocaleDateString(
         'en-US',

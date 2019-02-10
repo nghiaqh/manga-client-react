@@ -45,8 +45,6 @@ const StyledGrid = styled('div')(props => {
     gridGap: theme.padding / 2,
     gridTemplateColumns: `repeat(auto-fill, minmax(${colWidth}, 1fr))`,
     padding: theme.padding / 2,
-    justifyItems: 'center',
-    justifyContent: 'center',
 
     '.grid__item': {
       height: 'max-content'

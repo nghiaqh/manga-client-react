@@ -3,7 +3,7 @@ import { loadMoreImages } from 'redux/actions/imageList'
 import { toUrl } from 'libs/routes'
 import { Link } from 'react-router-dom'
 import ContentView from 'components/organisms/ContentView'
-import Image from 'components/atoms/Image'
+import ProgressiveImage from 'components/atoms/ProgressiveImage'
 import Card from 'components/molecules/Card'
 
 export default function ImageGrid ({ chapterId, mangaId, onItemClick }) {
@@ -19,7 +19,7 @@ export default function ImageGrid ({ chapterId, mangaId, onItemClick }) {
       })}
       onClick={onItemClick} >
       <Card
-        media={<Image key={image.id} {...image} />}
+        media={<ProgressiveImage key={image.id} {...image} />}
         description={image.number}
         size={{
           height: '200px',
