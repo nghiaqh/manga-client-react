@@ -11,12 +11,14 @@ class Image extends React.PureComponent {
   }
 
   render () {
-    switch (this.props.style) {
-      case 'material':
-        return this.renderMaterialVersion(this.props)
-      default:
-        return this.renderBasicVersion(this.props)
-    }
+    const { className, title, src } = this.props
+    return (
+      <BasicImage className={`image--basic ${className || ''}`}
+        alt={title}
+        src={getImageUrl(src)}
+        ref={this.ref}
+      />
+    )
   }
 
   componentDidMount () {
@@ -30,26 +32,6 @@ class Image extends React.PureComponent {
 
   setWidth () {
     if (this.props.setWidth) this.props.setWidth(this.ref, this.props)
-  }
-
-  renderBasicVersion (props) {
-    return (
-      <BasicImage className={`image--basic ${props.className || ''}`}
-        alt={props.title}
-        src={getImageUrl(props.src)}
-        ref={this.ref}
-      />
-    )
-  }
-
-  renderMaterialVersion (props) {
-    return (
-      <img className='image--material'
-        alt={props.title}
-        src={getImageUrl(props.src)}
-        ref={this.ref}
-      />
-    )
   }
 }
 

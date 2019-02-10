@@ -5,34 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Button extends PureComponent {
   render () {
-    switch (this.props.style) {
-      case 'material':
-        return this.renderMaterialVersion(this.props)
-      default:
-        return this.renderBasicVersion(this.props)
-    }
-  }
-
-  renderBasicVersion (props) {
+    const { id, className, onClick, disabled, title, children } = this.props
     return (
-      <StyledButton id={props.id}
-        className={`button--basic ${props.className || ''}`}
-        onClick={props.onClick}
-        disabled={props.disabled}
-        title={props.title}>
-        {props.children}
+      <StyledButton id={id}
+        className={`button--basic ${className || ''}`}
+        onClick={onClick}
+        disabled={disabled}
+        title={title}>
+        {children}
       </StyledButton>
-    )
-  }
-
-  renderMaterialVersion (props) {
-    return (
-      <button id={props.id}
-        className={`button--material ${props.className || ''}`}
-        onClick={props.onClick}
-        disabled={props.disabled}>
-        {props.children}
-      </button>
     )
   }
 }

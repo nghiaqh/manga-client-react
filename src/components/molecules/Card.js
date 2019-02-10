@@ -4,16 +4,7 @@ import { connect } from 'react-redux'
 
 class Card extends PureComponent {
   render () {
-    switch (this.props.style) {
-      case 'material':
-        return this.renderMaterialVersion(this.props)
-      default:
-        return this.renderBasicVersion(this.props)
-    }
-  }
-
-  renderBasicVersion (props) {
-    const { media, title, description, size, onClick, children } = props
+    const { media, title, description, size, onClick, children } = this.props
 
     return (
       <BasicCard className='card--basic' size={size} onClick={onClick}>
@@ -25,17 +16,6 @@ class Card extends PureComponent {
         <div className='card__overlay' />
         {children}
       </BasicCard>
-    )
-  }
-
-  renderMaterialVersion (props) {
-    const { media, title, description } = props
-    return (
-      <div className='card--material'>
-        <div className='card__media'>{media}</div>
-        <div className='card__title'>{title}</div>
-        <div className='card__description'>{description}</div>
-      </div>
     )
   }
 }

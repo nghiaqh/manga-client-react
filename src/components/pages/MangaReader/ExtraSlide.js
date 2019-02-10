@@ -23,7 +23,8 @@ function NextChapterLink ({ manga, mangaId, chapters, chapterId }) {
           chapterId: nextChapterKey,
           imageNumber: 1
         })}>
-        Next chapter - {chapters[nextChapterKey].shortTitle}
+        <h3>Next chapter</h3>
+        {chapters[nextChapterKey].shortTitle}
       </Link> : null
   }
 
@@ -41,10 +42,18 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
 
   return (
     <Container>
-      <i>
-        { manga.chaptersCount !== number && `End of ${shortTitle}` }
-        { (manga.chaptersCount === number) && `End of ${manga.shortTitle}` }
-      </i>
+      { manga.chaptersCount !== number &&
+        <div>
+          <h3>End of chapter</h3>
+          {shortTitle}
+        </div>
+      }
+      { (manga.chaptersCount === number) &&
+        <div>
+          <h3>End of manga</h3>
+          {manga.shortTitle}
+        </div>
+      }
 
       <div>
         <MangaGrid
@@ -55,7 +64,7 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
           cardSize={{ height: 150, width: 90 }}
           hideLoadMoreBtn
           noTags>
-          <h2>You might like</h2>
+          <h3>You might like</h3>
         </MangaGrid>
       </div>
       <NextChapterLink
@@ -102,7 +111,6 @@ const Container = styled.div(props => {
     '#to-next-chapter': {
       color: colors.onSurface,
       textDecoration: 'none',
-      fontWeight: 600,
 
       '&:hover': {
         textDecoration: 'underline'

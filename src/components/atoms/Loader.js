@@ -5,26 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Loader extends PureComponent {
   render () {
-    switch (this.props.style) {
-      case 'material':
-        return this.renderMaterialVersion(this.props)
-      default:
-        return this.renderBasicVersion(this.props)
-    }
-  }
-
-  renderBasicVersion (props) {
     return (
       <Spinner className='loader--basic'>
         {/* Loading... */}
         <FontAwesomeIcon icon='spinner' size='2x' />
       </Spinner>
-    )
-  }
-
-  renderMaterialVersion (props) {
-    return (
-      <span className='loader--material'>Loading...</span>
     )
   }
 }

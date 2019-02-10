@@ -53,9 +53,8 @@ class MangaReader extends React.PureComponent {
 
   render () {
     const { showThumbnail, sliderDirection, viewMode } = this.state
-    const { manga, artists, chapters, contentFilter } = this.props
+    const { manga, chapters, contentFilter } = this.props
     const { mangaId, chapterId, imageNumber } = this.props.match.params
-    const artist = manga ? get(artists, manga.artistId) : null
     const chapter = chapters[chapterId]
 
     const lastSlide = this.state.showExtraSlide && manga && <ExtraSlide
@@ -82,13 +81,13 @@ class MangaReader extends React.PureComponent {
             <div className='breadcrumb'>
               <h1 className='truncate'>
                 <Link to={toUrl('mangaDetail', { mangaId: mangaId })}>
-                  {manga && manga.shortTitle} by {artist && artist.name}
+                  {manga && manga.shortTitle}
                 </Link>
               </h1>
               <span className='truncate'>
                 {
                   chapter && manga.chaptersCount > 1 &&
-                ` ${chapter.shortTitle} (${chapter.number}/${manga.chaptersCount})`
+                ` C${chapter.number}. ${chapter.shortTitle}`
                 }
               </span>
             </div>
@@ -206,7 +205,6 @@ const ImageView = styled.div(props => {
       padding: `${padding / 2}px ${padding}px`,
       background: colors.surface,
       color: colors.onSurface,
-      fontWeight: 600,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
