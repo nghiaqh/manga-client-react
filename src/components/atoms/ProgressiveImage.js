@@ -6,7 +6,8 @@ export default class ProgressiveImage extends React.PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      preview: true
+      preview: true,
+      size: props.size || 180
     }
 
     this.ref = React.createRef()
@@ -16,7 +17,7 @@ export default class ProgressiveImage extends React.PureComponent {
 
   render () {
     const { className, title, src } = this.props
-    const { preview } = this.state
+    const { preview, size } = this.state
 
     return (
       <BasicImage
@@ -24,7 +25,7 @@ export default class ProgressiveImage extends React.PureComponent {
           ${preview ? 'preview' : ''}
           ${className || ''}`}
         alt={title}
-        src={getImageUrl(src, preview ? 9 : 180)}
+        src={getImageUrl(src, preview ? 9 : size)}
         ref={this.ref}
       />
     )
@@ -54,7 +55,12 @@ export default class ProgressiveImage extends React.PureComponent {
     const posTop = pageYOffset + top
     const posBottom = posTop + height
     if (pageYOffset < posBottom && pageYOffset + innerHeight > posTop) {
-      this.setState({ preview: false })
+      this.setState({
+        preview: false,
+        size: this.props.size
+          ? this.props.size
+          : window.innerWidth > 1400 ? 360 : 180
+      })
     }
   }
 }
