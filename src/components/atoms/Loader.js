@@ -22,9 +22,11 @@ const Spinner = styled.div(props => {
     display: 'block',
     textAlign: 'center',
     fontWeight: 600,
-    animationIterationCount: 'infinite',
-    animationName: 'spin',
-    animationDuration: '2s'
+    svg: {
+      animationIterationCount: 'infinite',
+      animationName: 'spin',
+      animationDuration: '2s'
+    }
   }
 })
 

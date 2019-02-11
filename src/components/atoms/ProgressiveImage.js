@@ -59,7 +59,7 @@ export default class ProgressiveImage extends React.PureComponent {
         preview: false,
         size: this.props.size
           ? this.props.size
-          : window.innerWidth > 1400 ? 360 : 180
+          : 360
       })
     }
   }
