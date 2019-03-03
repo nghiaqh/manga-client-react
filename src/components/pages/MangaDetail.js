@@ -21,8 +21,8 @@ class MangaDetail extends React.PureComponent {
     const artist = manga ? get(artists, manga.artistId) : null
     const previewImages = get(manga, 'previewImages', [])
     const status = manga.isComplete ? 'Complete' : 'On going'
-    const publishedDate = manga.publishedAt
-      ? new Date(manga.publishedAt).toLocaleDateString() : ''
+    const publishedDate = manga.latestPublishedAt
+      ? new Date(manga.latestPublishedAt).toLocaleDateString() : ''
     const latestPublishedDate = manga.latestPublishedAt
       ? new Date(manga.latestPublishedAt).toLocaleDateString() : ''
     const { includeNSFW } = contentFilter
