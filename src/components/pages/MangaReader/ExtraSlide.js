@@ -38,22 +38,27 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
       neq: manga.id
     }
   }
-  const { number, shortTitle } = chapters[chapterId]
+  const { number, shortTitle: chapterTitle } = chapters[chapterId]
+  const { isComplete, chaptersCount, shortTitle: mangaTitle } = manga
 
   return (
     <Container>
-      { manga.chaptersCount !== number &&
-        <div>
-          <h3>End of chapter</h3>
-          {shortTitle}
-        </div>
-      }
-      { (manga.chaptersCount === number) &&
-        <div>
-          <h3>End of manga</h3>
-          {manga.shortTitle}
-        </div>
-      }
+      <div>
+        <h3>End of&nbsp;
+          {
+            isComplete && (chaptersCount === 1 || chaptersCount === number)
+              ? `manga`
+              : (!isComplete && chaptersCount > number
+                ? `chapter`
+                : 'last chapter')
+          }
+        </h3>
+        {
+          isComplete && (chaptersCount === 1 || chaptersCount === number)
+            ? mangaTitle
+            : chapterTitle
+        }
+      </div>
 
       <div>
         <MangaGrid
@@ -67,6 +72,7 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
           <h3>You might like</h3>
         </MangaGrid>
       </div>
+
       <NextChapterLink
         manga={manga}
         mangaId={mangaId}
