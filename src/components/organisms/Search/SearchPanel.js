@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { CloseButton } from 'components/atoms/Button'
 import SearchBox from './SearchBox'
 import MangaSlider from 'components/organisms/MangaSlider'
-import ChapterList from 'components/organisms/ChapterList'
+import { FullTitleChapterList } from 'components/organisms/ChapterList'
 import ArtistList from 'components/organisms/ArtistList'
 
 class SearchPanel extends PureComponent {
@@ -43,14 +43,14 @@ class SearchPanel extends PureComponent {
                 </MangaSlider>
               </div>
               <div className='search-results'>
-                <ChapterList id={`chapters-search-${searchText}`}
+                <FullTitleChapterList id={`chapters-search-${searchText}`}
                   filter={{
                     title: searchText,
                     number: { gt: 0 }
                   }}
                   pageSize={6} >
                   <h2>Chapters</h2>
-                </ChapterList>
+                </FullTitleChapterList>
               </div>
               <div className='search-results'>
                 <ArtistList id={`artists-search-${searchText}`}
