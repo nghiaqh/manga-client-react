@@ -44,7 +44,6 @@ const Container = styled.div(props => {
 
     '> div:first-of-type': {
       marginBottom: padding / 2,
-      fontSize: '1.2em',
       fontWeight: 600
     },
 

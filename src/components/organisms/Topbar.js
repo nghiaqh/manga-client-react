@@ -167,6 +167,10 @@ const Header = styled.header(props => {
         borderBottomColor: colors.border,
         borderWidth: padding / 2 + 1,
         marginLeft: 0 - padding / 2 - 1
+      },
+
+      label: {
+        fontSize: '0.9em'
       }
     }
   }
