@@ -1,4 +1,5 @@
 import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
 import styled from '@emotion/styled/macro'
 import React, { PureComponent } from 'react'
 import Loader from 'components/atoms/Loader'
@@ -12,7 +13,7 @@ export default class Slider extends PureComponent {
     }
 
     this.ref = React.createRef()
-    this.handleScroll = this.handleScroll.bind(this)
+    this.handleScroll = throttle(this.handleScroll.bind(this), 400)
     this.handleMouseWheel = this.handleMouseWheel.bind(this)
     this.loadMore = debounce(this.loadMore.bind(this), 200)
   }
@@ -43,10 +44,7 @@ export default class Slider extends PureComponent {
 
           {this.props.children}
 
-          <div className='slider__main'
-            ref={this.ref}
-            onScroll={this.handleScroll}
-            onWheel={this.handleMouseWheel}>
+          <div className='slider__main' ref={this.ref}>
             {slides}
           </div>
         </StyledSlider>
@@ -60,13 +58,27 @@ export default class Slider extends PureComponent {
     }
   }
 
+  componentDidMount () {
+    this.ref.current.addEventListener(
+      'wheel',
+      this.handleMouseWheel,
+      { passive: true })
+    this.ref.current.addEventListener(
+      'scroll',
+      this.handleScroll,
+      { passive: true })
+  }
+
   componentWillUnmount () {
     this.loadMore.cancel()
+    this.ref.current.removeEventListener('wheel', this.handleMouseWheel)
+    this.ref.current.removeEventListener('scroll', this.handleScroll)
   }
 
   handleMouseWheel (event) {
     const direction = this.props.layoutDirection || 'ltr'
-    const deltaY = event.deltaMode === 1 ? event.deltaY * 50 : event.deltaY
+    const { deltaMode, deltaY: dy } = event
+    const deltaY = deltaMode === 1 ? dy * 50 : dy * 2
     if (direction === 'ltr') {
       this.ref.current.scrollLeft += deltaY
     } else {
@@ -105,9 +117,9 @@ const StyledSlider = styled.div(props => {
       width: '100%',
       display: 'flex',
       flexFlow: 'row nowrap',
+      overflowX: 'auto',
       scrollBehavior: 'smooth',
-      overflowX: 'auto'
-      // scrollSnapType: 'mandatory'
+      scrollSnapType: 'mandatory'
     },
 
     '.slide': {
@@ -115,7 +127,7 @@ const StyledSlider = styled.div(props => {
       display: 'flex',
       flexFlow: 'column',
       justifyContent: 'center',
-      // scrollSnapAlign: 'start',
+      scrollSnapAlign: 'start',
 
       '&:first-of-type': {
         paddingRight: direction === 'rtl' ? padding : 0,
