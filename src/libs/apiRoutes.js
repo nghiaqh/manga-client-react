@@ -27,7 +27,7 @@ const apiRoutes = {
 }
 
 export const getImageUrl = (src, type) => {
-  if (type && src.search('.webp') < 0) {
+  if (type && src && src.search('.webp') < 0) {
     const parts = src.split('/')
     const fileName = parts.pop()
     return `${imgServer}${parts.join('/')}/thumbnails/${type}/${fileName}`
