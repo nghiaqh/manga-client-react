@@ -145,13 +145,13 @@ class MangaReader extends React.PureComponent {
 
     if (mangaId && number) {
       this.props.dispatch(fetchChapterOfMangaIfNeeded(mangaId, number + 1))
-
-      // add a bit delay to avoid showing the extra slide
-      // while prior slide content is rendering
-      setTimeout(() => this.setState({
-        showExtraSlide: true
-      }), 300)
     }
+
+    // add a bit delay to avoid showing the extra slide
+    // while prior slide content is rendering
+    setTimeout(() => this.setState({
+      showExtraSlide: true
+    }), 300)
   }
 
   toggleFullScreen () {

@@ -40,19 +40,17 @@ export default function ExtraSlide ({ manga, mangaId, chapters, chapterId }) {
   }
   const { number, shortTitle: chapterTitle } = chapters[chapterId]
   const { isComplete, chaptersCount, shortTitle: mangaTitle } = manga
+  let entityType = 'chapter'
+  if (isComplete && (chaptersCount === 1 || chaptersCount === number)) {
+    entityType = 'manga'
+  } else if (!isComplete && chaptersCount === number) {
+    entityType = 'last chapter'
+  }
 
   return (
     <Container>
       <div>
-        <h3>End of&nbsp;
-          {
-            isComplete && (chaptersCount === 1 || chaptersCount === number)
-              ? `manga`
-              : (!isComplete && chaptersCount > number
-                ? `chapter`
-                : 'last chapter')
-          }
-        </h3>
+        <h3>End of {entityType}</h3>
         {
           isComplete && (chaptersCount === 1 || chaptersCount === number)
             ? mangaTitle
