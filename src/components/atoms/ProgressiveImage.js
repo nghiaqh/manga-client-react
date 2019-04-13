@@ -50,11 +50,11 @@ export default class ProgressiveImage extends React.PureComponent {
   }
 
   loadImage () {
-    const { pageYOffset, innerHeight } = window
-    const { top, height } = this.ref.current.getBoundingClientRect()
-    const posTop = pageYOffset + top
-    const posBottom = posTop + height
-    if (pageYOffset < posBottom && pageYOffset + innerHeight > posTop) {
+    const { innerHeight } = window
+    const { top, bottom } = this.ref.current.getBoundingClientRect()
+
+    if ((top >= 0 && top <= innerHeight) ||
+      (bottom >= 0 && bottom <= innerHeight)) {
       this.setState({
         preview: false,
         size: this.props.size

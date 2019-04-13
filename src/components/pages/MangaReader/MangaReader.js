@@ -87,7 +87,7 @@ class MangaReader extends React.PureComponent {
               <span className='truncate'>
                 {
                   chapter && manga.chaptersCount > 1 &&
-                ` C${chapter.number}. ${chapter.shortTitle}`
+                `${chapter.number}. ${chapter.shortTitle}`
                 }
               </span>
             </div>

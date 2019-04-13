@@ -1,6 +1,5 @@
 import styled from '@emotion/styled/macro'
 import isEqual from 'lodash/isEqual'
-// import merge from 'lodash/merge'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import Button from 'components/atoms/Button'
@@ -21,6 +20,9 @@ class WithLoadMore extends PureComponent {
     this.handleClick = this.handleClick.bind(this)
     this.checkNoMoreContent = this.checkNoMoreContent.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
+    this.autoLoadMore = this.autoLoadMore.bind(this)
+
+    this.ref = React.createRef()
   }
 
   static getDerivedStateFromError () {
@@ -67,7 +69,7 @@ class WithLoadMore extends PureComponent {
     const showButton = !this.state.noMoreContent && !hideLoadMoreBtn && !retrievingItems
 
     return (
-      <div id={domId}>
+      <div id={domId} ref={this.ref}>
         {dom}
 
         {showButton &&
@@ -76,6 +78,7 @@ class WithLoadMore extends PureComponent {
             outlined={!retrievingItems}
             disabled={retrievingItems}
             onClick={this.handleClick}
+            ref={this.loadMoreBtnRef}
           >
             More
           </LoadMoreButton>
@@ -89,6 +92,7 @@ class WithLoadMore extends PureComponent {
     const { filter, onNoMoreContent } = this.state
     dispatch(loadMore(id, pageSize, 1, filter, order))
     if (!onNoMoreContent) this.checkNoMoreContent()
+    window.addEventListener('scroll', this.autoLoadMore)
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -117,6 +121,10 @@ class WithLoadMore extends PureComponent {
       prevProps.filter !== this.props.filter) {
       this.updateFilter()
     }
+  }
+
+  componentWillUnMount () {
+    window.removeEventListener('scroll', this.autoLoadMore)
   }
 
   handleClick () {
@@ -166,6 +174,17 @@ class WithLoadMore extends PureComponent {
       filter.isNSFW = false
     }
     this.setState({ filter })
+  }
+
+  autoLoadMore () {
+    const { noMoreContent } = this.state
+    const { retrievingItems } = this.props.withLoadMore
+    if (noMoreContent || retrievingItems || !this.ref.current) return
+
+    const { bottom } = this.ref.current.getBoundingClientRect()
+    if (bottom < window.innerHeight) {
+      this.handleClick()
+    }
   }
 }
 

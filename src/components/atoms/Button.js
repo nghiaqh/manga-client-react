@@ -1,21 +1,19 @@
 import styled from '@emotion/styled/macro'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-class Button extends PureComponent {
-  render () {
-    const { id, className, onClick, disabled, title, children } = this.props
-    return (
-      <StyledButton id={id}
-        className={`button--basic ${className || ''}`}
-        onClick={onClick}
-        disabled={disabled}
-        title={title}>
-        {children}
-      </StyledButton>
-    )
-  }
+const Button = (props) => {
+  const { id, className, onClick, disabled, title, children } = props
+  return (
+    <StyledButton id={id}
+      className={`button--basic ${className || ''}`}
+      onClick={onClick}
+      disabled={disabled}
+      title={title}>
+      {children}
+    </StyledButton>
+  )
 }
 
 const StyledButton = styled.button(props => {
