@@ -8,8 +8,7 @@ export default class ProgressiveImage extends React.PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      preview: true,
-      size: props.size || 360
+      size: THUMBWIDTHS[0]
     }
 
     this.ref = React.createRef()
@@ -27,7 +26,7 @@ export default class ProgressiveImage extends React.PureComponent {
           ${preview ? 'preview' : ''}
           ${className || ''}`}
         alt={title}
-        src={getImageUrl(src, preview ? THUMBWIDTHS[0] : size)}
+        src={getImageUrl(src, size)}
         ref={this.ref}
       />
     )
@@ -53,22 +52,20 @@ export default class ProgressiveImage extends React.PureComponent {
 
   loadImage () {
     const { innerHeight } = window
-    const { top, bottom, height } = this.ref.current.getBoundingClientRect()
+    const { top, bottom, width, height } = this.ref.current.getBoundingClientRect()
     const { width: imgW, height: imgH } = this.props
 
     // calculate optimal size of image to load
     // if scale width > default thumbnail sizes, use original size (size = null)
-    const scaledWidth = imgW * height / imgH
+    const scaledHeight = imgH * width / imgW
+    const scaledWidth = imgW * (scaledHeight > height ? scaledHeight : height) / imgH
     const maxWidth = Math.min(...THUMBWIDTHS.filter(value =>
       value >= scaledWidth))
     const size = maxWidth === scaledWidth ? null : maxWidth
 
     if ((top >= 0 && top <= innerHeight) ||
       (bottom >= 0 && bottom <= innerHeight)) {
-      this.setState({
-        preview: false,
-        size: size
-      })
+      this.setState({ size })
     }
   }
 }
